@@ -19,7 +19,7 @@ namespace TowerDefense
         /// <param name="imagePath"></param>
         /// <param name="position"></param>
         /// <param name="isClickAble"></param>
-        public TowerType(int speed, int damage, int cost, float range, string imagePath, PointF position, bool isClickAble) : base(speed, damage, cost, range, imagePath, position, isClickAble)
+        public TowerType(float speed, int damage, int cost, float range, string imagePath, PointF position, bool isClickAble) : base(speed, damage, cost, range, imagePath, position, isClickAble)
         {
 
         }

@@ -22,7 +22,7 @@ namespace TowerDefense
             get { return range; }
         }
 
-        public TowerSlow(float slow, int range, int speed, int damage, int cost, string imagePath, PointF position, bool isClickAble)
+        public TowerSlow(float slow, int range, float speed, int damage, int cost, string imagePath, PointF position, bool isClickAble)
             : base(speed, damage, cost, range, imagePath, position, isClickAble)
         {
 
