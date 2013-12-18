@@ -14,7 +14,6 @@ namespace TowerDefense
         private int speed;
         private int damage;
         private int cost;
-        private string sprite;
         private float ranged;
         // Property
         public int Speed
@@ -29,7 +28,7 @@ namespace TowerDefense
         /// <summary>
         /// The COnstructor for the Tower Class
         /// </summary>
-        public Tower(int speed, int damage, int cost, string imagePath, float ranged) : base(string imagePath, PointF positiob, bool isClickAble)
+        public Tower(int speed, int damage, int cost, float ranged, string imagePath) : base(string imagePath, PointF positiob, bool isClickAble)
         {
             this.speed = speed;
             this.damage = damage;
