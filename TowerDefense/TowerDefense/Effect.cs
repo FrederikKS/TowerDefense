@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 namespace TowerDefense
 {
-    class Effect : GameObejct
+    public class Effect : GameObject
     {
         //Constructor
         public Effect(string imagePath, PointF position, bool isClickable): base(imagePath,position,isClickable)

@@ -82,12 +82,12 @@ namespace TowerDefense
 
         public bool CheckLocation(int startX, int startY, int endX, int endY)
         {
-            
+            return true;
         }
 
         public bool CheckLocation(int startX, int startY, int endX, int endY, int minDistStart)
         {
-
+            return true;
         }
 
         public void RoadBuilder(float worldSizeX, float worldSizeY, int startX, int startY, int endX, int endY, int[][] coordinateSystem)

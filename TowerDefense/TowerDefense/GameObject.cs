@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace TowerDefense
 {
-    class GameObject
+    public abstract class GameObject
     {
         //Fields
         #region
