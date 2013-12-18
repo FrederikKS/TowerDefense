@@ -65,8 +65,9 @@ namespace TowerDefense
             {
                 if (gw == null)
                 {
-                    gw = new GameWorld(CreateGraphics(), this.DisplayRectangle, 10, 10, difc);
+                    gw = new GameWorld(CreateGraphics(), this.DisplayRectangle, 20, 20, difc);
                 }
+
                 gw.GameLoop();
             }
 

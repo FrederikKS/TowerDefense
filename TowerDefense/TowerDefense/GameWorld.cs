@@ -28,14 +28,14 @@ namespace TowerDefense
 
         private float worldSizeX;
         private float worldSizeY;
-        private int tileSizeX;
-        private int tileSizeY;
+        private int tileSizeX = 64;
+        private int tileSizeY = 64;
         private int[][] coordinateSystem;
         private int grottoX;
         private int grottoY;
         private int treasureX;
         private int treasureY;
-        private int minDistStart;
+        private int minDistStart = 3;
         private List<Environment> environment = new List<Environment>();
         private List<Tower> towers = new List<Tower>();
         private List<PointF> checkpointList = new List<PointF>();
@@ -60,10 +60,15 @@ namespace TowerDefense
 
         public GameWorld(Graphics dc, Rectangle displayRectangle, float worldSizeX, float worldSizeY, float dif)
         {
+            /// Creates and allocates a buffer in memory with the size of the display
+            buffer = BufferedGraphicsManager.Current.Allocate(dc, displayRectangle);
+
             this.dc = buffer.Graphics;
             this.worldSizeX = worldSizeX;
             this.worldSizeY = worldSizeY;
             this.chosenDif = dif;
+
+            SetupWorld();
         }
 
         // Functions
@@ -106,8 +111,8 @@ namespace TowerDefense
                 }
             }
             //Location for treasure
-            treasureX = rnd.Next(tileSizeX, (int)worldSizeX);
-            treasureY = rnd.Next(tileSizeY, (int)worldSizeY);
+            treasureX = rnd.Next(1, (int)worldSizeX - 1);
+            treasureY = rnd.Next(1, (int)worldSizeY - 2);
 
             //Location for grotto
             #region Defining which border grotto should spawn on
@@ -117,25 +122,25 @@ namespace TowerDefense
             if (locationOfGrotto == 0)
             {
                 grottoX = 0;
-                grottoY = rnd.Next((int)worldSizeY - tileSizeY);
+                grottoY = rnd.Next(1, (int)worldSizeY - 2);
             }
             //right
             if (locationOfGrotto == 1)
             {
-                grottoX = (int)worldSizeX - tileSizeX;
-                grottoY = rnd.Next((int)worldSizeY - tileSizeY);
+                grottoX = (int)worldSizeX - 1;
+                grottoY = rnd.Next(1, (int)worldSizeY - 2);
             }
             //top
             if (locationOfGrotto == 2)
             {
-                grottoX = rnd.Next((int)worldSizeY - tileSizeY);
+                grottoX = rnd.Next(1, (int)worldSizeY - 2);
                 grottoY = 0;
             }
             //bot
             if (locationOfGrotto == 3)
             {
-                grottoX = rnd.Next((int)worldSizeY - tileSizeY);
-                grottoY = (int)worldSizeY - tileSizeY;
+                grottoX = rnd.Next(1, (int)worldSizeY - 2);
+                grottoY = (int)worldSizeY - 1;
             }
             #endregion
 
@@ -180,23 +185,98 @@ namespace TowerDefense
         /// </summary>
         public void GameLoop()
         {
+            //Time spent since last loop
+            TimeSpan deltaTime = DateTime.Now - lastFrameStarted;
+            //Convert deltaTime to milliseconds, 1ms minimum
+            int milliSeconds = deltaTime.Milliseconds > 0 ? deltaTime.Milliseconds : 1;
+            currentFPS = 1000 / milliSeconds;
+
+            //Set new frame start
+            lastFrameStarted = DateTime.Now;
+
+            Update();
+            UpdateAnimation();
+            Draw();
             GameState();
         }
         /// <summary>
-        /// 
+        /// Updates the gameworld on every frame
         /// </summary>
         public void Update()
         {
+            //Update all tower objects
+            foreach (Tower tower in towers)
+            {
+                tower.Update(currentFPS);
+            }
 
+            //Update all environment objects
+            foreach (Environment env in environment)
+            {
+                env.Update(currentFPS);
+            }
+
+            //Update all enemy objects
+            foreach (Enemy enemy in currentWave)
+            {
+                enemy.Update(currentFPS);
+            }
         }
+
+        /// <summary>
+        /// Updates the animations of the game objects in the world
+        /// </summary>
+        public void UpdateAnimation()
+        {
+            //Update all tower animations
+            foreach (Tower tower in towers)
+            {
+                tower.UpdateAnimation(currentFPS);
+            }
+
+            //Update all environment animations
+            foreach (Environment env in environment)
+            {
+                env.UpdateAnimation(currentFPS);
+            }
+
+            //Update all enemy animations
+            foreach (Enemy enemy in currentWave)
+            {
+                enemy.UpdateAnimation(currentFPS);
+            }
+        }
+
         /// <summary>
         /// Draws The World
         /// </summary>
         public void Draw()
         {
+            dc.Clear(Color.White);
+
+            //Drawing environment
+            foreach (Environment env in environment)
+            {
+                env.Draw(dc);
+            }
+
+            //Drawing towers
+            foreach (Tower tow in towers)
+            {
+                tow.Draw(dc);
+            }
+
+            //Drawing enemies
+            foreach (Enemy enemy in currentWave)
+            {
+                enemy.Draw(dc);
+            }
+
             Font w = new Font("Arial", 14);
             Brush q = new SolidBrush(Color.White);
-            dc.DrawString(string.Format("HP: {0}", phase), w, q, 30, 5);
+            dc.DrawString(string.Format("Phase: {0}", phase), w, q, 30, 5);
+            
+            buffer.Render();
 
         }
         /// <summary>
@@ -221,7 +301,39 @@ namespace TowerDefense
         /// <returns></returns>
         public bool CheckLocation(int startX, int startY, int endX, int endY, int minDistStart)
         {
-            return true;
+            Random rnd = new Random();
+            bool invalidLocation = false;
+
+            for (int x = 0; x < minDistStart + 1; x++)
+            {
+                for (int y = 0; y < minDistStart + 1; y++)
+                {
+                    if (endX + x == startX && endY + y == startY)
+                    {
+                        invalidLocation = true;
+                    }
+
+                    if (endX + x == startX && endY - y == startY)
+                    {
+                        invalidLocation = true;
+                    }
+
+                    if (endX - x == startX && endY + y == startY)
+                    {
+                        invalidLocation = true;
+                    }
+
+                    if (endX - x == startX && endY - y == startY)
+                    {
+                        invalidLocation = true;
+                    }
+                }
+            }
+
+            if (invalidLocation == true)
+                return false;
+            else
+                return true;
         }
         /// <summary>
         /// Builds The Road The Enemies Will Follow
@@ -247,111 +359,111 @@ namespace TowerDefense
         {
             if (environmentList.Count == 0)
                 environmentList.Clear();
-            else
+
+            for (int x = 0; x <= worldSizeX; x++)
             {
-                for (int x = 0; x <= worldSizeX; x++)
+                for (int y = 0; y <= worldSizeY; y++)
                 {
-                    for (int y = 0; y <= worldSizeY; y++)
+                    //Giving grotto location a value of 1
+                    if (coordinateSystem[x][y] == coordinateSystem[grottoX][grottoY])
                     {
-                        //Giving checkpoints locations a value of 2 + checkpoint number, reaching a maximum value of 4 when there is 3 checkpoints in the map
-                        if (checkpointList.Count() > 0)
-
-                            for (int i = 0; i < checkpointList.Count; i++)
-                            {
-                                if (coordinateSystem[x][y] == coordinateSystem[(int)checkpointList[i].X][(int)checkpointList[i].Y])
-                                {
-                                    coordinateSystem[x][y] = 2 + i;
-                                }
-                            }
-                        //Giving grotto location a value of 1
-                        else if (coordinateSystem[x][y] == coordinateSystem[grottoX][grottoY])
-                        {
-                            coordinateSystem[x][y] = 1;
-                        }
-                        //giving treasure location a value of 5
-                        else if (coordinateSystem[x][y] == coordinateSystem[treasureX][treasureY])
-                        {
-                            coordinateSystem[x][y] = 5;
-                        }
-
-                        //Giving value to all other tiles, randomizing if they will be water, rock, island or lighthouse
-                        else
-                        {
-                            int temp = rnd.Next(1, 100);
-                            
-                            //Water
-                            if (temp > 30 && temp <= 100)
-                                coordinateSystem[x][y] = 10;
-                            //Island
-                            if (temp >= 10 && temp < 25)
-                                coordinateSystem[x][y] = 11;
-                            //Lighthouse
-                            if (temp >= 25 && temp < 30)
-                                coordinateSystem[x][y] = 12;
-                            //Rock
-                            if (temp >= 0 && temp < 10)
-                                coordinateSystem[x][y] = 13;
-                        }
+                        coordinateSystem[x][y] = 1;
                     }
-                }
-
-                //Placing environment
-                int offsetX = tileSizeX / 2;
-                int offsetY = tileSizeY / 2;
-
-                for (int x = 0; x < (worldSizeX/tileSizeX); x++)
-                {
-                    for (int y = 0; y < (worldSizeY/tileSizeY; y++)
+                    //giving treasure location a value of 5
+                    else if (coordinateSystem[x][y] == coordinateSystem[treasureX][treasureY])
                     {
-                        //Temp locations to make the code cleaner
-                        int tempX = x * tileSizeX;
-                        int tempY = y * tileSizeY;
+                        coordinateSystem[x][y] = 5;
+                    }
 
-                        //Placing grotto
-                        if(coordinateSystem[x][y] == 1)
+                    //Giving value to all other tiles, randomizing if they will be water, rock, island or lighthouse
+                    else
+                    {
+                        int temp = rnd.Next(1, 100);
+
+                        //Water
+                        if (temp > 30 && temp <= 100)
+                            coordinateSystem[x][y] = 10;
+                        //Island
+                        if (temp >= 10 && temp < 25)
+                            coordinateSystem[x][y] = 11;
+                        //Lighthouse
+                        if (temp >= 25 && temp < 30)
+                            coordinateSystem[x][y] = 12;
+                        //Rock
+                        if (temp >= 0 && temp < 10)
+                            coordinateSystem[x][y] = 13;
+                    }
+
+                    //Giving checkpoints locations a value of 2 + checkpoint number, reaching a maximum value of 4 when there is 3 checkpoints in the map
+                    if (checkpointList.Count() > 0)
+
+                        for (int i = 0; i < checkpointList.Count; i++)
                         {
-                            environmentList.Add(new Grotto(@"Sprites/LandResized.png", new PointF(tempX, tempY), false));
+                            if (coordinateSystem[x][y] == coordinateSystem[(int)checkpointList[i].X][(int)checkpointList[i].Y])
+                            {
+                                coordinateSystem[x][y] = 2 + i;
+                            }
                         }
 
-                        //Checkpoints
-                        if(coordinateSystem[x][y] == 2)
-                        {
-                            environmentList.Add(new Rock(@"Sprites/Checkpoint1.png", new PointF(tempX, tempY), false));   
-                        }
-                        if(coordinateSystem[x][y] == 3)
-                        {
-                            environmentList.Add(new Rock(@"Sprites/Checkpoint2.png", new PointF(tempX, tempY), false));   
-                        }
-                        if(coordinateSystem[x][y] == 4)
-                        {
-                            environmentList.Add(new Rock(@"Sprites/Checkpoint2.png", new PointF(tempX, tempY), false));   
-                        }
+                }
+            }
 
-                        //Placing treasure chest
-                        if(coordinateSystem[x][y] == 5) 
-                        {
-                            environmentList.Add(new Treasure(@"Sprites/TreasureChestResized.png", new PointF(tempX, tempY), false));
-                        }
-                        //Placing Water
-                        if(coordinateSystem[x][y] == 10)
-                        {
-                            environmentList.Add(new Rock(@"Sprites/WaterPlaceHolder.jpg", new PointF(tempX, tempY), true));   
-                        }
-                        //Placing Islands
-                        if(coordinateSystem[x][y] == 11)
-                        {
-                            environmentList.Add(new Island(@"Sprites/IslandPlaceHolder.jpg", new PointF(tempX, tempY), true));   
-                        }
-                        //Placing lighthouses
-                        if(coordinateSystem[x][y] == 12)
-                        {
-                            environmentList.Add(new Lighthouse(@"Sprites/LighthousePlaceHolder.jpg", new PointF(tempX, tempY), false));   
-                        }
-                        //Placing rocks
-                        if(coordinateSystem[x][y] == 13)
-                        {
-                            environmentList.Add(new Rock(@"Sprites/RockPlaceHolder.jpg", new PointF(tempX, tempY), false));   
-                        }
+            //Placing environment
+            int offsetX = tileSizeX / 2;
+            int offsetY = tileSizeY / 2;
+
+            for (int x = 0; x < (worldSizeX / tileSizeX); x++)
+            {
+                for (int y = 0; y < (worldSizeY / tileSizeY); y++)
+                {
+                    //Temp locations to make the code cleaner
+                    int tempX = x * tileSizeX;
+                    int tempY = y * tileSizeY;
+
+                    //Placing grotto
+                    if (coordinateSystem[x][y] == 1)
+                    {
+                        environmentList.Add(new Grotto(@"Sprites/LandResized.png", new PointF(tempX, tempY), false));
+                    }
+
+                    //Checkpoints
+                    if (coordinateSystem[x][y] == 2)
+                    {
+                        environmentList.Add(new Rock(@"Sprites/Checkpoint1PlaceHolder.png", new PointF(tempX, tempY), false));
+                    }
+                    if (coordinateSystem[x][y] == 3)
+                    {
+                        environmentList.Add(new Rock(@"Sprites/Checkpoint2PlaceHolder.png", new PointF(tempX, tempY), false));
+                    }
+                    if (coordinateSystem[x][y] == 4)
+                    {
+                        environmentList.Add(new Rock(@"Sprites/Checkpoint3PlaceHolder.png", new PointF(tempX, tempY), false));
+                    }
+
+                    //Placing treasure chest
+                    if (coordinateSystem[x][y] == 5)
+                    {
+                        environmentList.Add(new Treasure(@"Sprites/TreasureChestResized.png", new PointF(tempX, tempY), false));
+                    }
+                    //Placing Water
+                    if (coordinateSystem[x][y] == 10)
+                    {
+                        environmentList.Add(new Rock(@"Sprites/WaterPlaceHolder.jpg", new PointF(tempX, tempY), true));
+                    }
+                    //Placing Islands
+                    if (coordinateSystem[x][y] == 11)
+                    {
+                        environmentList.Add(new Island(@"Sprites/LandResized.png", new PointF(tempX, tempY), true));
+                    }
+                    //Placing lighthouses
+                    if (coordinateSystem[x][y] == 12)
+                    {
+                        environmentList.Add(new Lighthouse(@"Sprites/LighthousePlaceHolder.jpg", new PointF(tempX, tempY), false));
+                    }
+                    //Placing rocks
+                    if (coordinateSystem[x][y] == 13)
+                    {
+                        environmentList.Add(new Rock(@"Sprites/RockPlaceHolder.jpg", new PointF(tempX, tempY), false));
                     }
                 }
             }

@@ -10,3 +10,16 @@ C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debu
 C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\TowerDefense.exe.config
 C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.exe
 C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.pdb
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.csprojResolveAssemblyReference.cache
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.Properties.Resources.resources
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.csproj.GenerateResource.Cache
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\LandResized.png
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\RockPlaceHolder.jpg
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\TreasureChestResized.png
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\TowerDefense.exe
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\TowerDefense.pdb
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\Checkpoint1PlaceHolder.png
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\Checkpoint2PlaceHolder.png
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\Checkpoint3PlaceHolder.png
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\LighthousePlaceHolder.jpg
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\WaterPlaceholder.png
