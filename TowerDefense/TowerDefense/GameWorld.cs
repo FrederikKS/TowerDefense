@@ -8,6 +8,8 @@ using System.Diagnostics;
 
 namespace TowerDefense
 {
+    public enum State { build,wave}
+    
     class GameWorld
     {
         // Fields
@@ -16,9 +18,12 @@ namespace TowerDefense
         private DateTime lastFrameStartIt = new DateTime();
         private float currentFPS;
         private Graphics dc;
+        private string phase;
         private BufferedGraphics buffer;
+        private TimeSpan bt;
+        private State currentState = State.build;
         private Stopwatch stopWatch = new Stopwatch();
-
+        private Stopwatch buildWatch = new Stopwatch();
         // Fields for world creation
 
         private float worldSizeX;
@@ -65,6 +70,7 @@ namespace TowerDefense
         /// </summary>
         public void SetupWorld()
         {
+            bt = buildWatch.Elapsed;
 
         }
         /// <summary>
@@ -72,7 +78,7 @@ namespace TowerDefense
         /// </summary>
         public void GameLoop()
         {
-
+            GameState();
         }
         /// <summary>
         /// 
@@ -86,6 +92,9 @@ namespace TowerDefense
         /// </summary>
         public void Draw()
         {
+            Font w = new Font("Arial", 14);
+            Brush q = new SolidBrush(Color.White);
+            dc.DrawString(string.Format("HP: {0}", phase), w, q, 30, 5);
 
         }
         /// <summary>
@@ -132,6 +141,31 @@ namespace TowerDefense
         public void GameState()
         {
 
+                   
+            switch (currentState)
+            {
+                case State.build:
+                    
+                    if (buildWatch.Elapsed.Milliseconds > 30000)
+                    {
+                        buildWatch.Stop();
+                        buildWatch.Reset();
+                        phase = "Wave";
+                        currentState = State.wave;
+                    }
+                    break;
+                case State.wave:
+                    
+                    if (currentWave.Count == 0)
+                    {
+                        phase = "build phase";
+                        buildWatch.Start();
+                        currentState = State.build;
+                        
+                    }
+                    break;
+                
+            }
         }
         /// <summary>
         /// The Build Function
