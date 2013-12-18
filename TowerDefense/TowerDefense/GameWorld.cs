@@ -365,12 +365,12 @@ namespace TowerDefense
                 for (int y = 0; y <= worldSizeY; y++)
                 {
                     //Giving grotto location a value of 1
-                    if (coordinateSystem[x][y] == coordinateSystem[grottoX][grottoY])
+                    if (x == grottoX && y == grottoY)
                     {
                         coordinateSystem[x][y] = 1;
                     }
                     //giving treasure location a value of 5
-                    else if (coordinateSystem[x][y] == coordinateSystem[treasureX][treasureY])
+                    else if (x == treasureX && y == treasureY)
                     {
                         coordinateSystem[x][y] = 5;
                     }
