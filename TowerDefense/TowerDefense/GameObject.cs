@@ -27,7 +27,12 @@ namespace TowerDefense
         }
         #endregion
 
-        //Constructor
+        /// <summary>
+        /// GameObject constructor
+        /// </summary>
+        /// <param name="imagePath"></param>
+        /// <param name="Position"></param>
+        /// <param name="isClickable"></param>
         public GameObject(string imagePath, PointF Position, bool isClickable)
         {
 
@@ -52,13 +57,19 @@ namespace TowerDefense
         
         //Functions
         #region
-        //Update
+        /// <summary>
+        /// Gameobject Update
+        /// </summary>
+        /// <param name="fps"></param>
         public virtual void Update(float fps)
         {
 
         }
 
-        //Update animations
+        /// <summary>
+        /// Animation update
+        /// </summary>
+        /// <param name="fps"></param>
         public virtual void UpdateAnimation(float fps)
         {
 
@@ -82,7 +93,10 @@ namespace TowerDefense
 
         }
 
-        //Draw function
+        /// <summary>
+        /// Draw function
+        /// </summary>
+        /// <param name="dc"></param>
         public virtual void Draw(Graphics dc)
         {
             dc.DrawImage(sprite, position);
