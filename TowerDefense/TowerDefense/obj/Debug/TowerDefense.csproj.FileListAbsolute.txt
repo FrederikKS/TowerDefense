@@ -23,3 +23,5 @@ C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug
 C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\Checkpoint3PlaceHolder.png
 C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\LighthousePlaceHolder.jpg
 C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\WaterPlaceholder.png
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.Form1.resources
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\GrottoPlaceHolder.png

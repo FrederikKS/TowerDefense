@@ -412,9 +412,9 @@ namespace TowerDefense
             int offsetX = tileSizeX / 2;
             int offsetY = tileSizeY / 2;
 
-            for (int x = 0; x < (worldSizeX / tileSizeX); x++)
+            for (int x = 0; x < worldSizeX; x++)
             {
-                for (int y = 0; y < (worldSizeY / tileSizeY); y++)
+                for (int y = 0; y < worldSizeY; y++)
                 {
                     //Temp locations to make the code cleaner
                     int tempX = x * tileSizeX;
@@ -423,21 +423,21 @@ namespace TowerDefense
                     //Placing grotto
                     if (coordinateSystem[x][y] == 1)
                     {
-                        environmentList.Add(new Grotto(@"Sprites/LandResized.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Grotto(@"Sprites/GrottoPlaceHolder.png", new PointF(tempX, tempY), false));
                     }
 
                     //Checkpoints
                     if (coordinateSystem[x][y] == 2)
                     {
-                        environmentList.Add(new Rock(@"Sprites/Checkpoint1PlaceHolder.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Checkpoint(@"Sprites/Checkpoint1PlaceHolder.png", new PointF(tempX, tempY), false));
                     }
                     if (coordinateSystem[x][y] == 3)
                     {
-                        environmentList.Add(new Rock(@"Sprites/Checkpoint2PlaceHolder.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Checkpoint(@"Sprites/Checkpoint2PlaceHolder.png", new PointF(tempX, tempY), false));
                     }
                     if (coordinateSystem[x][y] == 4)
                     {
-                        environmentList.Add(new Rock(@"Sprites/Checkpoint3PlaceHolder.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Checkpoint(@"Sprites/Checkpoint3PlaceHolder.png", new PointF(tempX, tempY), false));
                     }
 
                     //Placing treasure chest
@@ -448,7 +448,7 @@ namespace TowerDefense
                     //Placing Water
                     if (coordinateSystem[x][y] == 10)
                     {
-                        environmentList.Add(new Rock(@"Sprites/WaterPlaceHolder.jpg", new PointF(tempX, tempY), true));
+                        environmentList.Add(new Water(@"Sprites/WaterPlaceHolder.png", new PointF(tempX, tempY), true));
                     }
                     //Placing Islands
                     if (coordinateSystem[x][y] == 11)
