@@ -12,12 +12,12 @@ namespace TowerDefense
     {
         // Field
         private Stopwatch stopWatch;
-        private int speed;
+        private float speed;
         private int damage;
         private int cost;
         private float ranged;
         // Property
-        public int Speed
+        public float Speed
         {
             get { return speed; }
             set { speed = value; }
@@ -36,7 +36,7 @@ namespace TowerDefense
         /// <param name="imagePath"></param>
         /// <param name="position"></param>
         /// <param name="isClickAble"></param>
-        public Tower(int speed, int damage, int cost, float ranged, string imagePath, PointF position, bool isClickAble) : base(imagePath, position, isClickAble)
+        public Tower(float speed, int damage, int cost, float ranged, string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
         {
             this.speed = speed;
             this.damage = damage;
