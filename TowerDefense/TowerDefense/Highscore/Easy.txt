@@ -1,0 +1,17 @@
+﻿-- EASY --
+Name: Mikkel
+Lives Remaining: 38 out of 10
+--------------------Name: Bob
+Lives Remaining: 323
+Name: Bob
+Lives Remaining: 323
+
+Name: Mikkel
+Lives Remaining: 2032
+ --------------------
+Name: gfg
+Lives Remaining: 23
+ --------------------
+Name: Butt1
+Lives Remaining: 202
+ --------------------
