@@ -28,7 +28,7 @@ namespace TowerDefense
         /// <summary>
         /// The COnstructor for the Tower Class
         /// </summary>
-        public Tower(int speed, int damage, int cost, float ranged, string imagePath) : base(string imagePath, PointF positiob, bool isClickAble)
+        public Tower(int speed, int damage, int cost, float ranged, string imagePath, PointF position, bool isClickAble) : base(string imagePath, PointF position, bool isClickAble)
         {
             this.speed = speed;
             this.damage = damage;
