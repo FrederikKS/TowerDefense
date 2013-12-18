@@ -7,3 +7,6 @@ C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debu
 C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\TowerDefense.pdb
 C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.exe
 C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.pdb
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\TowerDefense.exe.config
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.exe
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.pdb

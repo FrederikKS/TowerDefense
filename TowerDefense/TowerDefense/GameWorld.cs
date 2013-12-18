@@ -15,7 +15,7 @@ namespace TowerDefense
         // Fields
 
         private Random rnd = new Random();
-        private DateTime lastFrameStartIt = new DateTime();
+        private DateTime lastFrameStarted = new DateTime();
         private float currentFPS;
         private Graphics dc;
         private string phase;
@@ -28,6 +28,8 @@ namespace TowerDefense
 
         private float worldSizeX;
         private float worldSizeY;
+        private int tileSizeX;
+        private int tileSizeY;
         private int[][] coordinateSystem;
         private int grottoX;
         private int grottoY;
@@ -36,6 +38,7 @@ namespace TowerDefense
         private int minDistStart;
         private List<Environment> environment = new List<Environment>();
         private List<Tower> towers = new List<Tower>();
+        private List<PointF> checkpointList = new List<PointF>();
 
         private bool validLocation;
 
@@ -66,11 +69,110 @@ namespace TowerDefense
         // Functions
 
         /// <summary>
-        /// Draws The World
+        /// Creates the world layout
         /// </summary>
         public void SetupWorld()
         {
             bt = buildWatch.Elapsed;
+
+            //Starting FPS timer
+            lastFrameStarted = DateTime.Now;
+
+            #region Instantiating coordinate system and grotto/checkpoints/treasure location
+            // Instantiating coordinate system
+            coordinateSystem = new int[(int)worldSizeX + 1][];
+
+            for (int i = 0; i <= worldSizeX; i++)
+            {
+                coordinateSystem[i] = new int[(int)worldSizeY + 1];
+            }
+
+            //Instantiating coordinate system
+            for (int x = 0; x < worldSizeX + 1; x++)
+            {
+                for (int y = 0; y < worldSizeY + 1; y++)
+                {
+                    coordinateSystem[x][y] = 0;
+                }
+            }
+
+            //Randomizing number of checkpoints in the map
+            int numberOfCheckpoints = rnd.Next(0, 3);
+            if (numberOfCheckpoints > 0)
+            {
+                for (int i = 0; i < numberOfCheckpoints; i++)
+                {
+                    checkpointList.Add(new PointF());
+                }
+            }
+            //Location for treasure
+            treasureX = rnd.Next(tileSizeX, (int)worldSizeX);
+            treasureY = rnd.Next(tileSizeY, (int)worldSizeY);
+
+            //Location for grotto
+            #region Defining which border grotto should spawn on
+            //Randoming one out of 4 numbers, each representing a side
+            int locationOfGrotto = rnd.Next(0, 3);
+            //left
+            if (locationOfGrotto == 0)
+            {
+                grottoX = 0;
+                grottoY = rnd.Next((int)worldSizeY - tileSizeY);
+            }
+            //right
+            if (locationOfGrotto == 1)
+            {
+                grottoX = (int)worldSizeX - tileSizeX;
+                grottoY = rnd.Next((int)worldSizeY - tileSizeY);
+            }
+            //top
+            if (locationOfGrotto == 2)
+            {
+                grottoX = rnd.Next((int)worldSizeY - tileSizeY);
+                grottoY = 0;
+            }
+            //bot
+            if (locationOfGrotto == 3)
+            {
+                grottoX = rnd.Next((int)worldSizeY - tileSizeY);
+                grottoY = (int)worldSizeY - tileSizeY;
+            }
+            #endregion
+
+            //Location for checkpoints
+            if (numberOfCheckpoints > 0)
+                for (int i = 0; i < numberOfCheckpoints; i++)
+                {
+                    checkpointList[i] = new PointF(rnd.Next(0, (int)worldSizeX), rnd.Next(0, (int)worldSizeY));
+                }
+
+            // Bool for checking validity of tile location
+            validLocation = CheckLocation(grottoX, grottoY, treasureX, treasureY, minDistStart);
+
+            //If location is not valid (start too close to finish), find a new location
+            while (!validLocation)
+            {
+                treasureX = rnd.Next(0, (int)worldSizeX);
+                treasureY = rnd.Next(0, (int)worldSizeY);
+
+                validLocation = CheckLocation(grottoX, grottoY, treasureX, treasureY, minDistStart);
+            }
+
+
+
+            #endregion
+
+            #region Building the world layout
+            //Assign values to positions in the coordinate system and place environment tiles accordingly while adding them to environment list
+            Randomizer(coordinateSystem, environment);
+
+            //Building road from A to B, then save that path
+            //Building road from B to C, then save that path
+            //Continue depending on amount of checkpoints
+
+
+
+            #endregion
 
         }
         /// <summary>
@@ -135,6 +237,126 @@ namespace TowerDefense
         {
 
         }
+
+        /// <summary>
+        /// Assigning values to positions in the coordinate system, defining which environment object will be placed on that coordinate.
+        /// Then it places that environment object on the tile and adds the object to gameworld's list of environment objects
+        /// </summary>
+        /// <param name="coordinateSystem"></param>
+        public void Randomizer(int[][] coordinateSystem, List<Environment> environmentList)
+        {
+            if (environmentList.Count == 0)
+                environmentList.Clear();
+            else
+            {
+                for (int x = 0; x <= worldSizeX; x++)
+                {
+                    for (int y = 0; y <= worldSizeY; y++)
+                    {
+                        //Giving checkpoints locations a value of 2 + checkpoint number, reaching a maximum value of 4 when there is 3 checkpoints in the map
+                        if (checkpointList.Count() > 0)
+
+                            for (int i = 0; i < checkpointList.Count; i++)
+                            {
+                                if (coordinateSystem[x][y] == coordinateSystem[(int)checkpointList[i].X][(int)checkpointList[i].Y])
+                                {
+                                    coordinateSystem[x][y] = 2 + i;
+                                }
+                            }
+                        //Giving grotto location a value of 1
+                        else if (coordinateSystem[x][y] == coordinateSystem[grottoX][grottoY])
+                        {
+                            coordinateSystem[x][y] = 1;
+                        }
+                        //giving treasure location a value of 5
+                        else if (coordinateSystem[x][y] == coordinateSystem[treasureX][treasureY])
+                        {
+                            coordinateSystem[x][y] = 5;
+                        }
+
+                        //Giving value to all other tiles, randomizing if they will be water, rock, island or lighthouse
+                        else
+                        {
+                            int temp = rnd.Next(1, 100);
+                            
+                            //Water
+                            if (temp > 30 && temp <= 100)
+                                coordinateSystem[x][y] = 10;
+                            //Island
+                            if (temp >= 10 && temp < 25)
+                                coordinateSystem[x][y] = 11;
+                            //Lighthouse
+                            if (temp >= 25 && temp < 30)
+                                coordinateSystem[x][y] = 12;
+                            //Rock
+                            if (temp >= 0 && temp < 10)
+                                coordinateSystem[x][y] = 13;
+                        }
+                    }
+                }
+
+                //Placing environment
+                int offsetX = tileSizeX / 2;
+                int offsetY = tileSizeY / 2;
+
+                for (int x = 0; x < (worldSizeX/tileSizeX); x++)
+                {
+                    for (int y = 0; y < (worldSizeY/tileSizeY; y++)
+                    {
+                        //Temp locations to make the code cleaner
+                        int tempX = x * tileSizeX;
+                        int tempY = y * tileSizeY;
+
+                        //Placing grotto
+                        if(coordinateSystem[x][y] == 1)
+                        {
+                            environmentList.Add(new Grotto(@"Sprites/LandResized.png", new PointF(tempX, tempY), false));
+                        }
+
+                        //Checkpoints
+                        if(coordinateSystem[x][y] == 2)
+                        {
+                            environmentList.Add(new Rock(@"Sprites/Checkpoint1.png", new PointF(tempX, tempY), false));   
+                        }
+                        if(coordinateSystem[x][y] == 3)
+                        {
+                            environmentList.Add(new Rock(@"Sprites/Checkpoint2.png", new PointF(tempX, tempY), false));   
+                        }
+                        if(coordinateSystem[x][y] == 4)
+                        {
+                            environmentList.Add(new Rock(@"Sprites/Checkpoint2.png", new PointF(tempX, tempY), false));   
+                        }
+
+                        //Placing treasure chest
+                        if(coordinateSystem[x][y] == 5) 
+                        {
+                            environmentList.Add(new Treasure(@"Sprites/TreasureChestResized.png", new PointF(tempX, tempY), false));
+                        }
+                        //Placing Water
+                        if(coordinateSystem[x][y] == 10)
+                        {
+                            environmentList.Add(new Rock(@"Sprites/WaterPlaceHolder.jpg", new PointF(tempX, tempY), true));   
+                        }
+                        //Placing Islands
+                        if(coordinateSystem[x][y] == 11)
+                        {
+                            environmentList.Add(new Island(@"Sprites/IslandPlaceHolder.jpg", new PointF(tempX, tempY), true));   
+                        }
+                        //Placing lighthouses
+                        if(coordinateSystem[x][y] == 12)
+                        {
+                            environmentList.Add(new Lighthouse(@"Sprites/LighthousePlaceHolder.jpg", new PointF(tempX, tempY), false));   
+                        }
+                        //Placing rocks
+                        if(coordinateSystem[x][y] == 13)
+                        {
+                            environmentList.Add(new Rock(@"Sprites/RockPlaceHolder.jpg", new PointF(tempX, tempY), false));   
+                        }
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Checks What Wave The Player Is On
         /// </summary>
