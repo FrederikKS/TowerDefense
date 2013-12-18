@@ -26,6 +26,11 @@ namespace TowerDefense
         {
             get { return damage; }
         }
+        public Stopwatch StopWatch
+        {
+            get { return stopWatch; }
+            set { stopWatch = value; }
+        }
         /// <summary>
         /// The Constructor For The Tower Class
         /// </summary>
