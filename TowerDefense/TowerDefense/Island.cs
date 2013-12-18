@@ -10,8 +10,8 @@ namespace TowerDefense
     class Island : Environment
     {
         // Constructor for island
-        
-        public Island(string imagePath, PointF position, bool isClickable)
+
+        public Island(string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
         {
             
         }

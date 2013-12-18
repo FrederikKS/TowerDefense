@@ -7,13 +7,11 @@ using System.Drawing;
 
 namespace TowerDefense
 {
-    class Grotto : Environment
+    class Treasure : Environment
     {
-        // Constructor for grotto
-
-        public Grotto(string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
+        public Treasure(string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
         {
-            
+
         }
     }
 }

@@ -11,7 +11,7 @@ namespace TowerDefense
     {
         // Constructor for water 
 
-        public Water(string imagePath, PointF position, bool isClickable)
+        public Water(string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
         {
 
         }
