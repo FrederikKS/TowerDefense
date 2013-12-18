@@ -99,7 +99,7 @@ namespace TowerDefense
         /// <param name="dc"></param>
         public virtual void Draw(Graphics dc)
         {
-            dc.DrawImage(sprite, position);
+            dc.DrawImage(sprite,position.X, position.Y, 64, 64);
             
         }
 

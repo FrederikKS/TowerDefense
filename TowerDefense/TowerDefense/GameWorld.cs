@@ -381,13 +381,13 @@ namespace TowerDefense
                         int temp = rnd.Next(1, 100);
 
                         //Water
-                        if (temp > 30 && temp <= 100)
+                        if (temp >= 27 && temp <= 100)
                             coordinateSystem[x][y] = 10;
                         //Island
                         if (temp >= 10 && temp < 25)
                             coordinateSystem[x][y] = 11;
                         //Lighthouse
-                        if (temp >= 25 && temp < 30)
+                        if (temp >= 25 && temp < 27)
                             coordinateSystem[x][y] = 12;
                         //Rock
                         if (temp >= 0 && temp < 10)
@@ -396,17 +396,15 @@ namespace TowerDefense
 
                     //Giving checkpoints locations a value of 2 + checkpoint number, reaching a maximum value of 4 when there is 3 checkpoints in the map
                     if (checkpointList.Count() > 0)
-
                         for (int i = 0; i < checkpointList.Count; i++)
                         {
-                            if (coordinateSystem[x][y] == coordinateSystem[(int)checkpointList[i].X][(int)checkpointList[i].Y])
+                            if (x == (int)checkpointList[i].X && y == (int)checkpointList[i].Y)
                             {
                                 coordinateSystem[x][y] = 2 + i;
                             }
                         }
-
+                    }
                 }
-            }
 
             //Placing environment
             int offsetX = tileSizeX / 2;

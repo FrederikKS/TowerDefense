@@ -251,7 +251,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1285, 1272);
+            this.ClientSize = new System.Drawing.Size(1285, 1280);
             this.Controls.Add(this.pnl_Main);
             this.Name = "Form1";
             this.Text = "Form1";
