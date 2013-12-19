@@ -49,6 +49,7 @@ namespace TowerDefense
         List<List<Enemy>> waveEnemy = new List<List<Enemy>>();
         private List<int> waveCount = new List<int>();
         private List<Enemy> currentWave = new List<Enemy>();
+        private List<PointF> path = new List<PointF>();
         private int waveNumber;
         private int listNumb;
         private int checkPoint;
@@ -182,6 +183,7 @@ namespace TowerDefense
             Randomizer(coordinateSystem, environment);
 
             //Building road from A to B, then save that path
+            RoadBuilder(worldSizeX, worldSizeY, grottoX, grottoY, treasureX, treasureY, coordinateSystem, numberOfCheckpoints);
             //Building road from B to C, then save that path
             //Continue depending on amount of checkpoints
 
@@ -379,8 +381,186 @@ namespace TowerDefense
         /// <param name="endX"></param>
         /// <param name="endY"></param>
         /// <param name="coordinateSystem"></param>
-        public void RoadBuilder(float worldSizeX, float worldSizeY, int startX, int startY, int endX, int endY, int[][] coordinateSystem)
+        public void RoadBuilder(float worldSizeX, float worldSizeY, int startX, int startY, int endX, int endY, int[][] coordinateSystem, int numberOfCheckpoints)
         {
+            //Creating a list of nodes
+            Node mainNode = new ParentNode(startX, startY, endX, endY, startX, startY);
+            List<Node> openNodes = new List<Node>();
+            List<Node> closedNodes = new List<Node>();
+            openNodes.Add(mainNode);
+            CheckNearbyNodes(mainNode, openNodes, closedNodes, startX, startY, endX, endY);
+
+            //Moving old parentNode to closed list
+            foreach (Node parentNode in openNodes)
+            {
+                if (parentNode is ParentNode)
+                {
+                    closedNodes.Add((ParentNode)parentNode);
+                    openNodes.Remove((ParentNode)parentNode);
+                    break;
+                }
+            }
+
+            //Setting new main node
+            for (int i = 0; i < 20; i++)
+            {
+
+                if (mainNode.LocationX != endX && mainNode.LocationY != endY)
+                {
+                    foreach (Node node in openNodes)
+                    {
+                        if (node.F < mainNode.F)
+                            mainNode = node;
+                        if (node.F == mainNode.F)
+                            mainNode = openNodes.First(n => (node.F == mainNode.F));
+                    }
+
+
+                    CheckNearbyNodes(mainNode, openNodes, closedNodes, startX, startY, endX, endY);
+                }
+            }
+        }
+
+        //Saving path to PointF array
+        //path.Add(new PointF(mainNode.LocationX, mainNode.LocationY));
+
+        public void CheckNearbyNodes(Node mainNode, List<Node> OpenNodes, List<Node> ClosedNodes, int startX, int startY, int endX, int endY)
+        {
+            //Bools to keep track of checked nodes
+            bool openTop = true;
+            bool openBot = true;
+            bool openLeft = true;
+            bool openRight = true;
+
+            bool closedTop = true;
+            bool closedBot = true;
+            bool closedLeft = true;
+            bool closedRight = true;
+
+            //Checking if nodes have already been examined
+            #region
+            foreach (Node open in OpenNodes)
+            {
+                //Bot
+                if (open.LocationX == mainNode.LocationX && open.LocationY == mainNode.LocationY + 1)
+                {
+                    openBot = true;
+                }
+                else
+                    openBot = false;
+                //Top
+                if (open.LocationX == mainNode.LocationX && open.LocationY == mainNode.LocationY - 1)
+                {
+                    openTop = true;
+                }
+                else
+                    openTop = false;
+                //Left
+                if (open.LocationX == mainNode.LocationX - 1 && open.LocationY == mainNode.LocationY)
+                {
+                    openLeft = true;
+                }
+                else
+                    openLeft = false;
+                //Right
+                if (open.LocationX == mainNode.LocationX + 1 && open.LocationY == mainNode.LocationY)
+                {
+                    openRight = true;
+                }
+                else
+                    openRight = false;
+            }
+
+            if (ClosedNodes.Count > 0)
+                foreach (Node closed in ClosedNodes)
+                {
+
+                    //Bot
+                    if (closed.LocationX == mainNode.LocationX && closed.LocationY == mainNode.LocationY + 1)
+                    {
+                        closedBot = true;
+                    }
+                    else
+                        closedBot = false;
+                    //Top
+                    if (closed.LocationX == mainNode.LocationX && closed.LocationY == mainNode.LocationY - 1)
+                    {
+                        closedTop = true;
+                    }
+                    else
+                        closedTop = false;
+                    //Left
+                    if (closed.LocationX == mainNode.LocationX - 1 && closed.LocationY == mainNode.LocationY)
+                    {
+                        closedLeft = true;
+                    }
+                    else
+                        closedLeft = false;
+                    //Right
+                    if (closed.LocationX == mainNode.LocationX + 1 && closed.LocationY == mainNode.LocationY)
+                    {
+                        closedRight = true;
+                    }
+                    else
+                        closedRight = false;
+                }
+            #endregion
+
+            #region check nodes below, above, left and right of parentnode
+            //Node below parentNode
+            if (mainNode.LocationY < worldSizeY - 1)
+                if (coordinateSystem[mainNode.LocationX][mainNode.LocationY + 1] > 1 && coordinateSystem[mainNode.LocationX][mainNode.LocationY + 1] < 11 && !openBot)
+                {
+                    OpenNodes.Add(new Node(mainNode.LocationX, mainNode.LocationY + 1, endX, endY, startX, startY));
+
+                }
+                else
+                {
+                    if (!closedBot)
+                        ClosedNodes.Add(new Node(mainNode.LocationX, mainNode.LocationY + 1, endX, endY, startX, startY));
+                }
+
+            //Node above parentNode
+            if (mainNode.LocationY > 0)
+                if (coordinateSystem[mainNode.LocationX][mainNode.LocationY - 1] > 1 && coordinateSystem[mainNode.LocationX][mainNode.LocationY - 1] < 11 && !openTop)
+                {
+                    OpenNodes.Add(new Node(mainNode.LocationX, mainNode.LocationY - 1, endX, endY, startX, startY));
+
+                }
+                else
+                {
+                    if (!closedTop)
+                        ClosedNodes.Add(new Node(mainNode.LocationX, mainNode.LocationY - 1, endX, endY, startX, startY));
+                }
+
+            //Node left of parentNode
+            if (mainNode.LocationX > 0)
+                if (coordinateSystem[mainNode.LocationX - 1][mainNode.LocationY] > 1 && coordinateSystem[mainNode.LocationX - 1][mainNode.LocationY] < 11 && !openLeft)
+                {
+                    OpenNodes.Add(new Node(mainNode.LocationX - 1, mainNode.LocationY, endX, endY, startX, startY));
+
+                }
+                else
+                {
+                    if (!closedLeft)
+                        ClosedNodes.Add(new Node(mainNode.LocationX - 1, mainNode.LocationY, endX, endY, startX, startY));
+                }
+
+            //Node Right of parentNode
+            if (mainNode.LocationX < worldSizeX - 1)
+                if (coordinateSystem[mainNode.LocationX + 1][mainNode.LocationY] > 1 && coordinateSystem[mainNode.LocationX + 1][mainNode.LocationY] < 11 && !openRight)
+                {
+                    OpenNodes.Add(new Node(mainNode.LocationX + 1, mainNode.LocationY, endX, endY, startX, startY));
+
+                }
+                else
+                {
+                    if (!closedRight)
+                        ClosedNodes.Add(new Node(mainNode.LocationX + 1, mainNode.LocationY, endX, endY, startX, startY));
+                }
+            #endregion
+
+
 
         }
 
