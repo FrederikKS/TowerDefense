@@ -27,6 +27,7 @@ namespace TowerDefense
         private State currentState = State.build;
         private Stopwatch stopWatch = new Stopwatch();
         private Stopwatch buildWatch = new Stopwatch();
+        private Stopwatch enemyWatch = new Stopwatch();
         // Fields for world creation
 
         private float worldSizeX;
@@ -46,10 +47,11 @@ namespace TowerDefense
         private bool validLocation;
 
         // Fields for wave
-
+        List<List<Enemy>> waveEnemy = new List<List<Enemy>>();
         private List<int> waveCount = new List<int>();
         private List<Enemy> currentWave = new List<Enemy>();
         private int waveNumber;
+        private int listNumb;
         private int checkPoint;
         private float chosenDif;
 
@@ -205,6 +207,10 @@ namespace TowerDefense
             UpdateAnimation();
             Draw();
             GameState();
+            if (currentState == State.wave)
+            {
+                Wave();
+            }
         }
         /// <summary>
         /// Updates the gameworld on every frame
@@ -484,9 +490,38 @@ namespace TowerDefense
                 }
             }
         }
+        /// <summary>
+        /// start the the enemy wave 
+        /// </summary>
+        public void Wave()
+        {
+            foreach (List<Enemy> wave in waveEnemy)
+            {
+                listNumb++; 
+                if (listNumb == waveNumber)
+                {
+                    enemyWatch.Start();
+                    foreach (Enemy enemy in wave)
+                    {
+                        while (enemyWatch.Elapsed.Milliseconds < 2500)
+                        {
+                            if (enemyWatch.Elapsed.Milliseconds > 2000)
+                            {
+                                currentWave.Add(enemy);
+                                enemyWatch.Restart();
+                                break;
+                            }
+                        }
+                        
+
+                    }
+                    break;
+                }
+            }
+        }
 
         /// <summary>
-        /// Checks What Wave The Player Is On
+        /// Checks What phase The Player Is On
         /// </summary>
         public void GameState()
         {
