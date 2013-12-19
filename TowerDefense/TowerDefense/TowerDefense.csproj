@@ -60,6 +60,7 @@
     <Compile Include="GameObject.cs" />
     <Compile Include="GameWorld.cs" />
     <Compile Include="Grotto.cs" />
+    <Compile Include="GUI.cs" />
     <Compile Include="Island.cs" />
     <Compile Include="Lighthouse.cs" />
     <Compile Include="OneTime.cs" />

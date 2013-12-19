@@ -166,20 +166,6 @@ namespace TowerDefense
                 Form1.ActiveForm.Close();
             }
         }
-        int x = 0, y = 0;
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-            Graphics g = CreateGraphics();
-            //Pen p = new Pen(Color.Navy);
-            //Pen erase = new Pen(Color.White);
-            //g.DrawLine(erase, 0,0,x,y);
-            x = e.X;
-            y = e.Y;
-            //g.DrawLine(p, 0, 0, x, y);
-            //lblX.Location = new Point(x - lblX.Width, y);
-            //lblY.Location = new Point(x, y - lblY.Height);
-        }
         void Form1_MouseUp(object sender, MouseEventArgs e)
         {
             Graphics g = CreateGraphics();
