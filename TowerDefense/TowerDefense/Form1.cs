@@ -20,12 +20,16 @@ namespace TowerDefense
         int difc = 0;
         // Highscore Choosen
         int highscoreC = 0;
+        // Classes
         GameWorld gw;
+        Tower t;
         //Mouse local position on the form
         public static Point localMousePos;
 
         //Checks if the GUI should be drawn
-        private bool drawBuilGUI = false;
+        public static int drawBuildGUI = 0;
+
+        public static bool guiIsClicked = false;
 
         public static Point guiPos;
         GUI guic;
@@ -85,14 +89,14 @@ namespace TowerDefense
                 }
                 if (guic == null)
                 {
-                    guic = new GUI(); 
+                    guic = new GUI();
                 }
+
 
                 gw.GameLoop();
 
-                if (drawBuilGUI)
+                if (drawBuildGUI > 1 && drawBuildGUI < 6)
                 {
-                    
                     guic.DrawGUI(CreateGraphics());
                 }
             }
@@ -121,7 +125,7 @@ namespace TowerDefense
             string readText = File.ReadAllText(path);
             rtb_highscore.Text = readText.ToString();
             pnl_submit.Visible = true;
-           // bla
+            // bla
         }
 
         private void btn_highHard_Click(object sender, EventArgs e)
@@ -155,7 +159,7 @@ namespace TowerDefense
             }
         }
         #endregion
-
+        // Btn Exit
         private void btn_exit_Click(object sender, EventArgs e)
         {
             DialogResult dlgRes;
@@ -166,23 +170,45 @@ namespace TowerDefense
                 Form1.ActiveForm.Close();
             }
         }
+        // Rempves the GUI
         void Form1_MouseUp(object sender, MouseEventArgs e)
         {
             Graphics g = CreateGraphics();
 
             if (e.Button == MouseButtons.Left)
             {
-                drawBuilGUI = false;
+                drawBuildGUI = 0;
             }
         }
-
+        // Creates The GUI
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-           
-
+            guiIsClicked = true;
             if (e.Button == MouseButtons.Left)
             {
-                drawBuilGUI = true;
+                foreach (Tower tower in gw.towers)
+                {
+                    if (gw.mouseRect.IntersectsWith(tower.CollisionRect))
+                    {
+                        drawBuildGUI = 2;
+                    }
+                }
+
+                foreach (Environment environment in gw.environment)
+                {
+                    if (gw.mouseRect.IntersectsWith(environment.CollisionRect))
+                    {
+                        if (environment is Water)
+                        {
+                            drawBuildGUI = 3;
+                        }
+                        if (environment is Island)
+                        {
+                            drawBuildGUI = 4;
+                        }
+                    }
+                }
+                //drawBuildGUI = 1;
                 //Set position
                 guiPos.X = e.X;
                 guiPos.Y = e.Y;

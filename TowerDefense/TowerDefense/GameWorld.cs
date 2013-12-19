@@ -9,12 +9,12 @@ using System.Diagnostics;
 
 namespace TowerDefense
 {
-    public enum State { build,wave}
-    
-    class GameWorld
+    public enum State { build, wave }
+
+    public class GameWorld
     {
         TowerButton tb;
-        Rectangle mouseRect;
+        public RectangleF mouseRect;
         // Fields
 
         private Random rnd = new Random();
@@ -23,7 +23,6 @@ namespace TowerDefense
         private Graphics dc;
         private string phase;
         private BufferedGraphics buffer;
-        private TimeSpan bt;
         private State currentState = State.build;
         private Stopwatch stopWatch = new Stopwatch();
         private Stopwatch buildWatch = new Stopwatch();
@@ -40,8 +39,8 @@ namespace TowerDefense
         private int treasureX;
         private int treasureY;
         private int minDistStart = 3;
-        private List<Environment> environment = new List<Environment>();
-        private List<Tower> towers = new List<Tower>();
+        public List<Environment> environment = new List<Environment>();
+        public List<Tower> towers = new List<Tower>();
         private List<PointF> checkpointList = new List<PointF>();
 
         private bool validLocation;
@@ -73,7 +72,7 @@ namespace TowerDefense
             this.worldSizeX = worldSizeX;
             this.worldSizeY = worldSizeY;
             this.chosenDif = dif;
-            
+
             SetupWorld();
         }
 
@@ -85,11 +84,12 @@ namespace TowerDefense
         public void SetupWorld()
         {
             mouseRect = new Rectangle(Form1.MousePosition, new Size(1, 1));
-            
-            bt = buildWatch.Elapsed;
-           
             //Mousedown
-            tb = new TowerButton(new Size(100, 100), new Point(150, 150), "Test");
+            //if (Form1.guiIsClicked)
+            //{
+                tb = new TowerButton(new Size(100, 100), new Point(150, 150), "Test", "hej", 1);
+            //}
+
             //Starting FPS timert
             lastFrameStarted = DateTime.Now;
 
@@ -212,22 +212,27 @@ namespace TowerDefense
             {
                 Wave();
             }
+            
         }
         /// <summary>
         /// Updates the gameworld on every frame
         /// </summary>
         public void Update()
-        {   
+        {
             //Update mouse rectangle pos
             mouseRect.Location = Form1.localMousePos;
 
-            if (mouseRect.IntersectsWith(tb.CollisionRect))
-            {
-                if (tb.Name == "Hat")
+            //if (Form1.guiIsClicked)
+            //{
+                if (mouseRect.IntersectsWith(tb.CollisionRect))
                 {
-                    //Build Hat
-                }
+                    if (tb.Name == "Test")
+                    {
+                       // Build A Test Tower
+                    }
+               // }
             }
+
 
             //Update all tower objects
             foreach (Tower tower in towers)
@@ -300,7 +305,11 @@ namespace TowerDefense
             Font w = new Font("Arial", 14);
             Brush q = new SolidBrush(Color.White);
             dc.DrawString(string.Format("Phase: {0}", phase), w, q, 30, 5);
-            tb.DrawMe(dc);
+            //if (Form1.guiIsClicked)
+            //{
+                tb.DrawMe(dc);
+           // }
+
             buffer.Render();
 
         }
@@ -428,8 +437,8 @@ namespace TowerDefense
                                 coordinateSystem[x][y] = 2 + i;
                             }
                         }
-                    }
                 }
+            }
 
             //Placing environment
             int offsetX = tileSizeX / 2;
@@ -446,47 +455,47 @@ namespace TowerDefense
                     //Placing grotto
                     if (coordinateSystem[x][y] == 1)
                     {
-                        environmentList.Add(new Grotto(@"Sprites/GrottoPlaceHolder.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Grotto(@"Graphic/GrottoPlaceHolder.png", new PointF(tempX, tempY), false));
                     }
 
                     //Checkpoints
                     if (coordinateSystem[x][y] == 2)
                     {
-                        environmentList.Add(new Checkpoint(@"Sprites/Checkpoint1PlaceHolder.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Checkpoint(@"Graphic/Checkpoint1PlaceHolder.png", new PointF(tempX, tempY), false));
                     }
                     if (coordinateSystem[x][y] == 3)
                     {
-                        environmentList.Add(new Checkpoint(@"Sprites/Checkpoint2PlaceHolder.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Checkpoint(@"Graphic/Checkpoint2PlaceHolder.png", new PointF(tempX, tempY), false));
                     }
                     if (coordinateSystem[x][y] == 4)
                     {
-                        environmentList.Add(new Checkpoint(@"Sprites/Checkpoint3PlaceHolder.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Checkpoint(@"Graphic/Checkpoint3PlaceHolder.png", new PointF(tempX, tempY), false));
                     }
 
                     //Placing treasure chest
                     if (coordinateSystem[x][y] == 5)
                     {
-                        environmentList.Add(new Treasure(@"Sprites/TreasureChestResized.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Treasure(@"Graphic/TreasureChestResized.png", new PointF(tempX, tempY), false));
                     }
                     //Placing Water
                     if (coordinateSystem[x][y] == 10)
                     {
-                        environmentList.Add(new Water(@"Sprites/WaterPlaceHolder.png", new PointF(tempX, tempY), true));
+                        environmentList.Add(new Water(@"Graphic/WaterPlaceHolder.png", new PointF(tempX, tempY), true));
                     }
                     //Placing Islands
                     if (coordinateSystem[x][y] == 11)
                     {
-                        environmentList.Add(new Island(@"Sprites/LandResized.png", new PointF(tempX, tempY), true));
+                        environmentList.Add(new Island(@"Graphic/LandResized.png", new PointF(tempX, tempY), true));
                     }
                     //Placing lighthouses
                     if (coordinateSystem[x][y] == 12)
                     {
-                        environmentList.Add(new Lighthouse(@"Sprites/LighthousePlaceHolder.jpg", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Lighthouse(@"Graphic/LighthousePlaceHolder.jpg", new PointF(tempX, tempY), false));
                     }
                     //Placing rocks
                     if (coordinateSystem[x][y] == 13)
                     {
-                        environmentList.Add(new Rock(@"Sprites/RockPlaceHolder.jpg", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/RockPlaceHolder.jpg", new PointF(tempX, tempY), false));
                     }
                 }
             }
@@ -498,7 +507,7 @@ namespace TowerDefense
         {
             foreach (List<Enemy> wave in waveEnemy)
             {
-                listNumb++; 
+                listNumb++;
                 if (listNumb == waveNumber)
                 {
                     enemyWatch.Start();
@@ -513,7 +522,7 @@ namespace TowerDefense
                                 break;
                             }
                         }
-                        
+
 
                     }
                     break;
@@ -527,11 +536,11 @@ namespace TowerDefense
         public void GameState()
         {
 
-                   
+
             switch (currentState)
             {
                 case State.build:
-                    
+
                     if (buildWatch.Elapsed.Milliseconds > 30000)
                     {
                         buildWatch.Stop();
@@ -541,16 +550,16 @@ namespace TowerDefense
                     }
                     break;
                 case State.wave:
-                    
+
                     if (currentWave.Count == 0)
                     {
                         phase = "build phase";
                         buildWatch.Start();
                         currentState = State.build;
-                        
+
                     }
                     break;
-                
+
             }
         }
         /// <summary>

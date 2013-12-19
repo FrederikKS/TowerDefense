@@ -18,6 +18,7 @@ namespace TowerDefense
         private int damage;
         private int cost;
         private float ranged;
+
         // Property
         public float Speed
         {

@@ -17,6 +17,10 @@ namespace TowerDefense
         public Image sprite;
         protected List<Image> animationFrames;
         protected float currentFrameIndex;
+        private RectangleF collisionRect;
+
+        
+
         #endregion
 
         //Properties
@@ -25,6 +29,11 @@ namespace TowerDefense
         {
             get { return position; }
             set { position = value; }
+        }
+        public RectangleF CollisionRect
+        {
+            get { return collisionRect; }
+            set { collisionRect = value; }
         }
         #endregion
 
@@ -59,7 +68,7 @@ namespace TowerDefense
         //Functions
         #region
         /// <summary>
-        /// Gameobject Update
+        /// GameObject Update
         /// </summary>
         /// <param name="fps"></param>
         public virtual void Update(float fps)
@@ -90,6 +99,7 @@ namespace TowerDefense
             //get the correct image
 
             sprite = animationFrames[(int)currentFrameIndex];
+            collisionRect = new RectangleF(Position.X, Position.Y, sprite.Width, sprite.Height);
 
 
         }
