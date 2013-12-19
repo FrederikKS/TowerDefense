@@ -60,7 +60,6 @@ namespace TowerDefense
         private int gold;
         private int cost;
         private int chest;
-        private int towerNumb;
 
 
         // Constructors
@@ -584,21 +583,25 @@ namespace TowerDefense
         /// <summary>
         /// The Sell Function
         /// </summary>
-        public void Sell(int towerNumb, PointF position)
+        public void Sell(int towerSell, Tower tower)
         {
-            switch (towerNumb)
+            switch (towerSell)
             {
                 case 1:
-                    towers.Remove(new TowerSlow(20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    towers.Remove(tower);
+                    gold += cost;
                     break;
                 case 2:
-                    towers.Remove(new TowerBoost(20, 20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    towers.Remove(tower);
+                    gold += cost;
                     break;
                 case 3:
-                    towers.Remove(new TowerStun(20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    towers.Remove(tower);
+                    gold += cost;
                     break;
                 case 4:
-                    towers.Remove(new TowerBoost(20, 20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    towers.Remove(tower);
+                    gold += cost;
                     break;
             }
                 
