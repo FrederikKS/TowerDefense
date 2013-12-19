@@ -58,7 +58,9 @@ namespace TowerDefense
         // Fields for building phase
 
         private int gold;
+        private int cost;
         private int chest;
+        private int towerNumb;
 
 
         // Constructors
@@ -555,16 +557,51 @@ namespace TowerDefense
         /// <summary>
         /// The Build Function
         /// </summary>
-        public void Build()
+        public void Build(int towerNumb, PointF position)
         {
+            switch(towerNumb)
+            {
+                case 1:
+                        towers.Add(new TowerSlow(20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                        gold -= cost;
+                    break;
 
+                case 2:
+                        towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                        gold -= cost;                   
+                    break;
+                case 3:
+                        towers.Add(new TowerStun(20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                        gold -= cost;
+                    break;
+                case 4:
+                        towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                        gold -= cost;
+                    break;
+            }
+                
         }
         /// <summary>
         /// The Sell Function
         /// </summary>
-        public void Sell()
+        public void Sell(int towerNumb, PointF position)
         {
-
+            switch (towerNumb)
+            {
+                case 1:
+                    towers.Remove(new TowerSlow(20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    break;
+                case 2:
+                    towers.Remove(new TowerBoost(20, 20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    break;
+                case 3:
+                    towers.Remove(new TowerStun(20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    break;
+                case 4:
+                    towers.Remove(new TowerBoost(20, 20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    break;
+            }
+                
         }
         /// <summary>
         /// Checking If The Enemies Are On A Checkpoing
