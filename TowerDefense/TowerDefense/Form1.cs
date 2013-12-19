@@ -15,7 +15,7 @@ namespace TowerDefense
     public partial class Form1 : Form
     {
         // test
-
+        GUI gui;
         // Dificulity choosen
         int difc = 0;
         // Highscore Choosen
@@ -27,7 +27,8 @@ namespace TowerDefense
         //Checks if the GUI should be drawn
         private bool drawBuilGUI = false;
 
-        private Point guiPos;
+        public static Point guiPos;
+        GUI guic;
 
         public Form1()
         {
@@ -39,6 +40,8 @@ namespace TowerDefense
             pnl_high.Visible = false;
             pnl_submit.Visible = false;
             MouseUp += new MouseEventHandler(Form1_MouseUp);
+            MouseDown += new MouseEventHandler(Form1_MouseDown);
+
         }
         #region Difficulty
         private void btn_dif_Click(object sender, EventArgs e)
@@ -80,13 +83,17 @@ namespace TowerDefense
                 {
                     gw = new GameWorld(CreateGraphics(), this.DisplayRectangle, 20, 20, difc);
                 }
+                if (guic == null)
+                {
+                    guic = new GUI(); 
+                }
 
                 gw.GameLoop();
 
                 if (drawBuilGUI)
                 {
-                    DrawGUI(CreateGraphics());
-
+                    
+                    guic.DrawGUI(CreateGraphics());
                 }
             }
 
@@ -120,7 +127,7 @@ namespace TowerDefense
         private void btn_highHard_Click(object sender, EventArgs e)
         {
             highscoreC = 3;
-            string path = @"C:\Users\Mikkel\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\Highscore\Hard.txt";
+            string path = @"Highscore/Hard.txt";
             string readText = File.ReadAllText(path);
             rtb_highscore.Text = readText.ToString();
             pnl_submit.Visible = true;
@@ -131,19 +138,19 @@ namespace TowerDefense
             if (highscoreC == 1)
             {
                 string path = @"Highscore/Easy.txt";
-                string text = "\nName: " + txt_name.Text + "\n" + "Lives Remaining: " + txt_health.Text + "\n --------------------";
+                string text = "\nName: " + txt_name.Text + "\n" + "Lives Remaining: " + txt_health.Text + " out of 10 \n --------------------";
                 File.AppendAllText(path, text);
             }
             if (highscoreC == 2)
             {
                 string path = @"C:\Users\Mikkel\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\Highscore\Medium.txt";
-                string text = "\nName: " + txt_name.Text + "\n" + "Lives Remaining: " + txt_health.Text + "\n --------------------";
+                string text = "\nName: " + txt_name.Text + "\n" + "Lives Remaining: " + txt_health.Text + " out of 5\n --------------------";
                 File.AppendAllText(path, text);
             }
             if (highscoreC == 3)
             {
                 string path = @"C:\Users\Mikkel\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\Highscore\Hard.txt";
-                string text = "\nName: " + txt_name.Text + "\n" + "Lives Remaining: " + txt_health.Text + "\n --------------------";
+                string text = "\nName: " + txt_name.Text + "\n" + "Lives Remaining: " + txt_health.Text + " out of 3\n --------------------";
                 File.AppendAllText(path, text);
             }
         }
@@ -191,33 +198,9 @@ namespace TowerDefense
             {
                 drawBuilGUI = true;
                 //Set position
-
+                guiPos.X = e.X;
+                guiPos.Y = e.Y;
             }
-        }
-
-        private void DrawGUI(Graphics g)
-        {
-            // Tower 1
-            Point point1 = new Point(x, y);
-            Point point2 = new Point(x, y + 150);
-            // Tower 2
-            Point point3 = new Point(x, y);
-            Point point4 = new Point(x - 120, y - 90);
-            // Tower 3
-            Point point5 = new Point(x, y);
-            Point point6 = new Point(x + 120, y - 90);
-            // Pen
-            Pen p = new Pen(Color.Red);
-            Pen pp = new Pen(Color.Blue);
-            Pen ppp = new Pen(Color.Green);
-            // The Large Ellipse
-            g.DrawEllipse(p, x - 150, y - 150, 300, 300);
-            // Drawing the lines
-            g.DrawLine(p, point1, point2);
-            g.DrawLine(pp, point3, point4);
-            g.DrawLine(ppp, point5, point6);
-            // The Small Ellipse
-            g.DrawEllipse(p, x - 50, y - 50, 100, 100);
         }
     }
 }
