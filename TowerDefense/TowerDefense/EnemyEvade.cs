@@ -8,6 +8,7 @@ namespace TowerDefense
 {
     class EnemyEvade : Enemy
     {
+        // test
         //Field
         private bool isEvade;
         //Properties

@@ -14,6 +14,8 @@ namespace TowerDefense
 {
     public partial class Form1 : Form
     {
+        // test
+
         // Dificulity choosen
         int difc = 0;
         // Highscore Choosen

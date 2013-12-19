@@ -10,6 +10,8 @@ namespace TowerDefense
 {
     class TowerBoost : TowerType
     {
+        // test
+
         //Fields
         private float boostDamage;
         private float boostSpeed;

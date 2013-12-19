@@ -8,6 +8,7 @@ namespace TowerDefense
 {
     public abstract class Enemy : GameObject
     {
+        // test
         //fields
         #region
         private int hp;

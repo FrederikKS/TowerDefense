@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TowerDefense
 {   
-    class TowerButton
+    public class TowerButton
     {   
         private Rectangle collisionRect;
 

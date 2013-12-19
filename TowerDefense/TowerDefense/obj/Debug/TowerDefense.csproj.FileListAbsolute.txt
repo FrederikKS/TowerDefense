@@ -1,12 +1,4 @@
 c:\users\claes\documents\visual studio 2013\Projects\TowerDefense\TowerDefense\bin\Debug\TowerDefense.exe.config
-C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\TowerDefense.exe.config
-C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.csprojResolveAssemblyReference.cache
-C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.Properties.Resources.resources
-C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.csproj.GenerateResource.Cache
-C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\TowerDefense.exe
-C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\TowerDefense.pdb
-C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.exe
-C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.pdb
 C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\TowerDefense.exe.config
 C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.exe
 C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.pdb
@@ -25,3 +17,24 @@ C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug
 C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\WaterPlaceholder.png
 C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.Form1.resources
 C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\GrottoPlaceHolder.png
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.Form1.resources
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.Properties.Resources.resources
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.csproj.GenerateResource.Cache
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\TowerDefense.exe.config
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Highscore\Easy.txt
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Highscore\Hard.txt
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Highscore\Medium.txt
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\Checkpoint1PlaceHolder.png
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\Checkpoint2PlaceHolder.png
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\Checkpoint3PlaceHolder.png
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\GrottoPlaceHolder.png
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\LandResized.png
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\LighthousePlaceHolder.jpg
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\RockPlaceHolder.jpg
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\TreasureChestResized.png
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Sprites\WaterPlaceholder.png
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\TowerDefense.exe
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\TowerDefense.pdb
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.csprojResolveAssemblyReference.cache
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.exe
+C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\obj\Debug\TowerDefense.pdb

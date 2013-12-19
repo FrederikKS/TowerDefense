@@ -8,6 +8,7 @@ namespace TowerDefense
 {
     public class Effect : GameObject
     {
+        // test
         //Constructor
         public Effect(string imagePath, PointF position, bool isClickable): base(imagePath,position,isClickable)
         {

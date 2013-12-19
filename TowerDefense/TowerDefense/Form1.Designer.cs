@@ -62,7 +62,7 @@
             this.pnl_Main.Controls.Add(this.btn_high);
             this.pnl_Main.Controls.Add(this.pnl_dif);
             this.pnl_Main.Controls.Add(this.btn_dif);
-            this.pnl_Main.Location = new System.Drawing.Point(-1, -1);
+            this.pnl_Main.Location = new System.Drawing.Point(12, 12);
             this.pnl_Main.Name = "pnl_Main";
             this.pnl_Main.Size = new System.Drawing.Size(657, 445);
             this.pnl_Main.TabIndex = 0;
