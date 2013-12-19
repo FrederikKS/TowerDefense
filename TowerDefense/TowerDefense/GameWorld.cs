@@ -12,6 +12,8 @@ namespace TowerDefense
     
     class GameWorld
     {
+        TowerButton tb;
+        Rectangle mouseRect;
         // Fields
 
         private Random rnd = new Random();
@@ -67,7 +69,7 @@ namespace TowerDefense
             this.worldSizeX = worldSizeX;
             this.worldSizeY = worldSizeY;
             this.chosenDif = dif;
-
+            
             SetupWorld();
         }
 
@@ -78,9 +80,13 @@ namespace TowerDefense
         /// </summary>
         public void SetupWorld()
         {
+            mouseRect = new Rectangle(Form1.MousePosition, new Size(1, 1));
+            
             bt = buildWatch.Elapsed;
-
-            //Starting FPS timer
+           
+            //Mousedown
+            tb = new TowerButton(new Size(100, 100), new Point(150, 150), "Test");
+            //Starting FPS timert
             lastFrameStarted = DateTime.Now;
 
             #region Instantiating coordinate system and grotto/checkpoints/treasure location
@@ -203,7 +209,18 @@ namespace TowerDefense
         /// Updates the gameworld on every frame
         /// </summary>
         public void Update()
-        {
+        {   
+            //Update mouse rectangle pos
+            mouseRect.Location = Form1.localMousePos;
+
+            if (mouseRect.IntersectsWith(tb.CollisionRect))
+            {
+                if (tb.Name == "Hat")
+                {
+                    //Build Hat
+                }
+            }
+
             //Update all tower objects
             foreach (Tower tower in towers)
             {
@@ -275,7 +292,7 @@ namespace TowerDefense
             Font w = new Font("Arial", 14);
             Brush q = new SolidBrush(Color.White);
             dc.DrawString(string.Format("Phase: {0}", phase), w, q, 30, 5);
-            
+            tb.DrawMe(dc);
             buffer.Render();
 
         }

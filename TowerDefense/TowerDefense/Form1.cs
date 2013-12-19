@@ -14,16 +14,25 @@ namespace TowerDefense
 {
     public partial class Form1 : Form
     {
+        // Dificulity choosen
         int difc = 0;
+        // Highscore Choosen
         int highscoreC = 0;
         GameWorld gw;
+        //Mouse local position on the form
+        public static Point localMousePos;
+
+        //Checks if the GUI should be drawn
+        private bool drawBuilGUI = false;
+
+        private Point guiPos;
 
         public Form1()
         {
             InitializeComponent();
             timer1.Enabled = true;
             timer1.Interval = 40;
-            pnl_Main.Visible = false;
+            pnl_Main.Visible = true;
             pnl_dif.Visible = false;
             pnl_high.Visible = false;
             pnl_submit.Visible = false;
@@ -62,6 +71,7 @@ namespace TowerDefense
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            localMousePos = this.PointToClient(Cursor.Position);
             if (difc > 0)
             {
                 if (gw == null)
@@ -70,6 +80,12 @@ namespace TowerDefense
                 }
 
                 gw.GameLoop();
+
+                if (drawBuilGUI)
+                {
+                    DrawGUI(CreateGraphics());
+
+                }
             }
 
         }
@@ -82,12 +98,8 @@ namespace TowerDefense
 
         private void btn_highEasy_Click(object sender, EventArgs e)
         {
-            //TextReader tr = new StreamReader(@"Highscore/Easy.txt");
-            //rtb_highscore.Text = tr.ReadLine();
-            //tr.Close();
-
             highscoreC = 1;
-            string path = @"C:\Users\Mikkel\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\Highscore\Easy.txt";
+            string path = @"Highscore/Easy.txt";
             string readText = File.ReadAllText(path);
             rtb_highscore.Text = readText.ToString();
             pnl_submit.Visible = true;
@@ -96,10 +108,11 @@ namespace TowerDefense
         private void btn_highMedium_Click(object sender, EventArgs e)
         {
             highscoreC = 2;
-            string path = @"C:\Users\Mikkel\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\Highscore\Medium.txt";
+            string path = @"Highscore/Medium.txt";
             string readText = File.ReadAllText(path);
             rtb_highscore.Text = readText.ToString();
             pnl_submit.Visible = true;
+           // bla
         }
 
         private void btn_highHard_Click(object sender, EventArgs e)
@@ -115,7 +128,7 @@ namespace TowerDefense
         {
             if (highscoreC == 1)
             {
-                string path = @"C:\Users\Mikkel\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\Highscore\Easy.txt";
+                string path = @"Highscore/Easy.txt";
                 string text = "\nName: " + txt_name.Text + "\n" + "Lives Remaining: " + txt_health.Text + "\n --------------------";
                 File.AppendAllText(path, text);
             }
@@ -164,39 +177,45 @@ namespace TowerDefense
 
             if (e.Button == MouseButtons.Left)
             {
-                // Test
-                
-                // Tower 1
-                Point point1 = new Point(x, y);
-                Point point2 = new Point(x, y + 150);
-                // Tower 2
-                Point point3 = new Point(x, y);
-                Point point4 = new Point(x - 120, y - 90);
-                // Tower 3
-                Point point5 = new Point(x, y);
-                Point point6 = new Point(x + 120, y - 90);
-                // Pen
-                Pen p = new Pen(Color.Red);
-                Pen pp = new Pen(Color.Blue);
-                Pen ppp = new Pen(Color.Green);
-                // The Large Ellipse
-                g.DrawEllipse(p, x - 150, y - 150, 300, 300);
-                // Drawing the lines
-                g.DrawLine(p, point1, point2);
-                g.DrawLine(pp, point3, point4);
-                g.DrawLine(ppp, point5, point6);
-                // The Small Ellipse
-                g.DrawEllipse(p, x - 50, y - 50, 100, 100);
+                drawBuilGUI = false;
             }
         }
 
-        protected override void OnPaint(PaintEventArgs e)
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            // Image
-            Image myImg = Image.FromFile(@"Images/tiel.png");
-            e.Graphics.DrawImage(myImg, 10, 10, myImg.Width, myImg.Height);
-            base.OnPaint(e);
+           
+
+            if (e.Button == MouseButtons.Left)
+            {
+                drawBuilGUI = true;
+                //Set position
+
+            }
         }
 
+        private void DrawGUI(Graphics g)
+        {
+            // Tower 1
+            Point point1 = new Point(x, y);
+            Point point2 = new Point(x, y + 150);
+            // Tower 2
+            Point point3 = new Point(x, y);
+            Point point4 = new Point(x - 120, y - 90);
+            // Tower 3
+            Point point5 = new Point(x, y);
+            Point point6 = new Point(x + 120, y - 90);
+            // Pen
+            Pen p = new Pen(Color.Red);
+            Pen pp = new Pen(Color.Blue);
+            Pen ppp = new Pen(Color.Green);
+            // The Large Ellipse
+            g.DrawEllipse(p, x - 150, y - 150, 300, 300);
+            // Drawing the lines
+            g.DrawLine(p, point1, point2);
+            g.DrawLine(pp, point3, point4);
+            g.DrawLine(ppp, point5, point6);
+            // The Small Ellipse
+            g.DrawEllipse(p, x - 50, y - 50, 100, 100);
+        }
     }
 }
