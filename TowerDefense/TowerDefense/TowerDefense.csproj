@@ -128,6 +128,9 @@
     <Content Include="Graphic\RockPlaceHolder.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Graphic\TreasureChest.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Graphic\TreasureChestResized.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

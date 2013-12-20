@@ -31,8 +31,8 @@ namespace TowerDefense
 
         private float worldSizeX;
         private float worldSizeY;
-        private int tileSizeX = 64;
-        private int tileSizeY = 64;
+        private int tileSizeX = 96;
+        private int tileSizeY = 96;
         private int[][] coordinateSystem;
         private int grottoX;
         private int grottoY;
@@ -655,7 +655,7 @@ namespace TowerDefense
                     //Placing treasure chest
                     if (coordinateSystem[x][y] == 5)
                     {
-                        environmentList.Add(new Treasure(@"Graphic/TreasureChestResized.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Treasure(@"Graphic/TreasureChest.png", new PointF(tempX, tempY), false));
                     }
                     //Placing Water
                     if (coordinateSystem[x][y] == 10)
