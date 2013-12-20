@@ -82,7 +82,6 @@ namespace TowerDefense
         /// <param name="fps"></param>
         public virtual void UpdateAnimation(float fps)
         {
-
             //Calculates the current index, so that the amount of images is spread out on one 1 second 
             // (1 / fps) * amount of images
 

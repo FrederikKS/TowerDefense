@@ -56,7 +56,6 @@ namespace TowerDefense
             // Water Tile
             if (Form1.drawBuildGUI == 3)
             {
-
                 // Tower 1
                 Point point1 = new Point(Form1.guiPos.X, Form1.guiPos.Y);
                 Point point2 = new Point(Form1.guiPos.X, Form1.guiPos.Y + 150);
@@ -78,10 +77,15 @@ namespace TowerDefense
                 g.DrawLine(ppp, point5, point6);
                 // The Small Ellipse
                 g.DrawEllipse(p, Form1.guiPos.X - 50, Form1.guiPos.Y - 50, 100, 100);
-                // Edit GUI Position to center of tile
-                
-                gw.tileSizeX = 100 / 2;
-                gw.tileSizeY = 100 / 2;
+                // Place the GUI's Position to center of tile
+                foreach (Environment e in gw.environment)
+                {
+                    if (gw.mouseRect.IntersectsWith(e.CollisionRect))
+                    {
+                        Form1.guiPos.X = gw.tileSizeX / 2;
+                        Form1.guiPos.Y = gw.tileSizeY / 2;
+                    }
+                }
 
             }
             // Island Tile
