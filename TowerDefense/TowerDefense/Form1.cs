@@ -16,7 +16,7 @@ namespace TowerDefense
         // test
         GUI gui;
         // Dificulity choosen
-        int difc = 0;
+        public static int difc = 0;
         // Highscore Choosen
         int highscoreC = 0;
         // Classes
@@ -182,9 +182,10 @@ namespace TowerDefense
         // Creates The GUI
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            guiIsClicked = true;
+            
             if (e.Button == MouseButtons.Left)
             {
+                guiIsClicked = true;
                 foreach (Tower tower in gw.towers)
                 {
                     if (gw.mouseRect.IntersectsWith(tower.CollisionRect))

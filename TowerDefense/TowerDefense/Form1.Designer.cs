@@ -106,7 +106,7 @@
             this.lbl_name.AutoSize = true;
             this.lbl_name.Location = new System.Drawing.Point(3, 10);
             this.lbl_name.Name = "lbl_name";
-            this.lbl_name.Size = new System.Drawing.Size(35, 13);
+            this.lbl_name.Size = new System.Drawing.Size(41, 15);
             this.lbl_name.TabIndex = 7;
             this.lbl_name.Text = "Name";
             // 
@@ -115,7 +115,7 @@
             this.lbl_health.AutoSize = true;
             this.lbl_health.Location = new System.Drawing.Point(4, 58);
             this.lbl_health.Name = "lbl_health";
-            this.lbl_health.Size = new System.Drawing.Size(38, 13);
+            this.lbl_health.Size = new System.Drawing.Size(43, 15);
             this.lbl_health.TabIndex = 8;
             this.lbl_health.Text = "Health";
             // 
@@ -251,6 +251,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1342, 882);
             this.Controls.Add(this.pnl_Main);
             this.Name = "Form1";

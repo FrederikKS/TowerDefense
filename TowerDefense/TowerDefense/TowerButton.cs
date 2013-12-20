@@ -44,11 +44,13 @@ namespace TowerDefense
         /// <param name="mySize"></param>
         /// <param name="myPosition"></param>
         /// <param name="name"></param>
+        
         public TowerButton(Size mySize, Point myPosition, string name, string imagePath, int ID)
         {
             collisionRect = new Rectangle(myPosition, mySize);
             this.name = name;
         }
+
         /// <summary>
         /// Draws The rectangle
         /// </summary>

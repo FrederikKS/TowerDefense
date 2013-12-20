@@ -15,6 +15,7 @@ namespace TowerDefense
     {
         TowerButton tb;
         public RectangleF mouseRect;
+        private List<TowerButton> tl;
         // Fields
 
         private Random rnd = new Random();
@@ -31,8 +32,8 @@ namespace TowerDefense
 
         private float worldSizeX;
         private float worldSizeY;
-        private int tileSizeX = 96;
-        private int tileSizeY = 96;
+        public int tileSizeX = 100;
+        public int tileSizeY = 100;
         private int[][] coordinateSystem;
         private int grottoX;
         private int grottoY;
@@ -66,7 +67,7 @@ namespace TowerDefense
 
         public GameWorld(Graphics dc, Rectangle displayRectangle, float worldSizeX, float worldSizeY, float dif)
         {
-            /// Creates and allocates a buffer in memory with the size of the display
+            // Creates and allocates a buffer in memory with the size of the display
             buffer = BufferedGraphicsManager.Current.Allocate(dc, displayRectangle);
 
             this.dc = buffer.Graphics;
@@ -88,7 +89,8 @@ namespace TowerDefense
             //Mousedown
             //if (Form1.guiIsClicked)
             //{
-                tb = new TowerButton(new Size(100, 100), new Point(150, 150), "Test", "hej", 1);
+            tl = new List<TowerButton>();
+            tl.Add(new TowerButton(new Size(100, 100), new Point(150, 150), "Test", "hej", 1));
             //}
 
             //Starting FPS timert
@@ -214,7 +216,7 @@ namespace TowerDefense
             {
                 Wave();
             }
-            
+
         }
         /// <summary>
         /// Updates the gameworld on every frame
@@ -224,16 +226,21 @@ namespace TowerDefense
             //Update mouse rectangle pos
             mouseRect.Location = Form1.localMousePos;
 
-            //if (Form1.guiIsClicked)
+            //if (mouseRect.IntersectsWith())
             //{
+
+            //}
+            foreach (TowerButton tb in this.tl)
+            {
                 if (mouseRect.IntersectsWith(tb.CollisionRect))
                 {
                     if (tb.Name == "Test")
                     {
-                       // Build A Test Tower
+                        //Build A Test Tower
                     }
-               // }
+                }
             }
+
 
 
             //Update all tower objects
@@ -309,8 +316,12 @@ namespace TowerDefense
             dc.DrawString(string.Format("Phase: {0}", phase), w, q, 30, 5);
             //if (Form1.guiIsClicked)
             //{
+            foreach (TowerButton tb in this.tl)
+            {
                 tb.DrawMe(dc);
-           // }
+            }
+                
+            // }
 
             buffer.Render();
 
@@ -621,16 +632,14 @@ namespace TowerDefense
             }
 
             //Placing environment
-            int offsetX = tileSizeX / 2;
-            int offsetY = tileSizeY / 2;
-
+            
             for (int x = 0; x < worldSizeX; x++)
             {
                 for (int y = 0; y < worldSizeY; y++)
                 {
                     //Temp locations to make the code cleaner
-                    int tempX = x * tileSizeX;
-                    int tempY = y * tileSizeY;
+                    int tempX = (x * tileSizeX);
+                    int tempY = (y * tileSizeY);
 
                     //Placing grotto
                     if (coordinateSystem[x][y] == 1)
@@ -747,27 +756,27 @@ namespace TowerDefense
         /// </summary>
         public void Build(int towerNumb, PointF position)
         {
-            switch(towerNumb)
+            switch (towerNumb)
             {
                 case 1:
-                        towers.Add(new TowerSlow(20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
-                        gold -= cost;
+                    towers.Add(new TowerSlow(20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    gold -= cost;
                     break;
 
                 case 2:
-                        towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
-                        gold -= cost;                   
+                    towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    gold -= cost;
                     break;
                 case 3:
-                        towers.Add(new TowerStun(20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
-                        gold -= cost;
+                    towers.Add(new TowerStun(20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    gold -= cost;
                     break;
                 case 4:
-                        towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
-                        gold -= cost;
+                    towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    gold -= cost;
                     break;
             }
-                
+
         }
         /// <summary>
         /// The Sell Function
@@ -793,7 +802,7 @@ namespace TowerDefense
                     gold += cost;
                     break;
             }
-                
+
         }
         /// <summary>
         /// Checking If The Enemies Are On A Checkpoing
