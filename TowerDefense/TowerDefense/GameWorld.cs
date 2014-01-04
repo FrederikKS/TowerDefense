@@ -15,7 +15,7 @@ namespace TowerDefense
     {
         TowerButton tb;
         public RectangleF mouseRect;
-        private List<TowerButton> tl = new List<TowerButton>();
+        private List<TowerButton> tl;
         // Fields
 
         private Random rnd = new Random();
@@ -90,6 +90,8 @@ namespace TowerDefense
             //Mousedown
             //if (Form1.guiIsClicked)
             //{
+            tl = new List<TowerButton>();
+            tl.Add(new TowerButton(new Size(100, 100), new Point(150, 150), "Test", "hej", 1));
             tb = new TowerButton(new Size(100, 100), new Point(150, 150), "Test", "hej", 1);
             //}
 
