@@ -49,3 +49,10 @@ C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debu
 C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Images\Tower1.png
 C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Images\Tower2.png
 C:\Users\Tobias\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Images\Tower3.png
+C:\Users\Tobias\Desktop\TowerDefense\TowerDefense\bin\Debug\TowerDefense.exe.config
+C:\Users\Tobias\Desktop\TowerDefense\TowerDefense\obj\Debug\TowerDefense.exe
+C:\Users\Tobias\Desktop\TowerDefense\TowerDefense\obj\Debug\TowerDefense.pdb
+C:\Users\Tobias\Desktop\TowerDefense\TowerDefense\obj\Debug\TowerDefense.csprojResolveAssemblyReference.cache
+C:\Users\Tobias\Desktop\TowerDefense\TowerDefense\obj\Debug\TowerDefense.Form1.resources
+C:\Users\Tobias\Desktop\TowerDefense\TowerDefense\obj\Debug\TowerDefense.Properties.Resources.resources
+C:\Users\Tobias\Desktop\TowerDefense\TowerDefense\obj\Debug\TowerDefense.csproj.GenerateResource.Cache
