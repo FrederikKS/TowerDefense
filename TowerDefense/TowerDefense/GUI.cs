@@ -56,37 +56,38 @@ namespace TowerDefense
             // Water Tile
             if (Form1.drawBuildGUI == 3)
             {
-                // Tower 1
-                Point point1 = new Point(Form1.guiPos.X, Form1.guiPos.Y);
-                Point point2 = new Point(Form1.guiPos.X, Form1.guiPos.Y + 150);
-                // Tower 2
-                Point point3 = new Point(Form1.guiPos.X, Form1.guiPos.Y);
-                Point point4 = new Point(Form1.guiPos.X - 120, Form1.guiPos.Y - 90);
-                // Tower 3
-                Point point5 = new Point(Form1.guiPos.X, Form1.guiPos.Y);
-                Point point6 = new Point(Form1.guiPos.X + 120, Form1.guiPos.Y - 90);
-                // Pen
-                Pen p = new Pen(Color.Purple);
-                Pen pp = new Pen(Color.Yellow);
-                Pen ppp = new Pen(Color.Navy);
-                // The Large Ellipse
-                g.DrawEllipse(p, Form1.guiPos.X - 150, Form1.guiPos.Y - 150, 300, 300);
-                // Drawing the lines
-                g.DrawLine(p, point1, point2);
-                g.DrawLine(pp, point3, point4);
-                g.DrawLine(ppp, point5, point6);
-                // The Small Ellipse
-                g.DrawEllipse(p, Form1.guiPos.X - 50, Form1.guiPos.Y - 50, 100, 100);
                 // Place the GUI's Position to center of tile
                 foreach (Environment e in gw.environment)
                 {
                     if (gw.mouseRect.IntersectsWith(e.CollisionRect))
                     {
-                        Form1.guiPos.X = gw.tileSizeX / 2;
-                        Form1.guiPos.Y = gw.tileSizeY / 2;
+                        #region Tower Walls
+                        // Tower 1
+                        Point point1 = new Point(Form1.guiPos.X, Form1.guiPos.Y);
+                        Point point2 = new Point(Form1.guiPos.X, Form1.guiPos.Y + 150);
+                        // Tower 2
+                        Point point3 = new Point(Form1.guiPos.X, Form1.guiPos.Y);
+                        Point point4 = new Point(Form1.guiPos.X - 120, Form1.guiPos.Y - 90);
+                        // Tower 3
+                        Point point5 = new Point(Form1.guiPos.X, Form1.guiPos.Y);
+                        Point point6 = new Point(Form1.guiPos.X + 120, Form1.guiPos.Y - 90);
+                        #endregion
+                        #region Tower Pen Collor
+                        // Pen
+                        Pen p = new Pen(Color.Blue);
+                        Pen pp = new Pen(Color.Blue);
+                        Pen ppp = new Pen(Color.Blue);
+                        #endregion
+                        // The Large Ellipse
+                        g.DrawEllipse(p, Form1.guiPos.X - 150, Form1.guiPos.Y - 150, 300, 300);
+                        // Drawing the lines
+                        g.DrawLine(p, point1, point2);
+                        g.DrawLine(pp, point3, point4);
+                        g.DrawLine(ppp, point5, point6);
+                        // The Small Ellipse
+                        g.DrawEllipse(p, Form1.guiPos.X - 25, Form1.guiPos.Y - 25, 50, 50);
                     }
                 }
-
             }
             // Island Tile
             if (Form1.drawBuildGUI == 4)
@@ -101,9 +102,9 @@ namespace TowerDefense
                 Point point5 = new Point(Form1.guiPos.X, Form1.guiPos.Y);
                 Point point6 = new Point(Form1.guiPos.X + 120, Form1.guiPos.Y - 90);
                 // Pen
-                Pen p = new Pen(Color.Bisque);
+                Pen p = new Pen(Color.Brown);
                 Pen pp = new Pen(Color.Brown);
-                Pen ppp = new Pen(Color.Cyan);
+                Pen ppp = new Pen(Color.Brown);
                 // The Large Ellipse
                 g.DrawEllipse(p, Form1.guiPos.X - 150, Form1.guiPos.Y - 150, 300, 300);
                 // Drawing the lines

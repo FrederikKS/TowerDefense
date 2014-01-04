@@ -18,13 +18,13 @@ namespace TowerDefense
         protected List<Image> animationFrames;
         protected float currentFrameIndex;
         private RectangleF collisionRect;
-
+        
         
 
         #endregion
 
         //Properties
-        #region
+        #region Property
         public PointF Position 
         {
             get { return position; }
@@ -45,9 +45,7 @@ namespace TowerDefense
         /// <param name="isClickable"></param>
         public GameObject(string imagePath, PointF Position, bool isClickable)
         {
-
             // Seperates the image path on ; enables multiple image paths
-
             string[] imagePaths = imagePath.Split(new char[] { ',' });
             this.Position = Position;
             sprite = Image.FromFile(imagePaths[0]);
@@ -66,7 +64,7 @@ namespace TowerDefense
         }
         
         //Functions
-        #region
+        #region Functions
         /// <summary>
         /// GameObject Update
         /// </summary>
@@ -84,7 +82,6 @@ namespace TowerDefense
         {
             //Calculates the current index, so that the amount of images is spread out on one 1 second 
             // (1 / fps) * amount of images
-
             float factor = 1 / fps;
             currentFrameIndex += factor * animationFrames.Count();
             //If currentAnimationIndex is outside of amount of images, reset it to the first image
@@ -99,8 +96,6 @@ namespace TowerDefense
 
             sprite = animationFrames[(int)currentFrameIndex];
             collisionRect = new RectangleF(Position.X, Position.Y, sprite.Width, sprite.Height);
-
-
         }
 
         /// <summary>
@@ -110,7 +105,10 @@ namespace TowerDefense
         public virtual void Draw(Graphics dc)
         {
             dc.DrawImage(sprite,position.X, position.Y,100, 100);
-            
+            Pen pen = new Pen(Color.Red);
+#if DEBUG
+            dc.DrawRectangle(pen, collisionRect.X, collisionRect.Y, collisionRect.Width = 100, collisionRect.Height = 100);
+#endif
         }
 
         #endregion

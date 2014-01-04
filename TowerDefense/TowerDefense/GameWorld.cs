@@ -13,11 +13,10 @@ namespace TowerDefense
 
     class GameWorld
     {
-        TowerButton tb;
         public RectangleF mouseRect;
-        private List<TowerButton> tl;
+        public List<TowerButton> tl;
+        #region Fields
         // Fields
-
         private Random rnd = new Random();
         private DateTime lastFrameStarted = new DateTime();
         private float currentFPS;
@@ -28,12 +27,22 @@ namespace TowerDefense
         private Stopwatch stopWatch = new Stopwatch();
         private Stopwatch buildWatch = new Stopwatch();
         private Stopwatch enemyWatch = new Stopwatch();
+<<<<<<< HEAD
         
         // Fields for world creation
         private float worldSizeX;
         private float worldSizeY;
         public int tileSizeX = 96;
         public int tileSizeY = 96;
+=======
+        #endregion
+        #region Fields for world creation
+        // Fields for world creation
+        public float worldSizeX;
+        public float worldSizeY;
+        public int tileSizeX = 100;
+        public int tileSizeY = 100;
+>>>>>>> GUI
         private int[][] coordinateSystem;
         private int grottoX;
         private int grottoY;
@@ -43,10 +52,14 @@ namespace TowerDefense
         public List<Environment> environment = new List<Environment>();
         public List<Tower> towers = new List<Tower>();
         private List<PointF> checkpointList = new List<PointF>();
+<<<<<<< HEAD
         private List<PointF> endPoints = new List<PointF>();
         private List<PointF> startPoints = new List<PointF>();
+=======
+>>>>>>> GUI
         private bool validLocation;
-
+        #endregion
+        #region Field for wave
         // Fields for wave
         List<List<Enemy>> waveEnemy = new List<List<Enemy>>();
         private List<int> waveCount = new List<int>();
@@ -57,6 +70,10 @@ namespace TowerDefense
         private int listNumb;
         private int checkPoint;
         private float chosenDif;
+<<<<<<< HEAD
+=======
+        #endregion
+>>>>>>> GUI
         // Fields for building phase
 
         private int gold;
@@ -87,13 +104,13 @@ namespace TowerDefense
         public void SetupWorld()
         {
             mouseRect = new Rectangle(Form1.MousePosition, new Size(1, 1));
-            //Mousedown
-            //if (Form1.guiIsClicked)
-            //{
             tl = new List<TowerButton>();
+<<<<<<< HEAD
             tl.Add(new TowerButton(new Size(100, 100), new Point(150, 150), "Test", "hej", 1));
             tb = new TowerButton(new Size(100, 100), new Point(150, 150), "Test", "hej", 1);
             //}
+=======
+>>>>>>> GUI
 
             //Starting FPS timert
             lastFrameStarted = DateTime.Now;
@@ -254,24 +271,58 @@ namespace TowerDefense
         {
             //Update mouse rectangle pos
             mouseRect.Location = Form1.localMousePos;
+<<<<<<< HEAD
 
             //if (mouseRect.IntersectsWith())
             //{
 
             //}
+=======
+>>>>>>> GUI
             foreach (TowerButton tb in tl)
             {
                 if (mouseRect.IntersectsWith(tb.CollisionRect))
                 {
-                    if (tb.Name == "Test")
+                    float x = Form1.guiPos.X - 50;
+                    float y = Form1.guiPos.Y - 50;
+                    #region Water Towers
+                    // Water Towers
+                    //Build Water Tower 1
+                    if (tb.Name == "Water_Tower1")
                     {
-                        //Build A Test Tower
+                        Build(1, new PointF(x, y));
                     }
+                    // Build Water Tower 2
+                    if (tb.Name == "Water_Tower2")
+                    {
+                        Build(2, new PointF(x, y));
+                    }
+                    // Build Water Tower 3
+                    if (tb.Name == "Water_Tower3")
+                    {
+                        Build(3, new PointF(x, y));
+                    }
+                    #endregion
+                    #region Land Towers
+                    // Land Towers
+                    // Build Land Tower 1
+                    if (tb.Name == "Land_Tower1")
+                    {
+                        Build(4, new PointF(x, y));
+                    }
+                    // Build Land Tower 2
+                    if (tb.Name == "Land_Tower2")
+                    {
+                        Build(5, new PointF(x, y));
+                    }
+                    // Build Land Tower 3
+                    if (tb.Name == "Land_Tower3")
+                    {
+                        Build(6, new PointF(x, y));
+                    }
+                    #endregion
                 }
             }
-
-
-
             //Update all tower objects
             foreach (Tower tower in towers)
             {
@@ -320,6 +371,25 @@ namespace TowerDefense
         /// </summary>
         public void Draw()
         {
+            if (Form1.guiIsClicked)
+            {
+                if (Form1.drawBuildGUI == 4)
+                {
+                    tl.Add(new TowerButton(new Size(75, 75), new Point(Form1.guiPos.X + 50, Form1.guiPos.Y), "Land_Tower1", "Towers/w1.png", 1));
+                    tl.Add(new TowerButton(new Size(75, 75), new Point(Form1.guiPos.X - 120, Form1.guiPos.Y), "Land_Tower2", "Towers/w2.png", 2));
+                    tl.Add(new TowerButton(new Size(75, 75), new Point(Form1.guiPos.X - 30, Form1.guiPos.Y - 120), "Land_Tower3", "Towers/w3.png", 3));
+                }
+                if (Form1.drawBuildGUI == 3)
+                {
+                    tl.Add(new TowerButton(new Size(75, 75), new Point(Form1.guiPos.X + 50, Form1.guiPos.Y), "Water_Tower1", "Towers/w1.png", 1));
+                    tl.Add(new TowerButton(new Size(75, 75), new Point(Form1.guiPos.X - 120, Form1.guiPos.Y), "Water_Tower2", "Towers/w2.png", 2));
+                    tl.Add(new TowerButton(new Size(75, 75), new Point(Form1.guiPos.X - 30, Form1.guiPos.Y - 120), "Water_Tower3", "Towers/w3.png", 3));
+                }
+                if (Form1.drawBuildGUI == 2)
+                {
+                    tl.Add(new TowerButton(new Size(75, 75), new Point(Form1.guiPos.X - 30, Form1.guiPos.Y - 120), "Sell_Tower", "Towers/st.png", 3));
+                }
+            }
             dc.Clear(Color.White);
 
             //Drawing environment
@@ -343,14 +413,13 @@ namespace TowerDefense
             Font w = new Font("Arial", 14);
             Brush q = new SolidBrush(Color.White);
             dc.DrawString(string.Format("Phase: {0}", phase), w, q, 30, 5);
-            //if (Form1.guiIsClicked)
-            //{
-            foreach (TowerButton tb in this.tl)
+            if (Form1.guiIsClicked)
             {
-                tb.DrawMe(dc);
+                foreach (TowerButton tb in tl)
+                {
+                    tb.DrawMe(dc);
+                }
             }
-                
-            // }
 
             buffer.Render();
 
@@ -695,6 +764,10 @@ namespace TowerDefense
             }
 
             //Placing environment
+<<<<<<< HEAD
+=======
+
+>>>>>>> GUI
             for (int x = 0; x < worldSizeX; x++)
             {
                 for (int y = 0; y < worldSizeY; y++)
@@ -820,25 +893,38 @@ namespace TowerDefense
         {
             switch (towerNumb)
             {
+                #region Water
+                // Water
                 case 1:
-                    towers.Add(new TowerSlow(20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    towers.Add(new TowerSlow(20, 20, 20, 20, 20, @"Towers/w1.png", position, true));
                     gold -= cost;
                     break;
 
                 case 2:
-                    towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Towers/w2.png", position, true));
                     gold -= cost;
                     break;
                 case 3:
-                    towers.Add(new TowerStun(20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    towers.Add(new TowerStun(20, 20, 20, 20, 20, @"Towers/w3.png", position, true));
                     gold -= cost;
                     break;
+                #endregion
+                #region Land
+                // Land
                 case 4:
-                    towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Sprites/LighthousePlaceHolder.jpg", position, true));
+                    towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Towers/L1.png", position, true));
                     gold -= cost;
                     break;
+                case 5:
+                    towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Towers/L2.png", position, true));
+                    gold -= cost;
+                    break;
+                case 6:
+                    towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Towers/L3.png", position, true));
+                    gold -= cost;
+                    break;
+                #endregion
             }
-
         }
         /// <summary>
         /// The Sell Function
@@ -862,6 +948,13 @@ namespace TowerDefense
                 case 4:
                     towers.Remove(tower);
                     gold += cost;
+                    break;
+                case 5:
+                    towers.Remove(tower);
+                    gold += cost;
+                    break;
+                case 6:
+                    towers.Remove(tower);
                     break;
             }
 

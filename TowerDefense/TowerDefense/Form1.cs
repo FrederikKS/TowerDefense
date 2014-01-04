@@ -24,24 +24,23 @@ namespace TowerDefense
         Tower t;
         //Mouse local position on the form
         public static Point localMousePos;
-
         //Checks if the GUI should be drawn
         public static int drawBuildGUI = 0;
-
         public static bool guiIsClicked = false;
-
         public static Point guiPos;
-        GUI guic;
 
         public Form1()
         {
             InitializeComponent();
+            // Enable the timer and timer interval
             timer1.Enabled = true;
             timer1.Interval = 40;
+            // Menu
             pnl_Main.Visible = true;
             pnl_dif.Visible = false;
             pnl_high.Visible = false;
             pnl_submit.Visible = false;
+            // GUI
             MouseUp += new MouseEventHandler(Form1_MouseUp);
             MouseDown += new MouseEventHandler(Form1_MouseDown);
 
@@ -86,17 +85,16 @@ namespace TowerDefense
                 {
                     gw = new GameWorld(CreateGraphics(), this.DisplayRectangle, 14, 8, difc);
                 }
-                if (guic == null)
+                if (gui == null)
                 {
-                    guic = new GUI();
+                    gui = new GUI();
                 }
-
 
                 gw.GameLoop();
 
                 if (drawBuildGUI > 1 && drawBuildGUI < 6)
                 {
-                    guic.DrawGUI(CreateGraphics());
+                    gui.DrawGUI(CreateGraphics());
                 }
             }
 
@@ -173,16 +171,17 @@ namespace TowerDefense
         void Form1_MouseUp(object sender, MouseEventArgs e)
         {
             Graphics g = CreateGraphics();
-
             if (e.Button == MouseButtons.Left)
             {
                 drawBuildGUI = 0;
+                gw.tl.Clear();
             }
+            guiIsClicked = false;
         }
         // Creates The GUI
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            
+
             if (e.Button == MouseButtons.Left)
             {
                 guiIsClicked = true;
@@ -208,7 +207,6 @@ namespace TowerDefense
                         }
                     }
                 }
-                //drawBuildGUI = 1;
                 //Set position
                 guiPos.X = e.X;
                 guiPos.Y = e.Y;

@@ -6,15 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TowerDefense
-{   
+{
     public class TowerButton
-    {   
+    {
+        GameWorld gw;
         private Rectangle collisionRect;
         // Fields
         private string name;
         private string imagePath;
         private int id;
-                
+
         // Property
         public string Name
         {
@@ -44,7 +45,7 @@ namespace TowerDefense
         /// <param name="mySize"></param>
         /// <param name="myPosition"></param>
         /// <param name="name"></param>
-        
+
         public TowerButton(Size mySize, Point myPosition, string name, string imagePath, int ID)
         {
             collisionRect = new Rectangle(myPosition, mySize);
@@ -57,10 +58,19 @@ namespace TowerDefense
         /// <param name="dc"></param>
         public void DrawMe(Graphics dc)
         {
-            
-            //Draw example button
-            dc.FillRectangle(Brushes.Green, collisionRect);
-        }
+            if (Form1.guiIsClicked)
+            {
+                if (Form1.drawBuildGUI == 4)
+                {
+                    dc.FillRectangle(Brushes.Brown, collisionRect);
+                }
+                if (Form1.drawBuildGUI == 3)
+                {
+                    dc.FillRectangle(Brushes.Blue, collisionRect);
+                }
+                // Draw The TowerButton
 
+            }
+        }
     }
 }
