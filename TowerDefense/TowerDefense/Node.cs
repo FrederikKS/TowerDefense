@@ -15,8 +15,8 @@ namespace TowerDefense
         private int f;
         private int g;
         private int h;
-        private Node parentNode;
-        
+        private bool wasChecked = false;
+
         //Properties
         public int LocationX
         {
@@ -30,60 +30,39 @@ namespace TowerDefense
             set { locationY = value; }
         }
 
-        public int NodeLocationX
-        {
-            get { return nodeLocationX; }
-            set { nodeLocationX = value; }
-        }
-
-        public int NodeLocationY
-        {
-            get { return nodeLocationY; }
-            set { nodeLocationY = value; }
-        }
-        
         public int F
         {
             get { return f; }
             set { f = value; }
         }
-        
+
         public int G
         {
             get { return g; }
             set { g = value; }
         }
-        
+
         public int H
         {
             get { return h; }
             set { h = value; }
         }
 
-        public Node ParentNode
+        public bool WasChecked
         {
-            get { return parentNode; }
-            set { parentNode = value; }
+            get { return wasChecked; }
+            set { wasChecked = value; }
         }
 
         //Constructor
-        public Node(int locationX, int locationY, int endX, int endY, int parentNodeLocationX, int parentNodeLocationY)
+        public Node(int locationX, int locationY, int endX, int endY, int parentNodeGValue)
         {
             this.locationX = locationX;
             this.locationY = locationY;
-            this.H = FixNeg(locationX - endX) + FixNeg(locationY - endY);
-            this.G = FixNeg(locationX - parentNodeLocationX) + FixNeg(locationY - parentNodeLocationY);
+            this.H = Math.Abs(locationX - endX) + Math.Abs(locationY - endY);
+            this.G = parentNodeGValue + 1;
             this.F = H + G;
 
-        }
-
-        //Correcting negative numbers
-        public int FixNeg(int value1)
-        {
-            if (value1 < 0)
-                value1 = value1 * -1;
-
-            return value1;
         }
     }
 }

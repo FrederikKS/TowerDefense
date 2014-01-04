@@ -11,11 +11,11 @@ namespace TowerDefense
 {
     public enum State { build, wave }
 
-    public class GameWorld
+    class GameWorld
     {
         TowerButton tb;
         public RectangleF mouseRect;
-        private List<TowerButton> tl;
+        private List<TowerButton> tl = new List<TowerButton>();
         // Fields
 
         private Random rnd = new Random();
@@ -28,12 +28,12 @@ namespace TowerDefense
         private Stopwatch stopWatch = new Stopwatch();
         private Stopwatch buildWatch = new Stopwatch();
         private Stopwatch enemyWatch = new Stopwatch();
+        
         // Fields for world creation
-
         private float worldSizeX;
         private float worldSizeY;
-        public int tileSizeX = 100;
-        public int tileSizeY = 100;
+        public int tileSizeX = 96;
+        public int tileSizeY = 96;
         private int[][] coordinateSystem;
         private int grottoX;
         private int grottoY;
@@ -43,19 +43,20 @@ namespace TowerDefense
         public List<Environment> environment = new List<Environment>();
         public List<Tower> towers = new List<Tower>();
         private List<PointF> checkpointList = new List<PointF>();
-
+        private List<PointF> endPoints = new List<PointF>();
+        private List<PointF> startPoints = new List<PointF>();
         private bool validLocation;
 
         // Fields for wave
         List<List<Enemy>> waveEnemy = new List<List<Enemy>>();
         private List<int> waveCount = new List<int>();
         private List<Enemy> currentWave = new List<Enemy>();
-        private List<PointF> path = new List<PointF>();
+        List<bool> pathAvailable = new List<bool>();
+        private List<List<PointF>> path = new List<List<PointF>>();
         private int waveNumber;
         private int listNumb;
         private int checkPoint;
         private float chosenDif;
-
         // Fields for building phase
 
         private int gold;
@@ -89,8 +90,7 @@ namespace TowerDefense
             //Mousedown
             //if (Form1.guiIsClicked)
             //{
-            tl = new List<TowerButton>();
-            tl.Add(new TowerButton(new Size(100, 100), new Point(150, 150), "Test", "hej", 1));
+            tb = new TowerButton(new Size(100, 100), new Point(150, 150), "Test", "hej", 1);
             //}
 
             //Starting FPS timert
@@ -123,6 +123,14 @@ namespace TowerDefense
                     checkpointList.Add(new PointF());
                 }
             }
+
+            //Initializing enemy path lists, depending on amount of checkpoints
+            for (int i = 0; i < checkpointList.Count + 1; i++)
+            {
+                path.Add(new List<PointF>());
+                pathAvailable.Add(new bool());
+            }
+
             //Location for treasure
             treasureX = rnd.Next(1, (int)worldSizeX - 1);
             treasureY = rnd.Next(1, (int)worldSizeY - 2);
@@ -157,17 +165,27 @@ namespace TowerDefense
             }
             #endregion
 
+            //Adding grotto position to list of startpoints used for saving paths. Saved as first position in list
+            startPoints.Add(new PointF(grottoX, grottoY));
+
             //Location for checkpoints
             if (numberOfCheckpoints > 0)
                 for (int i = 0; i < numberOfCheckpoints; i++)
                 {
                     checkpointList[i] = new PointF(rnd.Next(0, (int)worldSizeX), rnd.Next(0, (int)worldSizeY));
+                    //Adding position of checkpoint to list of endpoints used for saving paths
+                    endPoints.Add(checkpointList[i]);
+                    //Adding position of checkpoint to list of startpoints used for saving paths
+                    startPoints.Add(checkpointList[i]);
                 }
+
+            //Adding treasure position to list of endpoints used for saving paths. Added as last position in list
+            endPoints.Add(new PointF(treasureX, treasureY));
 
             // Bool for checking validity of tile location
             validLocation = CheckLocation(grottoX, grottoY, treasureX, treasureY, minDistStart);
 
-            //If location is not valid (start too close to finish), find a new location
+            //If location is not valid (if start is too close to finish), find a new location
             while (!validLocation)
             {
                 treasureX = rnd.Next(0, (int)worldSizeX);
@@ -176,20 +194,29 @@ namespace TowerDefense
                 validLocation = CheckLocation(grottoX, grottoY, treasureX, treasureY, minDistStart);
             }
 
-
-
             #endregion
 
             #region Building the world layout
+
             //Assign values to positions in the coordinate system and place environment tiles accordingly while adding them to environment list
             Randomizer(coordinateSystem, environment);
 
-            //Building road from A to B, then save that path
-            RoadBuilder(worldSizeX, worldSizeY, grottoX, grottoY, treasureX, treasureY, coordinateSystem, numberOfCheckpoints);
-            //Building road from B to C, then save that path
-            //Continue depending on amount of checkpoints
+            //Building enemy paths, depending on amount of checkpoints
+            for (int i = 0; i < endPoints.Count; i++)
+            {
+                RoadBuilder((int)startPoints[i].X, (int)startPoints[i].Y, (int)endPoints[i].X, (int)endPoints[i].Y, i);
+            }
 
-
+            //If a path cannot be found, perform generation again
+            while (!CheckIfValidPath(pathAvailable, numberOfCheckpoints))
+            {
+                //Perform world generation again
+                Randomizer(coordinateSystem, environment);
+                for (int i = 0; i < endPoints.Count; i++)
+                {
+                    RoadBuilder((int)startPoints[i].X, (int)startPoints[i].Y, (int)endPoints[i].X, (int)endPoints[i].Y, i);
+                }
+            }
 
             #endregion
 
@@ -230,7 +257,7 @@ namespace TowerDefense
             //{
 
             //}
-            foreach (TowerButton tb in this.tl)
+            foreach (TowerButton tb in tl)
             {
                 if (mouseRect.IntersectsWith(tb.CollisionRect))
                 {
@@ -334,9 +361,9 @@ namespace TowerDefense
         /// <param name="endX"></param>
         /// <param name="endY"></param>
         /// <returns></returns>
-        public bool CheckLocation(int startX, int startY, int endX, int endY)
+        public bool CheckForDuplicates(ref List<Node> openNodes, Node mainNode, int xModifier, int yModifier)
         {
-            return true;
+            return openNodes.Any(p => p.LocationX == mainNode.LocationX + xModifier && p.LocationY == mainNode.LocationY + yModifier);
         }
         /// <summary>
         /// Checking If The Location Of The Treasure Island Is On A Valid Location And Is Minimum Px From Start
@@ -392,189 +419,223 @@ namespace TowerDefense
         /// <param name="endX"></param>
         /// <param name="endY"></param>
         /// <param name="coordinateSystem"></param>
-        public void RoadBuilder(float worldSizeX, float worldSizeY, int startX, int startY, int endX, int endY, int[][] coordinateSystem, int numberOfCheckpoints)
+
+        #region Pathfinding A* algorithm
+
+        public void RoadBuilder(int startX, int startY, int endX, int endY, int pathNumber)
         {
             //Creating a list of nodes
-            Node mainNode = new ParentNode(startX, startY, endX, endY, startX, startY);
+            Node mainNode;
             List<Node> openNodes = new List<Node>();
             List<Node> closedNodes = new List<Node>();
+            mainNode = new Node(startX, startY, endX, endY, -1);
             openNodes.Add(mainNode);
-            CheckNearbyNodes(mainNode, openNodes, closedNodes, startX, startY, endX, endY);
 
-            //Moving old parentNode to closed list
-            foreach (Node parentNode in openNodes)
+            //Check nearby nodes
+            CheckNearbyNodes(ref mainNode, ref openNodes, ref closedNodes, startX, startY, endX, endY);
+            mainNode.WasChecked = true;
+            RemoveClosedNodesFromOpenNodesList(ref closedNodes, ref openNodes);
+
+            //Setting new main node
+            while (mainNode.LocationX != endX || mainNode.LocationY != endY)
             {
-                if (parentNode is ParentNode)
+                if (!NodeListContains(ref closedNodes, ref mainNode))
                 {
-                    closedNodes.Add((ParentNode)parentNode);
-                    openNodes.Remove((ParentNode)parentNode);
+                    closedNodes.Add(mainNode);
+                }
+                openNodes.Remove(mainNode);
+                int counter = 0;
+                foreach (Node node in openNodes)
+                {
+                    counter++;
+                    //If node's F value is less than current mainNode, set that node to mainNode instead
+                    if (node.F < mainNode.F)
+                    {
+                        mainNode = node;
+                        break;
+                    }
+
+                    //If no node's F value is less than current mainNode, choose the first node from the openNodes list instead
+                    if (counter == openNodes.Count)
+                    {
+                        mainNode = openNodes.First(n => node.WasChecked == false);
+                    }
+                }
+
+                //Perform nearby node checks again
+                CheckNearbyNodes(ref mainNode, ref openNodes, ref closedNodes, startX, startY, endX, endY);
+                RemoveClosedNodesFromOpenNodesList(ref closedNodes, ref openNodes);
+                mainNode.WasChecked = true;
+
+                //If no more open nodes are available, label path as unavailable
+                if (openNodes.Count < 1)
+                {
+                    pathAvailable[pathNumber] = false;
                     break;
                 }
             }
 
-            //Setting new main node
-            for (int i = 0; i < 20; i++)
+            //If mainNode's location is the same as end location, path is valid and set to true
+            if (mainNode.LocationX == endX && mainNode.LocationY == endY)
+                pathAvailable[pathNumber] = true;
+            else
+                pathAvailable[pathNumber] = false;
+
+            //Draw this valid path and save it in a list of paths
+            if (pathAvailable[pathNumber])
             {
+                BuildEnemyPath(ref closedNodes, mainNode, mainNode.G - 1, pathNumber);
+            }
+        }
 
-                if (mainNode.LocationX != endX && mainNode.LocationY != endY)
+        /// <summary>
+        /// Building enemy path and storing it in a list of PointF values
+        /// </summary>
+        /// <param name="closedNodes"></param>
+        /// <param name="mainNode"></param>
+        /// <param name="steps"></param>
+        /// <param name="pathNumber"></param>
+        public void BuildEnemyPath(ref List<Node> closedNodes, Node mainNode, int steps, int pathNumber)
+        {
+            Node tempNode = mainNode;
+            int counter = 0;
+            while (tempNode.G != 0)
+            {
+                foreach (Node node in closedNodes)
                 {
-                    foreach (Node node in openNodes)
+                    if (node.LocationX == tempNode.LocationX - 1 && node.LocationY == tempNode.LocationY && node.G == steps - counter)
                     {
-                        if (node.F < mainNode.F)
-                            mainNode = node;
-                        if (node.F == mainNode.F)
-                            mainNode = openNodes.First(n => (node.F == mainNode.F));
+                        path[pathNumber].Add(new PointF(node.LocationX * tileSizeX + (tileSizeX / 2), node.LocationY * tileSizeY + (tileSizeY / 2)));
+                        counter++;
+                        tempNode = node;
+                        break;
                     }
+                    if (node.LocationX == tempNode.LocationX + 1 && node.LocationY == tempNode.LocationY && node.G == steps - counter)
+                    {
+                        path[pathNumber].Add(new PointF(node.LocationX * tileSizeX + (tileSizeX / 2), node.LocationY * tileSizeY + (tileSizeY / 2)));
+                        counter++;
+                        tempNode = node;
+                        break;
+                    }
+                    if (node.LocationX == tempNode.LocationX && node.LocationY == tempNode.LocationY - 1 && node.G == steps - counter)
+                    {
+                        path[pathNumber].Add(new PointF(node.LocationX * tileSizeX + (tileSizeX / 2), node.LocationY * tileSizeY + (tileSizeY / 2)));
+                        counter++;
+                        tempNode = node;
+                        break;
+                    }
+                    if (node.LocationX == tempNode.LocationX && node.LocationY == tempNode.LocationY + 1 && node.G == steps - counter)
+                    {
+                        path[pathNumber].Add(new PointF(node.LocationX * tileSizeX + (tileSizeX / 2), node.LocationY * tileSizeY + (tileSizeY / 2)));
+                        counter++;
+                        tempNode = node;
+                        break;
+                    }
+                }
+            }
+        }
 
+        /// <summary>
+        /// Checks if a valid path is available or the map should be remade
+        /// </summary>
+        /// <param name="pathAvailable"></param>
+        /// <param name="numberOfCheckpoints"></param>
+        /// <returns></returns>
+        public bool CheckIfValidPath(List<bool> pathAvailable, int numberOfCheckpoints)
+        {
+            for (int i = 0; i <= numberOfCheckpoints; i++)
+            {
+                if (pathAvailable[i] == false)
+                    return false;
+            }
+            return true;
+        }
 
-                    CheckNearbyNodes(mainNode, openNodes, closedNodes, startX, startY, endX, endY);
+        /// <summary>
+        /// Shortcut for checking if node is out of bounds
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public bool OutOfBounds(int x, int y)
+        {
+            return x >= 0 && x < worldSizeX
+                && y >= 0 && y < worldSizeY;
+        }
+
+        /// <summary>
+        /// Checks if list already contains specific node
+        /// </summary>
+        /// <param name="nodeList"></param>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public bool NodeListContains(ref List<Node> nodeList, ref Node node)
+        {
+            foreach (Node currentNode in nodeList)
+            {
+                if (currentNode.LocationX == node.LocationX && currentNode.LocationY == node.LocationY)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Removes duplicated notes in list of open nodes
+        /// </summary>
+        /// <param name="closedNodes"></param>
+        /// <param name="openNodes"></param>
+        public void RemoveClosedNodesFromOpenNodesList(ref List<Node> closedNodes, ref List<Node> openNodes)
+        {
+            for (int x = 0; x < closedNodes.Count; x++)
+            {
+                for (int y = 0; y < openNodes.Count; y++)
+                {
+                    if (closedNodes[x].LocationX == openNodes[y].LocationX && closedNodes[x].LocationY == openNodes[y].LocationY)
+                        openNodes.Remove(openNodes[y]);
                 }
             }
         }
 
         //Saving path to PointF array
         //path.Add(new PointF(mainNode.LocationX, mainNode.LocationY));
-
-        public void CheckNearbyNodes(Node mainNode, List<Node> OpenNodes, List<Node> ClosedNodes, int startX, int startY, int endX, int endY)
+        public void CheckNearbyNodes(ref Node mainNode, ref List<Node> openNodes, ref List<Node> closedNodes, int startX, int startY, int endX, int endY)
         {
-            //Bools to keep track of checked nodes
-            bool openTop = true;
-            bool openBot = true;
-            bool openLeft = true;
-            bool openRight = true;
-
-            bool closedTop = true;
-            bool closedBot = true;
-            bool closedLeft = true;
-            bool closedRight = true;
-
-            //Checking if nodes have already been examined
-            #region
-            foreach (Node open in OpenNodes)
-            {
-                //Bot
-                if (open.LocationX == mainNode.LocationX && open.LocationY == mainNode.LocationY + 1)
-                {
-                    openBot = true;
-                }
-                else
-                    openBot = false;
-                //Top
-                if (open.LocationX == mainNode.LocationX && open.LocationY == mainNode.LocationY - 1)
-                {
-                    openTop = true;
-                }
-                else
-                    openTop = false;
-                //Left
-                if (open.LocationX == mainNode.LocationX - 1 && open.LocationY == mainNode.LocationY)
-                {
-                    openLeft = true;
-                }
-                else
-                    openLeft = false;
-                //Right
-                if (open.LocationX == mainNode.LocationX + 1 && open.LocationY == mainNode.LocationY)
-                {
-                    openRight = true;
-                }
-                else
-                    openRight = false;
-            }
-
-            if (ClosedNodes.Count > 0)
-                foreach (Node closed in ClosedNodes)
-                {
-
-                    //Bot
-                    if (closed.LocationX == mainNode.LocationX && closed.LocationY == mainNode.LocationY + 1)
-                    {
-                        closedBot = true;
-                    }
-                    else
-                        closedBot = false;
-                    //Top
-                    if (closed.LocationX == mainNode.LocationX && closed.LocationY == mainNode.LocationY - 1)
-                    {
-                        closedTop = true;
-                    }
-                    else
-                        closedTop = false;
-                    //Left
-                    if (closed.LocationX == mainNode.LocationX - 1 && closed.LocationY == mainNode.LocationY)
-                    {
-                        closedLeft = true;
-                    }
-                    else
-                        closedLeft = false;
-                    //Right
-                    if (closed.LocationX == mainNode.LocationX + 1 && closed.LocationY == mainNode.LocationY)
-                    {
-                        closedRight = true;
-                    }
-                    else
-                        closedRight = false;
-                }
-            #endregion
-
-            #region check nodes below, above, left and right of parentnode
-            //Node below parentNode
+            //Node below main
             if (mainNode.LocationY < worldSizeY - 1)
-                if (coordinateSystem[mainNode.LocationX][mainNode.LocationY + 1] > 1 && coordinateSystem[mainNode.LocationX][mainNode.LocationY + 1] < 11 && !openBot)
+                if (coordinateSystem[mainNode.LocationX][mainNode.LocationY + 1] > 1 && coordinateSystem[mainNode.LocationX][mainNode.LocationY + 1] < 11)
                 {
-                    OpenNodes.Add(new Node(mainNode.LocationX, mainNode.LocationY + 1, endX, endY, startX, startY));
-
-                }
-                else
-                {
-                    if (!closedBot)
-                        ClosedNodes.Add(new Node(mainNode.LocationX, mainNode.LocationY + 1, endX, endY, startX, startY));
+                    if (!CheckForDuplicates(ref openNodes, mainNode, 0, 1))
+                        openNodes.Add(new Node(mainNode.LocationX, mainNode.LocationY + 1, endX, endY, mainNode.G));
                 }
 
-            //Node above parentNode
+            //Node above main
             if (mainNode.LocationY > 0)
-                if (coordinateSystem[mainNode.LocationX][mainNode.LocationY - 1] > 1 && coordinateSystem[mainNode.LocationX][mainNode.LocationY - 1] < 11 && !openTop)
+                if (coordinateSystem[mainNode.LocationX][mainNode.LocationY - 1] > 1 && coordinateSystem[mainNode.LocationX][mainNode.LocationY - 1] < 11)
                 {
-                    OpenNodes.Add(new Node(mainNode.LocationX, mainNode.LocationY - 1, endX, endY, startX, startY));
-
-                }
-                else
-                {
-                    if (!closedTop)
-                        ClosedNodes.Add(new Node(mainNode.LocationX, mainNode.LocationY - 1, endX, endY, startX, startY));
+                    if (!CheckForDuplicates(ref openNodes, mainNode, 0, -1))
+                        openNodes.Add(new Node(mainNode.LocationX, mainNode.LocationY - 1, endX, endY, mainNode.G));
                 }
 
-            //Node left of parentNode
+            //Node left of main
             if (mainNode.LocationX > 0)
-                if (coordinateSystem[mainNode.LocationX - 1][mainNode.LocationY] > 1 && coordinateSystem[mainNode.LocationX - 1][mainNode.LocationY] < 11 && !openLeft)
+                if (coordinateSystem[mainNode.LocationX - 1][mainNode.LocationY] > 1 && coordinateSystem[mainNode.LocationX - 1][mainNode.LocationY] < 11)
                 {
-                    OpenNodes.Add(new Node(mainNode.LocationX - 1, mainNode.LocationY, endX, endY, startX, startY));
-
-                }
-                else
-                {
-                    if (!closedLeft)
-                        ClosedNodes.Add(new Node(mainNode.LocationX - 1, mainNode.LocationY, endX, endY, startX, startY));
+                    if (!CheckForDuplicates(ref openNodes, mainNode, -1, 0))
+                        openNodes.Add(new Node(mainNode.LocationX - 1, mainNode.LocationY, endX, endY, mainNode.G));
                 }
 
-            //Node Right of parentNode
+            //Node right of main
             if (mainNode.LocationX < worldSizeX - 1)
-                if (coordinateSystem[mainNode.LocationX + 1][mainNode.LocationY] > 1 && coordinateSystem[mainNode.LocationX + 1][mainNode.LocationY] < 11 && !openRight)
+                if (coordinateSystem[mainNode.LocationX + 1][mainNode.LocationY] > 1 && coordinateSystem[mainNode.LocationX + 1][mainNode.LocationY] < 11)
                 {
-                    OpenNodes.Add(new Node(mainNode.LocationX + 1, mainNode.LocationY, endX, endY, startX, startY));
-
+                    if (!CheckForDuplicates(ref openNodes, mainNode, 1, 0))
+                        openNodes.Add(new Node(mainNode.LocationX + 1, mainNode.LocationY, endX, endY, mainNode.G));
                 }
-                else
-                {
-                    if (!closedRight)
-                        ClosedNodes.Add(new Node(mainNode.LocationX + 1, mainNode.LocationY, endX, endY, startX, startY));
-                }
-            #endregion
-
-
-
         }
 
+        #endregion
         /// <summary>
         /// Assigning values to positions in the coordinate system, defining which environment object will be placed on that coordinate.
         /// Then it places that environment object on the tile and adds the object to gameworld's list of environment objects
@@ -632,14 +693,13 @@ namespace TowerDefense
             }
 
             //Placing environment
-            
             for (int x = 0; x < worldSizeX; x++)
             {
                 for (int y = 0; y < worldSizeY; y++)
                 {
                     //Temp locations to make the code cleaner
-                    int tempX = (x * tileSizeX);
-                    int tempY = (y * tileSizeY);
+                    int tempX = x * tileSizeX;
+                    int tempY = y * tileSizeY;
 
                     //Placing grotto
                     if (coordinateSystem[x][y] == 1)

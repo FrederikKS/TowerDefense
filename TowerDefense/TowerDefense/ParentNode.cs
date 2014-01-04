@@ -61,7 +61,7 @@ namespace TowerDefense
         }
 
         //Constructor
-        public ParentNode(int locationX, int locationY, int endX, int endY, int parentNodeLocationX, int parentNodeLocationY) : base(locationX, locationY, endX,endY,parentNodeLocationX,parentNodeLocationY)
+        public ParentNode(int locationX, int locationY, int endX, int endY, int parentNodeGValue) : base(locationX, locationY, endX,endY, parentNodeGValue)
         {
 
         }
