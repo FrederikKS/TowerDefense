@@ -13,9 +13,10 @@ namespace TowerDefense
 
     class GameWorld
     {
+        TowerButton tb;
         public RectangleF mouseRect;
         public List<TowerButton> tl;
-        #region Fields
+
         // Fields
         private Random rnd = new Random();
         private DateTime lastFrameStarted = new DateTime();
@@ -27,22 +28,12 @@ namespace TowerDefense
         private Stopwatch stopWatch = new Stopwatch();
         private Stopwatch buildWatch = new Stopwatch();
         private Stopwatch enemyWatch = new Stopwatch();
-<<<<<<< HEAD
         
         // Fields for world creation
         private float worldSizeX;
         private float worldSizeY;
         public int tileSizeX = 96;
         public int tileSizeY = 96;
-=======
-        #endregion
-        #region Fields for world creation
-        // Fields for world creation
-        public float worldSizeX;
-        public float worldSizeY;
-        public int tileSizeX = 100;
-        public int tileSizeY = 100;
->>>>>>> GUI
         private int[][] coordinateSystem;
         private int grottoX;
         private int grottoY;
@@ -52,13 +43,10 @@ namespace TowerDefense
         public List<Environment> environment = new List<Environment>();
         public List<Tower> towers = new List<Tower>();
         private List<PointF> checkpointList = new List<PointF>();
-<<<<<<< HEAD
         private List<PointF> endPoints = new List<PointF>();
         private List<PointF> startPoints = new List<PointF>();
-=======
->>>>>>> GUI
         private bool validLocation;
-        #endregion
+
         #region Field for wave
         // Fields for wave
         List<List<Enemy>> waveEnemy = new List<List<Enemy>>();
@@ -70,10 +58,7 @@ namespace TowerDefense
         private int listNumb;
         private int checkPoint;
         private float chosenDif;
-<<<<<<< HEAD
-=======
         #endregion
->>>>>>> GUI
         // Fields for building phase
 
         private int gold;
@@ -105,12 +90,9 @@ namespace TowerDefense
         {
             mouseRect = new Rectangle(Form1.MousePosition, new Size(1, 1));
             tl = new List<TowerButton>();
-<<<<<<< HEAD
             tl.Add(new TowerButton(new Size(100, 100), new Point(150, 150), "Test", "hej", 1));
             tb = new TowerButton(new Size(100, 100), new Point(150, 150), "Test", "hej", 1);
             //}
-=======
->>>>>>> GUI
 
             //Starting FPS timert
             lastFrameStarted = DateTime.Now;
@@ -271,14 +253,12 @@ namespace TowerDefense
         {
             //Update mouse rectangle pos
             mouseRect.Location = Form1.localMousePos;
-<<<<<<< HEAD
 
             //if (mouseRect.IntersectsWith())
             //{
 
             //}
-=======
->>>>>>> GUI
+
             foreach (TowerButton tb in tl)
             {
                 if (mouseRect.IntersectsWith(tb.CollisionRect))
@@ -764,10 +744,6 @@ namespace TowerDefense
             }
 
             //Placing environment
-<<<<<<< HEAD
-=======
-
->>>>>>> GUI
             for (int x = 0; x < worldSizeX; x++)
             {
                 for (int y = 0; y < worldSizeY; y++)
