@@ -1000,6 +1000,11 @@ namespace TowerDefense
             {
                 enemy.ReachedPointCounter++;
 
+                if (endPoints.Count == enemy.ReachedEndCounter)
+                {
+                    //
+                }
+
                 //Check if enemy has been on all the points between his starting position and his end position
                 if (enemy.ReachedPointCounter != path[enemy.ReachedEndCounter].Count+1)
                 {
@@ -1012,11 +1017,6 @@ namespace TowerDefense
                     enemy.ReachedPointCounter = 0;
                     enemy.EndPosition = new PointF(endPoints[enemy.ReachedEndCounter].X*tileSizeX, endPoints[enemy.ReachedEndCounter].Y*tileSizeY);
                     enemy.ReachedEndCounter++;
-                    
-                    if (endPoints.Count == enemy.ReachedEndCounter)
-                    {
-                        //remove enemy, subtract 1 life
-                    }
                 }
             }
         }

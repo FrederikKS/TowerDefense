@@ -80,25 +80,59 @@ namespace TowerDefense
 
         public void MovementAI()
         {
+            int correction = 0;
+            
             if (position.X < endPosition.X)
             {
-                position.X = position.X + speed;
+                if (Math.Abs(position.X - endPosition.X) < speed)
+                {
+                    correction = (int)Math.Abs(position.X - endPosition.X);
+                    position.X = position.X + correction;
+                }
+                else
+                    position.X = position.X + speed;
+
+                correction = 0;
             }
 
             if (position.X > endPosition.X)
             {
+                if (Math.Abs(position.X - endPosition.X) < speed)
+                {
+                    correction = (int)Math.Abs(position.X - endPosition.X);
+                    position.X = position.X - correction;
+                }
+                else
                 position.X = position.X - speed;
+
+                correction = 0;
             }
 
 
             if (position.Y < endPosition.Y)
             {
+                if (Math.Abs(position.Y - endPosition.Y) < speed)
+                {
+                    correction = (int)Math.Abs(position.Y - endPosition.Y);
+                    position.Y = position.Y + correction;
+                }
+                else
                 position.Y = position.Y + speed;
+
+                correction = 0;
             }
 
             if (position.Y > endPosition.Y)
             {
+                if (Math.Abs(position.Y - endPosition.Y) < speed)
+                {
+                    correction = (int)Math.Abs(position.Y - endPosition.Y);
+                    position.Y = position.Y - correction;
+                }
+                else
                 position.Y = position.Y - speed;
+
+                correction = 0;
             }
 
         }
