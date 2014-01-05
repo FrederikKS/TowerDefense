@@ -56,3 +56,10 @@ C:\Users\Tobias\Desktop\TowerDefense\TowerDefense\obj\Debug\TowerDefense.csprojR
 C:\Users\Tobias\Desktop\TowerDefense\TowerDefense\obj\Debug\TowerDefense.Form1.resources
 C:\Users\Tobias\Desktop\TowerDefense\TowerDefense\obj\Debug\TowerDefense.Properties.Resources.resources
 C:\Users\Tobias\Desktop\TowerDefense\TowerDefense\obj\Debug\TowerDefense.csproj.GenerateResource.Cache
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Towers\L1.png
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Towers\L2.png
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Towers\L3.png
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Towers\st.png
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Towers\w1.png
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Towers\w2.png
+C:\Users\Claes\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\bin\Debug\Towers\w3.png

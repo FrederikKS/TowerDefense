@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Diagnostics;
+using System.Timers;
 
 
 namespace TowerDefense
@@ -22,7 +23,7 @@ namespace TowerDefense
         private DateTime lastFrameStarted = new DateTime();
         private float currentFPS;
         private Graphics dc;
-        private string phase;
+        private string phase = "Build Phase";
         private BufferedGraphics buffer;
         private State currentState = State.build;
         private Stopwatch stopWatch = new Stopwatch();
@@ -34,6 +35,8 @@ namespace TowerDefense
         private float worldSizeY;
         public int tileSizeX = 96;
         public int tileSizeY = 96;
+        private int offsetX = 96 / 2;
+        private int offsetY = 96 / 2;
         private int[][] coordinateSystem;
         private int grottoX;
         private int grottoY;
@@ -43,21 +46,27 @@ namespace TowerDefense
         public List<Environment> environment = new List<Environment>();
         public List<Tower> towers = new List<Tower>();
         private List<PointF> checkpointList = new List<PointF>();
-        private List<PointF> endPoints = new List<PointF>();
+        public List<PointF> endPoints = new List<PointF>();
         private List<PointF> startPoints = new List<PointF>();
         private bool validLocation;
 
-        #region Field for wave
+        #region Fields for wave
         // Fields for wave
         List<List<Enemy>> waveEnemy = new List<List<Enemy>>();
         private List<int> waveCount = new List<int>();
         private List<Enemy> currentWave = new List<Enemy>();
         List<bool> pathAvailable = new List<bool>();
-        private List<List<PointF>> path = new List<List<PointF>>();
-        private int waveNumber;
+        public List<List<PointF>> path = new List<List<PointF>>();
+        private int waveNumber = 0;
         private int listNumb;
         private int checkPoint;
         private float chosenDif;
+
+        //Timer for spawning enemies
+        public Timer spawner = new Timer(60000);
+        private int TimerEventCounter = 0;
+
+
         #endregion
         // Fields for building phase
 
@@ -218,6 +227,19 @@ namespace TowerDefense
 
             #endregion
 
+            //Instantiating and adding enemies to waves list
+            for (int waveNumber = 0; waveNumber < 20; waveNumber++)
+            {
+                waveEnemy.Add(new List<Enemy>());
+
+                for (int enemyNumber = 0; enemyNumber < 10; enemyNumber++)
+                {
+                    waveEnemy[waveNumber].Add(new EnemyNormal("TestEnemy", 100 * chosenDif, 2, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Towers/L1.png", new PointF(grottoX*tileSizeX, grottoY*tileSizeY), path[0].Last(), false));
+                }
+            }
+
+            //Starting buildwatch for the first time
+            buildWatch.Start();
         }
         /// <summary>
         /// Makes sure all the update functions is called every frames
@@ -237,10 +259,6 @@ namespace TowerDefense
             UpdateAnimation();
             Draw();
             GameState();
-            if (currentState == State.wave)
-            {
-                Wave();
-            }
 
         }
         /// <summary>
@@ -313,6 +331,7 @@ namespace TowerDefense
             foreach (Enemy enemy in currentWave)
             {
                 enemy.Update(currentFPS);
+                UpdatePath(enemy, ref endPoints, ref path);
             }
         }
 
@@ -387,6 +406,13 @@ namespace TowerDefense
             Font w = new Font("Arial", 14);
             Brush q = new SolidBrush(Color.White);
             dc.DrawString(string.Format("Phase: {0}", phase), w, q, 30, 5);
+            
+            //Draw timer if build phase is on
+            if (Enum.IsDefined(typeof(State), State.build))
+            {
+                dc.DrawString(string.Format("Time: {0}", buildWatch.Elapsed.Seconds), w, q, 30, 25);
+            }
+
             if (Form1.guiIsClicked)
             {
                 foreach (TowerButton tb in tl)
@@ -550,34 +576,35 @@ namespace TowerDefense
                 {
                     if (node.LocationX == tempNode.LocationX - 1 && node.LocationY == tempNode.LocationY && node.G == steps - counter)
                     {
-                        path[pathNumber].Add(new PointF(node.LocationX * tileSizeX + (tileSizeX / 2), node.LocationY * tileSizeY + (tileSizeY / 2)));
+                        path[pathNumber].Add(new PointF(node.LocationX * tileSizeX, node.LocationY * tileSizeY));
                         counter++;
                         tempNode = node;
                         break;
                     }
                     if (node.LocationX == tempNode.LocationX + 1 && node.LocationY == tempNode.LocationY && node.G == steps - counter)
                     {
-                        path[pathNumber].Add(new PointF(node.LocationX * tileSizeX + (tileSizeX / 2), node.LocationY * tileSizeY + (tileSizeY / 2)));
+                        path[pathNumber].Add(new PointF(node.LocationX * tileSizeX, node.LocationY * tileSizeY));
                         counter++;
                         tempNode = node;
                         break;
                     }
                     if (node.LocationX == tempNode.LocationX && node.LocationY == tempNode.LocationY - 1 && node.G == steps - counter)
                     {
-                        path[pathNumber].Add(new PointF(node.LocationX * tileSizeX + (tileSizeX / 2), node.LocationY * tileSizeY + (tileSizeY / 2)));
+                        path[pathNumber].Add(new PointF(node.LocationX * tileSizeX, node.LocationY * tileSizeY));
                         counter++;
                         tempNode = node;
                         break;
                     }
                     if (node.LocationX == tempNode.LocationX && node.LocationY == tempNode.LocationY + 1 && node.G == steps - counter)
                     {
-                        path[pathNumber].Add(new PointF(node.LocationX * tileSizeX + (tileSizeX / 2), node.LocationY * tileSizeY + (tileSizeY / 2)));
+                        path[pathNumber].Add(new PointF(node.LocationX * tileSizeX , node.LocationY * tileSizeY));
                         counter++;
                         tempNode = node;
                         break;
                     }
                 }
             }
+            path[pathNumber].Remove(path[pathNumber].Last());
         }
 
         /// <summary>
@@ -794,35 +821,63 @@ namespace TowerDefense
                 }
             }
         }
+        
+        
         /// <summary>
         /// start the the enemy wave 
+        /// Bliver ikke brugt, bruger en Timer og EventHandler istedet
         /// </summary>
         public void Wave()
         {
             foreach (List<Enemy> wave in waveEnemy)
             {
                 listNumb++;
-                if (listNumb == waveNumber)
+                if (listNumb == waveNumber-1)
                 {
                     enemyWatch.Start();
+
                     foreach (Enemy enemy in wave)
                     {
-                        while (enemyWatch.Elapsed.Milliseconds < 2500)
+                        while (enemyWatch.Elapsed.Seconds < 4)
                         {
-                            if (enemyWatch.Elapsed.Milliseconds > 2000)
+                            if (enemyWatch.Elapsed.Seconds > 2)
                             {
                                 currentWave.Add(enemy);
                                 enemyWatch.Restart();
                                 break;
                             }
                         }
-
-
                     }
                     break;
                 }
             }
         }
+
+
+        public void StartWave()
+        {
+            spawner.Enabled = true;
+            spawner.Interval = 3000;
+            spawner.Elapsed += new ElapsedEventHandler(SpawnWave);
+        }
+
+        public void SpawnWave(object source, ElapsedEventArgs e)
+        {
+            if (TimerEventCounter == waveEnemy[waveNumber].Count)
+            {
+                spawner.Enabled = false;
+                TimerEventCounter = 0;
+            }
+
+            if (spawner.Enabled)
+            {
+                currentWave.Add(waveEnemy[waveNumber][TimerEventCounter]);
+                TimerEventCounter++;
+            }
+
+
+        }
+
         /// <summary>
         /// Checks What phase The Player Is On
         /// </summary>
@@ -832,21 +887,30 @@ namespace TowerDefense
             {
                 case State.build:
 
-                    if (buildWatch.Elapsed.Milliseconds > 30000)
+                    if (buildWatch.Elapsed.Seconds > 2)
                     {
+                        waveNumber++;
                         buildWatch.Stop();
                         buildWatch.Reset();
                         phase = "Wave";
                         currentState = State.wave;
+                        StartWave();
                     }
                     break;
+
                 case State.wave:
 
                     if (currentWave.Count == 0)
                     {
-                        phase = "build phase";
+                        if (!buildWatch.IsRunning)
                         buildWatch.Start();
-                        currentState = State.build;
+
+                        if (buildWatch.Elapsed.Seconds > 5)
+                        {
+                            phase = "Build phase";
+                            buildWatch.Reset();
+                            currentState = State.build;
+                        }
 
                     }
                     break;
@@ -927,11 +991,27 @@ namespace TowerDefense
 
         }
         /// <summary>
-        /// Checking If The Enemies Are On A Checkpoing
+        /// Updating the enemies' endposition, the point they will try to reach
         /// </summary>
-        public void OnCheckpoint()
+        public void UpdatePath(Enemy enemy, ref List<PointF> endPoints, ref List<List<PointF>> path)
         {
-
+            //Check if enemy is positioned on top of his current endposition
+            if (enemy.Position == enemy.EndPosition)
+            {
+                enemy.ReachedPointCounter++;
+                //Check if enemy has been on all the points between his starting position and his end position
+                if (enemy.ReachedPointCounter != path[enemy.ReachedEndCounter].Count)
+                {
+                    enemy.EndPosition = path[enemy.ReachedEndCounter][path[enemy.ReachedEndCounter].Count - enemy.ReachedPointCounter];
+                }
+                //If enemy has been on all points between start and end, set endposition to a point from endPoints list and reset reachedPointCounter.
+                if (endPoints.Count == enemy.ReachedEndCounter)
+                {
+                    enemy.ReachedPointCounter = 0;
+                    enemy.EndPosition = endPoints[enemy.ReachedEndCounter];
+                    enemy.ReachedEndCounter++;
+                }
+            }
         }
     }
 }

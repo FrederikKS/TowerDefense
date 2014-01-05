@@ -24,7 +24,7 @@ namespace TowerDefense
             set { eRange = value; }
         }
         //Constructer
-        public EnemySlow(float eSlow, int eRange, int hp, int speed, int armor, int worth, Effect effect, string imagePath, PointF position, bool isClickable): base(hp,speed,armor,worth,effect,imagePath,position,isClickable)
+        public EnemySlow(string name, float eSlow, int eRange, float hp, int speed, int armor, int worth, Effect effect, string imagePath, PointF position, PointF endPosition, bool isClickable): base(name,hp,speed,armor,worth,effect,imagePath,position,endPosition,isClickable)
         {
             this.eSlow = eSlow;
             this.eRange = eRange;
