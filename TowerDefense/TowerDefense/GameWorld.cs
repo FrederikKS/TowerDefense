@@ -181,9 +181,9 @@ namespace TowerDefense
                 {
                     checkpointList[i] = new PointF(rnd.Next(0, (int)worldSizeX), rnd.Next(0, (int)worldSizeY));
                     //Adding position of checkpoint to list of endpoints used for saving paths
-                    endPoints.Add(checkpointList[i]);
+                    endPoints.Add(new PointF(checkpointList[i].X, checkpointList[i].Y));
                     //Adding position of checkpoint to list of startpoints used for saving paths
-                    startPoints.Add(checkpointList[i]);
+                    startPoints.Add(new PointF(checkpointList[i].X, checkpointList[i].Y));
                 }
 
             //Adding treasure position to list of endpoints used for saving paths. Added as last position in list
@@ -234,7 +234,7 @@ namespace TowerDefense
 
                 for (int enemyNumber = 0; enemyNumber < 10; enemyNumber++)
                 {
-                    waveEnemy[waveNumber].Add(new EnemyNormal("TestEnemy", 100 * chosenDif, 2, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/96.jpg", new PointF(grottoX*tileSizeX, grottoY*tileSizeY), path[0].Last(), false));
+                    waveEnemy[waveNumber].Add(new EnemyNormal("TestEnemy", 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/96.jpg", new PointF(grottoX*tileSizeX, grottoY*tileSizeY), path[0].Last(), false));
                 }
             }
 
@@ -999,17 +999,24 @@ namespace TowerDefense
             if (enemy.Position == enemy.EndPosition)
             {
                 enemy.ReachedPointCounter++;
+
                 //Check if enemy has been on all the points between his starting position and his end position
-                if (enemy.ReachedPointCounter != path[enemy.ReachedEndCounter].Count)
+                if (enemy.ReachedPointCounter != path[enemy.ReachedEndCounter].Count+1)
                 {
                     enemy.EndPosition = path[enemy.ReachedEndCounter][path[enemy.ReachedEndCounter].Count - enemy.ReachedPointCounter];
                 }
+
                 //If enemy has been on all points between start and end, set endposition to a point from endPoints list and reset reachedPointCounter.
-                if (endPoints.Count == enemy.ReachedEndCounter)
+                else
                 {
                     enemy.ReachedPointCounter = 0;
-                    enemy.EndPosition = endPoints[enemy.ReachedEndCounter];
+                    enemy.EndPosition = new PointF(endPoints[enemy.ReachedEndCounter].X*tileSizeX, endPoints[enemy.ReachedEndCounter].Y*tileSizeY);
                     enemy.ReachedEndCounter++;
+                    
+                    if (endPoints.Count == enemy.ReachedEndCounter)
+                    {
+                        //remove enemy, subtract 1 life
+                    }
                 }
             }
         }

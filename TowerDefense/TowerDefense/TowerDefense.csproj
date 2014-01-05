@@ -106,6 +106,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Graphic\96.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Graphic\Checkpoint1PlaceHolder.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
