@@ -234,7 +234,7 @@ namespace TowerDefense
 
                 for (int enemyNumber = 0; enemyNumber < 10; enemyNumber++)
                 {
-                    waveEnemy[waveNumber].Add(new EnemyNormal("TestEnemy", 100 * chosenDif, 2, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Towers/L1.png", new PointF(grottoX*tileSizeX, grottoY*tileSizeY), path[0].Last(), false));
+                    waveEnemy[waveNumber].Add(new EnemyNormal("TestEnemy", 100 * chosenDif, 2, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/96.jpg", new PointF(grottoX*tileSizeX, grottoY*tileSizeY), path[0].Last(), false));
                 }
             }
 
