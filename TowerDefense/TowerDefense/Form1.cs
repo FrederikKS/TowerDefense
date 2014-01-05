@@ -97,7 +97,6 @@ namespace TowerDefense
                     gui.DrawGUI(CreateGraphics());
                 }
             }
-
         }
         #region Highscore
         private void btn_high_Click(object sender, EventArgs e)
@@ -181,17 +180,10 @@ namespace TowerDefense
         // Creates The GUI
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-
             if (e.Button == MouseButtons.Left)
             {
                 guiIsClicked = true;
-                foreach (Tower tower in gw.towers)
-                {
-                    if (gw.mouseRect.IntersectsWith(tower.CollisionRect))
-                    {
-                        drawBuildGUI = 2;
-                    }
-                }
+                
 
                 foreach (Environment environment in gw.environment)
                 {
@@ -204,6 +196,16 @@ namespace TowerDefense
                         if (environment is Island)
                         {
                             drawBuildGUI = 4;
+                        }
+                    }
+                }
+                foreach (Tower tower in gw.towers)
+                {
+                    if (gw.mouseRect.IntersectsWith(tower.CollisionRect))
+                    {
+                        if (tower is Tower)
+                        {
+                            drawBuildGUI = 2;
                         }
                     }
                 }

@@ -90,9 +90,6 @@ namespace TowerDefense
         {
             mouseRect = new Rectangle(Form1.MousePosition, new Size(1, 1));
             tl = new List<TowerButton>();
-            tl.Add(new TowerButton(new Size(100, 100), new Point(150, 150), "Test", "hej", 1));
-            tb = new TowerButton(new Size(100, 100), new Point(150, 150), "Test", "hej", 1);
-            //}
 
             //Starting FPS timert
             lastFrameStarted = DateTime.Now;
@@ -253,12 +250,6 @@ namespace TowerDefense
         {
             //Update mouse rectangle pos
             mouseRect.Location = Form1.localMousePos;
-
-            //if (mouseRect.IntersectsWith())
-            //{
-
-            //}
-
             foreach (TowerButton tb in tl)
             {
                 if (mouseRect.IntersectsWith(tb.CollisionRect))
@@ -300,6 +291,9 @@ namespace TowerDefense
                     {
                         Build(6, new PointF(x, y));
                     }
+                    #endregion
+                    #region Sell
+
                     #endregion
                 }
             }
@@ -370,7 +364,7 @@ namespace TowerDefense
                     tl.Add(new TowerButton(new Size(75, 75), new Point(Form1.guiPos.X - 30, Form1.guiPos.Y - 120), "Sell_Tower", "Towers/st.png", 3));
                 }
             }
-            dc.Clear(Color.White);
+           dc.Clear(Color.White);
 
             //Drawing environment
             foreach (Environment env in environment)
@@ -829,14 +823,11 @@ namespace TowerDefense
                 }
             }
         }
-
         /// <summary>
         /// Checks What phase The Player Is On
         /// </summary>
         public void GameState()
         {
-
-
             switch (currentState)
             {
                 case State.build:

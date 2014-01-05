@@ -68,6 +68,10 @@ namespace TowerDefense
                 {
                     dc.FillRectangle(Brushes.Blue, collisionRect);
                 }
+                if (Form1.drawBuildGUI == 2)
+                {
+                    dc.FillRectangle(Brushes.Red, collisionRect);
+                }
                 // Draw The TowerButton
 
             }
