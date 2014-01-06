@@ -15,16 +15,13 @@ namespace TowerDefense
         // Field
         private Stopwatch stopWatch;
         public float speed;
-        private int damage;
         private int cost;
         private float ranged;
-<<<<<<< HEAD
 
-=======
         private GameWorld gw;
         private Projectile bullet;
         public Enemy target;
->>>>>>> atk and bullet function
+ 
         // Property
         public float Speed
         {

@@ -29,6 +29,7 @@ namespace TowerDefense
         private Stopwatch stopWatch = new Stopwatch();
         private Stopwatch buildWatch = new Stopwatch();
         private Stopwatch enemyWatch = new Stopwatch();
+        public List<Projectile> bullets = new List<Projectile>;
         
         // Fields for world creation
         private float worldSizeX;
@@ -54,7 +55,7 @@ namespace TowerDefense
         // Fields for wave
         List<List<Enemy>> waveEnemy = new List<List<Enemy>>();
         private List<int> waveCount = new List<int>();
-        private List<Enemy> currentWave = new List<Enemy>();
+        public List<Enemy> currentWave = new List<Enemy>();
         List<bool> pathAvailable = new List<bool>();
         public List<List<PointF>> path = new List<List<PointF>>();
         private int waveNumber = 0;

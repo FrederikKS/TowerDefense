@@ -7,34 +7,55 @@ using System.Drawing;
 
 namespace TowerDefense
 {
-    class Projectile : Tower
+    class Projectile : GameObject
     {
         // test
 
         //Fields
-        private PointF location;
+        private int damage;
+        public float bulletSpeed;
+        private Tower tw;
+        private GameWorld gw;
+ 
 
         //Properties
-        public PointF Location
+        public int Damage
         {
-            get { return location; }
-            set { location = value; }
+            get { return damage; }
+            set { damage = value; }
         }
 
         /// <summary>
         /// Projectile Constructor
         /// </summary>
-        /// <param name="location"></param>
-        /// <param name="speed"></param>
         /// <param name="damage"></param>
-        /// <param name="cost"></param>
-        /// <param name="range"></param>
         /// <param name="imagePath"></param>
         /// <param name="position"></param>
         /// <param name="isClickable"></param>
-        public Projectile(PointF location, float speed, int damage, int cost, float range, string imagePath, PointF position, bool isClickable) : base(speed, damage, cost, range, imagePath, position, isClickable)
+        public Projectile( int damage, float bulletSpeed, string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
         {
-            this.Location = location;
+            this.damage = damage;
+            this.bulletSpeed = bulletSpeed;
+        }
+        public void MoveBullet()
+        {
+            Vector2D direction = new Vector2D(tw.target.Position.X - Position.X, tw.target.Position.Y - Position.Y);
+            direction.Normalize(bulletSpeed);
+            Position = new PointF(direction.X + Position.X, direction.Y + Position.Y);
+            if (tw.target.Position == position)
+            {
+                tw.target.HP = tw.target.HP + tw.target.Armor - damage;
+                if (tw.target.HP <= 0)
+                {
+                    gw.currentWave.Remove(tw.target);
+                }
+                gw.bullets.Remove(this);
+                
+            }
+        }
+        public override void Update()
+        {
+            MoveBullet();
         }
     }
 }
