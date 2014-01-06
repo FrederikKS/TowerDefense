@@ -53,9 +53,10 @@ namespace TowerDefense
                 
             }
         }
-        public virtual void Update()
+        public override void Update(float FPS)
         {
             MoveBullet();
+            base.Update(FPS);
         }
     }
 }

@@ -82,6 +82,7 @@ namespace TowerDefense
         public override void Update(float FPS) 
         {
             Atk();
+            base.Update(FPS);
         }
 
     }
