@@ -104,10 +104,10 @@ namespace TowerDefense
         /// <param name="dc"></param>
         public virtual void Draw(Graphics dc)
         {
-            dc.DrawImage(sprite,position.X, position.Y,100, 100);
+            dc.DrawImage(sprite,position.X, position.Y, 96, 96);
             Pen pen = new Pen(Color.Red);
 #if DEBUG
-            dc.DrawRectangle(pen, collisionRect.X, collisionRect.Y, collisionRect.Width = 100, collisionRect.Height = 100);
+            dc.DrawRectangle(pen, collisionRect.X, collisionRect.Y, collisionRect.Width = 96, collisionRect.Height = 96);
 #endif
         }
 

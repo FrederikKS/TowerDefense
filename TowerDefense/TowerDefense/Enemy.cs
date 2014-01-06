@@ -20,10 +20,10 @@ namespace TowerDefense
         private PointF endPosition;
         private int reachedPointCounter = 0;
         private int reachedEndCounter = 0;
-
+        private bool enabled = false;
 
         #endregion
-        //propertis
+        //properties
         #region
         public string Name 
         {
@@ -64,6 +64,11 @@ namespace TowerDefense
         {
             get { return reachedEndCounter; }
             set { reachedEndCounter = value; }
+        }
+        public bool Enabled
+        {
+            get { return enabled; }
+            set { enabled = value; }
         }
         #endregion
         //constructor

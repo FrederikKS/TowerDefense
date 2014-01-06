@@ -122,7 +122,7 @@ namespace TowerDefense
             }
 
             //Randomizing number of checkpoints in the map
-            int numberOfCheckpoints = rnd.Next(0, 3);
+            int numberOfCheckpoints = rnd.Next(1, 3);
             if (numberOfCheckpoints > 0)
             {
                 for (int i = 0; i < numberOfCheckpoints; i++)
@@ -228,13 +228,13 @@ namespace TowerDefense
             #endregion
 
             //Instantiating and adding enemies to waves list
-            for (int waveNumber = 0; waveNumber < 20; waveNumber++)
+            for (int i = 0; i < 20; i++)
             {
                 waveEnemy.Add(new List<Enemy>());
 
                 for (int enemyNumber = 0; enemyNumber < 10; enemyNumber++)
                 {
-                    waveEnemy[waveNumber].Add(new EnemyNormal("TestEnemy", 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/96.jpg", new PointF(grottoX*tileSizeX, grottoY*tileSizeY), path[0].Last(), false));
+                    waveEnemy[i].Add(new EnemyNormal("TestEnemy", 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/96.jpg", new PointF(grottoX*tileSizeX, grottoY*tileSizeY), path[0].Last(), false));
                 }
             }
 
@@ -330,8 +330,11 @@ namespace TowerDefense
             //Update all enemy objects
             foreach (Enemy enemy in currentWave)
             {
-                enemy.Update(currentFPS);
-                UpdatePath(enemy, ref endPoints, ref path);
+                if (enemy.Enabled)
+                {
+                    enemy.Update(currentFPS);
+                    UpdatePath(enemy, ref endPoints, ref path);
+                }
             }
         }
 
@@ -400,6 +403,7 @@ namespace TowerDefense
             //Drawing enemies
             foreach (Enemy enemy in currentWave)
             {
+                if(enemy.Enabled)
                 enemy.Draw(dc);
             }
 
@@ -801,7 +805,7 @@ namespace TowerDefense
                     //Placing Water
                     if (coordinateSystem[x][y] == 10)
                     {
-                        environmentList.Add(new Water(@"Graphic/WaterPlaceHolder.png", new PointF(tempX, tempY), true));
+                        environmentList.Add(new Water(@"Graphic/Water.png", new PointF(tempX, tempY), true));
                     }
                     //Placing Islands
                     if (coordinateSystem[x][y] == 11)
@@ -816,7 +820,7 @@ namespace TowerDefense
                     //Placing rocks
                     if (coordinateSystem[x][y] == 13)
                     {
-                        environmentList.Add(new Rock(@"Graphic/RockPlaceHolder.jpg", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/Rock.png", new PointF(tempX, tempY), false));
                     }
                 }
             }
@@ -853,9 +857,12 @@ namespace TowerDefense
             }
         }
 
-
+        /// <summary>
+        /// Starts the current wave
+        /// </summary>
         public void StartWave()
         {
+            currentWave = waveEnemy[waveNumber];
             spawner.Enabled = true;
             spawner.Interval = 3000;
             spawner.Elapsed += new ElapsedEventHandler(SpawnWave);
@@ -871,11 +878,9 @@ namespace TowerDefense
 
             if (spawner.Enabled)
             {
-                currentWave.Add(waveEnemy[waveNumber][TimerEventCounter]);
+                currentWave[TimerEventCounter].Enabled = true;
                 TimerEventCounter++;
             }
-
-
         }
 
         /// <summary>
@@ -889,12 +894,12 @@ namespace TowerDefense
 
                     if (buildWatch.Elapsed.Seconds > 2)
                     {
-                        waveNumber++;
                         buildWatch.Stop();
                         buildWatch.Reset();
                         phase = "Wave";
                         currentState = State.wave;
                         StartWave();
+                        waveNumber++;
                     }
                     break;
 
