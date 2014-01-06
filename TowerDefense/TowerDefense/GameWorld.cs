@@ -312,7 +312,13 @@ namespace TowerDefense
                     }
                     #endregion
                     #region Sell
-
+                    foreach (Tower tower in towers)
+                    {
+                        if (mouseRect.IntersectsWith(tower.CollisionRect))
+                        {
+                            Sell(1, tower);
+                        }
+                    }
                     #endregion
                 }
             }
