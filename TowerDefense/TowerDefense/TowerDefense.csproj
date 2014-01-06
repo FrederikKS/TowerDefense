@@ -78,6 +78,7 @@
     <Compile Include="TowerStun.cs" />
     <Compile Include="TowerType.cs" />
     <Compile Include="Treasure.cs" />
+    <Compile Include="Vector2D.cs" />
     <Compile Include="Water.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
