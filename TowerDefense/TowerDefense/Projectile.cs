@@ -16,7 +16,9 @@ namespace TowerDefense
         private int damage;
         public float bulletSpeed;
         private Tower tw;
-        
+        private Enemy target;
+
+
  
 
         //Properties
@@ -24,6 +26,11 @@ namespace TowerDefense
         {
             get { return damage; }
             set { damage = value; }
+        }
+        public Enemy Target
+        {
+            get { return target; }
+            set { target = value; }
         }
 
         /// <summary>
@@ -46,15 +53,15 @@ namespace TowerDefense
         /// </summary>
         public void MoveBullet()
         {
-            Vector2D direction = new Vector2D(tw.target.Position.X - Position.X, tw.target.Position.Y - Position.Y);
+            Vector2D direction = new Vector2D(target.Position.X - Position.X, target.Position.Y - Position.Y);
             direction.Normalize(bulletSpeed);
             Position = new PointF(direction.X + Position.X, direction.Y + Position.Y);
-            if (tw.target.Position == position)
+            if (target.Position == position)
             {
-                tw.target.HP = tw.target.HP + tw.target.Armor - damage;
-                if (tw.target.HP <= 0)
+                target.HP = target.HP + target.Armor - damage;
+                if (target.HP <= 0)
                 {
-                   Form1.gw.currentWave.Remove(tw.target);
+                   Form1.gw.currentWave.Remove(target);
                 }
                 Form1.gw.bullets.Remove(this);
                 

@@ -30,7 +30,7 @@ namespace TowerDefense
         private Stopwatch buildWatch = new Stopwatch();
         private Stopwatch enemyWatch = new Stopwatch();
         public List<Projectile> bullets = new List<Projectile>();
-        
+
         // Fields for world creation
         private float worldSizeX;
         private float worldSizeY;
@@ -228,6 +228,13 @@ namespace TowerDefense
 
             #endregion
 
+            //First point enemy should move to, in case first path is empty
+            PointF firstPoint;
+            if (path[0].Count > 0)
+                firstPoint = path[0].Last();
+            else
+                firstPoint = endPoints[0];
+
             //Instantiating and adding enemies to waves list
             for (int i = 0; i < 20; i++)
             {
@@ -235,7 +242,7 @@ namespace TowerDefense
 
                 for (int enemyNumber = 0; enemyNumber < 10; enemyNumber++)
                 {
-                    waveEnemy[i].Add(new EnemyNormal("TestEnemy", 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/96.jpg", new PointF(grottoX*tileSizeX, grottoY*tileSizeY), path[0].Last(), false));
+                    waveEnemy[i].Add(new EnemyNormal("TestEnemy", 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/96.jpg", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                 }
             }
 
@@ -405,31 +412,34 @@ namespace TowerDefense
                     }
                 }
             }
-           dc.Clear(Color.White);
+            dc.Clear(Color.White);
 
             //Drawing environment
-            foreach (Environment env in environment)
+            for (int i = 0; i < environment.Count; i++)
             {
-                env.Draw(dc);
+                environment[i].Draw(dc);
             }
-
             //Drawing towers
-            foreach (Tower tow in towers)
+            for (int i = 0; i < towers.Count; i++)
             {
-                tow.Draw(dc);
+                towers[i].Draw(dc);   
             }
-
             //Drawing enemies
-            foreach (Enemy enemy in currentWave)
+            for (int i = 0; i < currentWave.Count; i++)
             {
-                if(enemy.Enabled)
-                enemy.Draw(dc);
+                if (currentWave[i].Enabled)
+                    currentWave[i].Draw(dc);
+            }
+            // Drawing Bullets
+            for (int i = 0; i < bullets.Count; i++)
+            {
+                bullets[i].Draw(dc);
             }
 
             Font w = new Font("Arial", 14);
             Brush q = new SolidBrush(Color.White);
             dc.DrawString(string.Format("Phase: {0}", phase), w, q, 30, 5);
-            
+
             //Draw timer if build phase is on
             if (Enum.IsDefined(typeof(State), State.build))
             {
@@ -620,7 +630,7 @@ namespace TowerDefense
                     }
                     if (node.LocationX == tempNode.LocationX && node.LocationY == tempNode.LocationY + 1 && node.G == steps - counter)
                     {
-                        path[pathNumber].Add(new PointF(node.LocationX * tileSizeX , node.LocationY * tileSizeY));
+                        path[pathNumber].Add(new PointF(node.LocationX * tileSizeX, node.LocationY * tileSizeY));
                         counter++;
                         tempNode = node;
                         break;
@@ -845,9 +855,9 @@ namespace TowerDefense
                 }
             }
         }
-        
-        
-        
+
+
+
 
         /// <summary>
         /// Starts the current wave
@@ -901,7 +911,7 @@ namespace TowerDefense
                     if (currentWave.Count == 0)
                     {
                         if (!buildWatch.IsRunning)
-                        buildWatch.Start();
+                            buildWatch.Start();
 
                         if (buildWatch.Elapsed.Seconds > 5)
                         {
@@ -925,8 +935,8 @@ namespace TowerDefense
                 #region Water
                 // Water
                 case 1:
-                    towers.Add(new TowerSlow(2, 5, 5, 25, 6, @"Towers/w1.png", position, true));
-                    towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
+                    towers.Add(new TowerSlow(2, tileSizeX * 3, 5, 25, tileSizeX * 3, @"Towers/w1.png", position, true));
+                    towers[0].Bullet = new Projectile(100, 5, @"Towers/w2.png", position, false, towers[0]);
                     gold -= cost;
                     break;
 
@@ -1017,15 +1027,15 @@ namespace TowerDefense
                     }
 
                 //If enemy has been on all points between start and end, set endposition to a point from endPoints list and reset reachedPointCounter.
-                else
-                {
-                    if (enemy.Enabled)
+                    else
                     {
-                        enemy.ReachedPointCounter = 0;
-                        enemy.EndPosition = new PointF(endPoints[enemy.ReachedEndCounter].X * tileSizeX, endPoints[enemy.ReachedEndCounter].Y * tileSizeY);
-                        enemy.ReachedEndCounter++;
+                        if (enemy.Enabled)
+                        {
+                            enemy.ReachedPointCounter = 0;
+                            enemy.EndPosition = new PointF(endPoints[enemy.ReachedEndCounter].X * tileSizeX, endPoints[enemy.ReachedEndCounter].Y * tileSizeY);
+                            enemy.ReachedEndCounter++;
+                        }
                     }
-                }
             }
         }
     }
