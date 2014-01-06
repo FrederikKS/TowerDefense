@@ -370,21 +370,33 @@ namespace TowerDefense
         {
             if (Form1.guiIsClicked)
             {
+
+                int tmpX = Form1.gui.ellipse.X + tileSizeX + (tileSizeX / 2);
+                int tmpY = Form1.gui.ellipse.Y + tileSizeY + (tileSizeY / 2);
                 if (Form1.drawBuildGUI == 4)
                 {
-                    tl.Add(new TowerButton(new Size(75, 75), new Point(Form1.guiPos.X + 50, Form1.guiPos.Y), "Land_Tower1", "Towers/w1.png", 1));
-                    tl.Add(new TowerButton(new Size(75, 75), new Point(Form1.guiPos.X - 120, Form1.guiPos.Y), "Land_Tower2", "Towers/w2.png", 2));
-                    tl.Add(new TowerButton(new Size(75, 75), new Point(Form1.guiPos.X - 30, Form1.guiPos.Y - 120), "Land_Tower3", "Towers/w3.png", 3));
+                    if (tl.Count < 3)
+                    {
+                        tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX + 50, tmpY), "Land_Tower1", "Towers/w1.png", 1));
+                        tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 120, tmpY), "Land_Tower2", "Towers/w2.png", 2));
+                        tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 30, tmpY - 120), "Land_Tower3", "Towers/w3.png", 3));
+                    }
                 }
                 if (Form1.drawBuildGUI == 3)
                 {
-                    tl.Add(new TowerButton(new Size(75, 75), new Point(Form1.guiPos.X + 50, Form1.guiPos.Y), "Water_Tower1", "Towers/w1.png", 1));
-                    tl.Add(new TowerButton(new Size(75, 75), new Point(Form1.guiPos.X - 120, Form1.guiPos.Y), "Water_Tower2", "Towers/w2.png", 2));
-                    tl.Add(new TowerButton(new Size(75, 75), new Point(Form1.guiPos.X - 30, Form1.guiPos.Y - 120), "Water_Tower3", "Towers/w3.png", 3));
+                    if (tl.Count < 3)
+                    {
+                        tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX + 50, tmpY), "Water_Tower1", "Towers/w1.png", 1));
+                        tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 120, tmpY), "Water_Tower2", "Towers/w2.png", 2));
+                        tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 30, tmpY - 120), "Water_Tower3", "Towers/w3.png", 3));
+                    }
                 }
                 if (Form1.drawBuildGUI == 2)
                 {
-                    tl.Add(new TowerButton(new Size(75, 75), new Point(Form1.guiPos.X - 30, Form1.guiPos.Y - 120), "Sell_Tower", "Towers/st.png", 3));
+                    if (tl.Count < 1)
+                    {
+                        tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 30, tmpY - 120), "Sell_Tower", "Towers/st.png", 3));
+                    }
                 }
             }
            dc.Clear(Color.White);

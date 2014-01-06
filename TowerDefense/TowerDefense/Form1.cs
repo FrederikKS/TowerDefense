@@ -14,7 +14,7 @@ namespace TowerDefense
     public partial class Form1 : Form
     {
         // test
-        GUI gui;
+        public static GUI gui;
         // Dificulity choosen
         public static int difc = 0;
         // Highscore Choosen
@@ -81,21 +81,23 @@ namespace TowerDefense
             localMousePos = this.PointToClient(Cursor.Position);
             if (difc > 0)
             {
-                if (gw == null)
-                {
-                    gw = new GameWorld(CreateGraphics(), this.DisplayRectangle, 14, 8, difc);
-                }
                 if (gui == null)
                 {
                     gui = new GUI();
                 }
-
-                gw.GameLoop();
-
                 if (drawBuildGUI > 1 && drawBuildGUI < 6)
                 {
                     gui.DrawGUI(CreateGraphics());
                 }
+                if (gw == null)
+                {
+                    gw = new GameWorld(CreateGraphics(), this.DisplayRectangle, 14, 8, difc);
+                }
+
+
+                gw.GameLoop();
+
+
             }
         }
         #region Highscore
@@ -183,7 +185,7 @@ namespace TowerDefense
             if (e.Button == MouseButtons.Left)
             {
                 guiIsClicked = true;
-                
+
 
                 foreach (Environment environment in gw.environment)
                 {
@@ -210,7 +212,7 @@ namespace TowerDefense
                     }
                 }
                 //Set position
-                
+
                 guiPos = ActiveForm.PointToClient(Cursor.Position);
             }
         }
