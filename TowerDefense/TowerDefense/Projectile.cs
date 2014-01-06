@@ -16,7 +16,7 @@ namespace TowerDefense
         private int damage;
         public float bulletSpeed;
         private Tower tw;
-        private GameWorld gw;
+        
  
 
         //Properties
@@ -33,10 +33,11 @@ namespace TowerDefense
         /// <param name="imagePath"></param>
         /// <param name="position"></param>
         /// <param name="isClickable"></param>
-        public Projectile( int damage, float bulletSpeed, string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
+        public Projectile( int damage, float bulletSpeed, string imagePath, PointF position, bool isClickable, Tower fromTower ) : base(imagePath, position, isClickable)
         {
             this.damage = damage;
             this.bulletSpeed = bulletSpeed;
+            this.tw = fromTower;
         }
         /// <summary>
         /// lucas
@@ -53,9 +54,9 @@ namespace TowerDefense
                 tw.target.HP = tw.target.HP + tw.target.Armor - damage;
                 if (tw.target.HP <= 0)
                 {
-                    gw.currentWave.Remove(tw.target);
+                   Form1.gw.currentWave.Remove(tw.target);
                 }
-                gw.bullets.Remove(this);
+                Form1.gw.bullets.Remove(this);
                 
             }
         }

@@ -9,7 +9,7 @@ namespace TowerDefense
 {
     public class TowerButton
     {
-        GameWorld gw;
+        
         private Rectangle collisionRect;
         // Fields
         private string name;

@@ -30,7 +30,7 @@ namespace TowerDefense
         }
 
         //Constructor
-        public TowerDoT(float dmgOverTime, float duration, float speed, int cost, int ranged, Projectile bullet,string imagePath, PointF position, bool isClickable) : base(speed, cost, ranged, bullet, imagePath, position, isClickable)
+        public TowerDoT(float dmgOverTime, float duration, float speed, int cost, int ranged,string imagePath, PointF position, bool isClickable) : base(speed, cost, ranged, imagePath, position, isClickable)
         {
             this.dmgOverTime = dmgOverTime;
             this.duration = duration;
@@ -41,7 +41,7 @@ namespace TowerDefense
             
         }
 
-        public void Update(float FPS)
+        public override void Update(float FPS)
         {
             base.Update(FPS);
         }

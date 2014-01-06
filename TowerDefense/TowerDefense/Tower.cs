@@ -19,6 +19,8 @@ namespace TowerDefense
         protected float ranged;
 
         private Projectile bullet;
+
+
         public Enemy target;
  
         // Property
@@ -27,7 +29,11 @@ namespace TowerDefense
             get { return speed; }
             set { speed = value; }
         }
-        
+        public Projectile Bullet
+        {
+            get { return bullet; }
+            set { bullet = value; }
+        }
        
        
         /// <summary>
@@ -40,12 +46,12 @@ namespace TowerDefense
         /// <param name="imagePath"></param>
         /// <param name="position"></param>
         /// <param name="isClickAble"></param>
-        public Tower(float speed, int cost, float ranged, Projectile bullet, string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
+        public Tower(float speed, int cost, float ranged, string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
         {
             this.speed = speed;
             this.cost = cost;
             this.ranged = ranged;
-            this.bullet = bullet;
+            
         }
 
         /// <summary>
