@@ -23,10 +23,6 @@ namespace TowerDefense
         /// <param name="g"></param>
         public void DrawGUI(Graphics g)
         {
-            if (gw == null)
-            {
-                gw = new GameWorld(g, Form1.ActiveForm.DisplayRectangle, 14, 8, Form1.difc);
-            }
             // Tower Tile
             if (Form1.drawBuildGUI == 2)
             {

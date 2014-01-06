@@ -20,8 +20,7 @@ namespace TowerDefense
         // Highscore Choosen
         int highscoreC = 0;
         // Classes
-        GameWorld gw;
-        Tower t;
+        public static GameWorld gw;
         //Mouse local position on the form
         public static Point localMousePos;
         //Checks if the GUI should be drawn

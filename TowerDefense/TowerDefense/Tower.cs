@@ -13,12 +13,11 @@ namespace TowerDefense
         // test
 
         // Field
-        private Stopwatch stopWatch;
+        private Stopwatch stopWatch = new Stopwatch();
         public float speed;
         private int cost;
         protected float ranged;
 
-        private GameWorld gw;
         private Projectile bullet;
         public Enemy target;
  
@@ -46,8 +45,7 @@ namespace TowerDefense
             this.speed = speed;
             this.cost = cost;
             this.ranged = ranged;
-            
-            
+            this.bullet = bullet;
         }
 
         /// <summary>
@@ -57,19 +55,19 @@ namespace TowerDefense
         /// </summary>
         public void Atk()
         {
-            for (int i = 0; i < gw.currentWave.Count ; i++)
+            for (int i = 0; i < Form1.gw.currentWave.Count; i++)
             {
-                if (Math.Sqrt(position.X * gw.currentWave[i].Position.X + position.Y * gw.currentWave[i].Position.Y)< ranged)
+                if (Math.Sqrt(position.X * Form1.gw.currentWave[i].Position.X + position.Y * Form1.gw.currentWave[i].Position.Y) < ranged)
                 {
                     stopWatch.Start();
                     if (stopWatch.Elapsed.Milliseconds > speed)
                     {
-                        
+
                         if (target == null)
                         {
-                            target = gw.currentWave[i];
+                            target = Form1.gw.currentWave[i];
                         }
-                        gw.bullets.Add(bullet);
+                        Form1.gw.bullets.Add(bullet);
                         stopWatch.Restart();
                     }
                 }
@@ -78,7 +76,7 @@ namespace TowerDefense
                     target = null;
                 }
             }
-            
+
         }
         /// <summary>
         /// The Update function for the towers
