@@ -16,7 +16,7 @@ namespace TowerDefense
         private Stopwatch stopWatch;
         public float speed;
         private int cost;
-        private float ranged;
+        protected float ranged;
 
         private GameWorld gw;
         private Projectile bullet;

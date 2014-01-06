@@ -29,7 +29,7 @@ namespace TowerDefense
         private Stopwatch stopWatch = new Stopwatch();
         private Stopwatch buildWatch = new Stopwatch();
         private Stopwatch enemyWatch = new Stopwatch();
-        public List<Projectile> bullets = new List<Projectile>;
+        public List<Projectile> bullets = new List<Projectile>();
         
         // Fields for world creation
         private float worldSizeX;
@@ -933,31 +933,31 @@ namespace TowerDefense
                 #region Water
                 // Water
                 case 1:
-                    towers.Add(new TowerSlow(20, 20, 20, 20, 20, @"Towers/w1.png", position, true));
+                    towers.Add(new TowerSlow(2, 5, 5, 25, 6, new Projectile(10, 3, @"Images/Tower1.png", position, false), @"Images/Tower2.png", position, true));
                     gold -= cost;
                     break;
 
                 case 2:
-                    towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Towers/w2.png", position, true));
+                    towers.Add(new TowerBoost(2, 3, 5, 35, 6, new Projectile(10, 3, @"Images/Tower1.png", position, false), @"Images/Tower3.png", position, true));
                     gold -= cost;
                     break;
                 case 3:
-                    towers.Add(new TowerStun(20, 20, 20, 20, 20, @"Towers/w3.png", position, true));
+                    towers.Add(new TowerStun(2, 5, 40, 7, new Projectile(10, 3, @"Images/Tower1.png", position, false), @"Images/Tower1.png", position, true));
                     gold -= cost;
                     break;
                 #endregion
                 #region Land
                 // Land
                 case 4:
-                    towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Towers/L1.png", position, true));
+                    towers.Add(new TowerBoost(2, 3, 5, 35, 6, new Projectile(10, 3, @"Images/Tower1.png", position, false), @"Towers/L1.png", position, true));
                     gold -= cost;
                     break;
                 case 5:
-                    towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Towers/L2.png", position, true));
+                    towers.Add(new TowerSlow(2, 5, 5, 25, 6, new Projectile(10, 3, @"Images/Tower1.png", position, false), @"Towers/L2.png", position, true));
                     gold -= cost;
                     break;
                 case 6:
-                    towers.Add(new TowerBoost(20, 20, 20, 20, 20, 20, @"Towers/L3.png", position, true));
+                    towers.Add(new TowerStun(2, 5, 40, 7, new Projectile(10, 3, @"Images/Tower1.png", position, false), @"Towers/L3.png", position, true));
                     gold -= cost;
                     break;
                 #endregion

@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace TowerDefense
 {
-    class Projectile : GameObject
+    public class Projectile : GameObject
     {
         // test
 
@@ -53,7 +53,7 @@ namespace TowerDefense
                 
             }
         }
-        public override void Update()
+        public virtual void Update()
         {
             MoveBullet();
         }

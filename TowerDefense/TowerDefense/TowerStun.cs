@@ -29,8 +29,8 @@ namespace TowerDefense
         /// <param name="imagePath"></param>
         /// <param name="position"></param>
         /// <param name="isClickAble"></param>
-        public TowerStun(float stunTime,float speed, int damage, int cost, float range, string imagePath, PointF position, bool isClickAble)
-            : base(speed, damage, cost, range, imagePath, position, isClickAble)
+        public TowerStun(float stunTime,float speed, int cost, float ranged, Projectile bullet, string imagePath, PointF position, bool isClickAble)
+            : base(speed, cost, ranged, bullet, imagePath, position, isClickAble)
         {
 
         }
