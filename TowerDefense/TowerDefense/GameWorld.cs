@@ -627,7 +627,8 @@ namespace TowerDefense
                     }
                 }
             }
-            path[pathNumber].Remove(path[pathNumber].Last());
+            if (path[pathNumber].Count > 0)
+                path[pathNumber].Remove(path[pathNumber].Last());
         }
 
         /// <summary>
@@ -1001,25 +1002,29 @@ namespace TowerDefense
             //Check if enemy is positioned on top of his current endposition
             if (enemy.Position == enemy.EndPosition)
             {
-                enemy.ReachedPointCounter++;
-
                 if (endPoints.Count == enemy.ReachedEndCounter)
                 {
-                    //
+                    enemy.Enabled = false;
                 }
 
                 //Check if enemy has been on all the points between his starting position and his end position
-                if (enemy.ReachedPointCounter != path[enemy.ReachedEndCounter].Count+1)
-                {
-                    enemy.EndPosition = path[enemy.ReachedEndCounter][path[enemy.ReachedEndCounter].Count - enemy.ReachedPointCounter];
-                }
+                if (enemy.Enabled)
+                    if (enemy.ReachedPointCounter != path[enemy.ReachedEndCounter].Count)
+                    {
+                        enemy.ReachedPointCounter++;
+                        enemy.EndPosition = path[enemy.ReachedEndCounter][path[enemy.ReachedEndCounter].Count - enemy.ReachedPointCounter];
+
+                    }
 
                 //If enemy has been on all points between start and end, set endposition to a point from endPoints list and reset reachedPointCounter.
                 else
                 {
-                    enemy.ReachedPointCounter = 0;
-                    enemy.EndPosition = new PointF(endPoints[enemy.ReachedEndCounter].X*tileSizeX, endPoints[enemy.ReachedEndCounter].Y*tileSizeY);
-                    enemy.ReachedEndCounter++;
+                    if (enemy.Enabled)
+                    {
+                        enemy.ReachedPointCounter = 0;
+                        enemy.EndPosition = new PointF(endPoints[enemy.ReachedEndCounter].X * tileSizeX, endPoints[enemy.ReachedEndCounter].Y * tileSizeY);
+                        enemy.ReachedEndCounter++;
+                    }
                 }
             }
         }
