@@ -50,6 +50,11 @@ namespace TowerDefense
             
         }
 
+        /// <summary>
+        /// lucas
+        /// checks if enemy are in range and checks if cooldown is down
+        /// mark the enemy target
+        /// </summary>
         public void Atk()
         {
             for (int i = 0; i < gw.currentWave.Count ; i++)
@@ -59,12 +64,12 @@ namespace TowerDefense
                     stopWatch.Start();
                     if (stopWatch.Elapsed.Milliseconds > speed)
                     {
-                        gw.bullets.Add(bullet);
+                        
                         if (target == null)
                         {
                             target = gw.currentWave[i];
                         }
-
+                        gw.bullets.Add(bullet);
                         stopWatch.Restart();
                     }
                 }

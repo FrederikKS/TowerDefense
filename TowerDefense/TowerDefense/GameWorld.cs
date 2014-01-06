@@ -828,35 +828,7 @@ namespace TowerDefense
         }
         
         
-        /// <summary>
-        /// start the the enemy wave 
-        /// Bliver ikke brugt, bruger en Timer og EventHandler istedet
-        /// </summary>
-        public void Wave()
-        {
-            foreach (List<Enemy> wave in waveEnemy)
-            {
-                listNumb++;
-                if (listNumb == waveNumber-1)
-                {
-                    enemyWatch.Start();
-
-                    foreach (Enemy enemy in wave)
-                    {
-                        while (enemyWatch.Elapsed.Seconds < 4)
-                        {
-                            if (enemyWatch.Elapsed.Seconds > 2)
-                            {
-                                currentWave.Add(enemy);
-                                enemyWatch.Restart();
-                                break;
-                            }
-                        }
-                    }
-                    break;
-                }
-            }
-        }
+        
 
         /// <summary>
         /// Starts the current wave
@@ -885,6 +857,7 @@ namespace TowerDefense
         }
 
         /// <summary>
+        /// Lucas
         /// Checks What phase The Player Is On
         /// </summary>
         public void GameState()

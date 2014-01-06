@@ -9,7 +9,8 @@ namespace TowerDefense
 {
     public class Projectile : GameObject
     {
-        // test
+        
+
 
         //Fields
         private int damage;
@@ -37,6 +38,11 @@ namespace TowerDefense
             this.damage = damage;
             this.bulletSpeed = bulletSpeed;
         }
+        /// <summary>
+        /// lucas
+        /// Moves the bullet along a vector to target and give target damage
+        /// Remove bullet when bullet position are equal to target position
+        /// </summary>
         public void MoveBullet()
         {
             Vector2D direction = new Vector2D(tw.target.Position.X - Position.X, tw.target.Position.Y - Position.Y);
