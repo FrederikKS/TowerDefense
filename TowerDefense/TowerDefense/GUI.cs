@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace TowerDefense
 {
@@ -59,34 +60,35 @@ namespace TowerDefense
                 // Place the GUI's Position to center of tile
                 foreach (Environment e in gw.environment)
                 {
-                    if (gw.mouseRect.IntersectsWith(e.CollisionRect))
-                    {
-                        #region Tower Walls
-                        // Tower 1
-                        Point point1 = new Point(Form1.guiPos.X, Form1.guiPos.Y);
-                        Point point2 = new Point(Form1.guiPos.X, Form1.guiPos.Y + 150);
-                        // Tower 2
-                        Point point3 = new Point(Form1.guiPos.X, Form1.guiPos.Y);
-                        Point point4 = new Point(Form1.guiPos.X - 120, Form1.guiPos.Y - 90);
-                        // Tower 3
-                        Point point5 = new Point(Form1.guiPos.X, Form1.guiPos.Y);
-                        Point point6 = new Point(Form1.guiPos.X + 120, Form1.guiPos.Y - 90);
-                        #endregion
-                        #region Tower Pen Collor
-                        // Pen
-                        Pen p = new Pen(Color.Blue);
-                        Pen pp = new Pen(Color.Blue);
-                        Pen ppp = new Pen(Color.Blue);
-                        #endregion
-                        // The Large Ellipse
-                        g.DrawEllipse(p, Form1.guiPos.X - 150, Form1.guiPos.Y - 150, 300, 300);
-                        // Drawing the lines
-                        g.DrawLine(p, point1, point2);
-                        g.DrawLine(pp, point3, point4);
-                        g.DrawLine(ppp, point5, point6);
-                        // The Small Ellipse
-                        g.DrawEllipse(p, Form1.guiPos.X - 25, Form1.guiPos.Y - 25, 50, 50);
-                    }
+
+                    int x = (((int)Math.Floor((decimal)Form1.guiPos.X / gw.tileSizeX)) * gw.tileSizeX) - 1 * gw.tileSizeX;
+                    int y = (((int)Math.Floor((decimal)Form1.guiPos.Y / gw.tileSizeY)) * gw.tileSizeY) - 1 * gw.tileSizeY;
+                    #region Tower Walls
+                    // Tower 1
+                    Point point1 = new Point(Form1.guiPos.X, Form1.guiPos.Y);
+                    Point point2 = new Point(Form1.guiPos.X, Form1.guiPos.Y + 150);
+                    // Tower 2
+                    Point point3 = new Point(Form1.guiPos.X, Form1.guiPos.Y);
+                    Point point4 = new Point(Form1.guiPos.X - 120, Form1.guiPos.Y - 90);
+                    // Tower 3
+                    Point point5 = new Point(Form1.guiPos.X, Form1.guiPos.Y);
+                    Point point6 = new Point(Form1.guiPos.X + 120, Form1.guiPos.Y - 90);
+                    #endregion
+                    #region Tower Pen Collor
+                    // Pen
+                    Pen p = new Pen(Color.White);
+                    Pen pp = new Pen(Color.White);
+                    Pen ppp = new Pen(Color.White);
+                    #endregion
+                    // The Large Ellipse
+                    g.DrawEllipse(p, x, y, 300, 300);
+                    // Drawing the lines
+                    g.DrawLine(p, point1, point2);
+                    g.DrawLine(pp, point3, point4);
+                    g.DrawLine(ppp, point5, point6);
+                    // The Small Ellipse
+                    g.DrawEllipse(p, x, y, 50, 50);
+
                 }
             }
             // Island Tile

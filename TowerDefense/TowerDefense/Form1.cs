@@ -210,8 +210,8 @@ namespace TowerDefense
                     }
                 }
                 //Set position
-                guiPos.X = e.X;
-                guiPos.Y = e.Y;
+                
+                guiPos = ActiveForm.PointToClient(Cursor.Position);
             }
         }
     }
