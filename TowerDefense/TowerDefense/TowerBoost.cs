@@ -13,8 +13,6 @@ namespace TowerDefense
         //Fields
         private int boostDamage;
         private float boostSpeed;
-        private GameWorld gw;
-        private Projectile projectile;
         
         //Properties
         public int BoostDamage
@@ -39,16 +37,11 @@ namespace TowerDefense
 
         public void Boost()
         {
-            for (int i = 0; i < gw.currentWave.Count; i++)
+            for (int i = 0; i < Form1.gw.towers.Count; i++)
             {
-                if (Math.Sqrt(position.X * gw.currentWave[i].Position.X + position.Y * gw.currentWave[i].Position.Y) > ranged)
+                if (Math.Sqrt(position.X * Form1.gw.towers[i].Position.X + position.Y * Form1.gw.towers[i].Position.Y) > ranged)
                 {
-                    foreach (Tower tw in gw.towers)
-                    {
-                        tw.speed += boostSpeed;
-                        projectile.Damage += boostDamage;
-                        
-                    }
+                    
                 }
             }
         }
