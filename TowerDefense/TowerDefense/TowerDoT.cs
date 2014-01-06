@@ -35,5 +35,15 @@ namespace TowerDefense
             this.dmgOverTime = dmgOverTime;
             this.duration = duration;
         }
+
+        public void DoT()
+        {
+            
+        }
+
+        public void Update(float FPS)
+        {
+            base.Update(FPS);
+        }
     }
 }

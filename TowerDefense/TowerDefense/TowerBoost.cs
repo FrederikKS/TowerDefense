@@ -10,14 +10,14 @@ namespace TowerDefense
 {
     class TowerBoost : TowerType
     {
-        // test
-
         //Fields
-        private float boostDamage;
+        private int boostDamage;
         private float boostSpeed;
-
+        private GameWorld gw;
+        private Projectile projectile;
+        
         //Properties
-        public float BoostDamage
+        public int BoostDamage
         {
             get { return boostDamage; }
             set { boostDamage = value; }
@@ -30,11 +30,33 @@ namespace TowerDefense
         }
 
         //Constructor
-        public TowerBoost(float boostDamage, float boostSpeed, float speed, int cost, int ranged, Projectile bullet, string imagePath, PointF position, bool isClickable) 
+        public TowerBoost(int boostDamage, float boostSpeed, float speed, int cost, int ranged, Projectile bullet, string imagePath, PointF position, bool isClickable) 
             : base(speed, cost, ranged, bullet, imagePath, position, isClickable)
         {
             this.boostDamage = boostDamage;
             this.boostSpeed = boostSpeed;
+        }
+
+        public void Boost()
+        {
+            for (int i = 0; i < gw.currentWave.Count; i++)
+            {
+                if (Math.Sqrt(position.X * gw.currentWave[i].Position.X + position.Y * gw.currentWave[i].Position.Y) > ranged)
+                {
+                    foreach (Tower tw in gw.towers)
+                    {
+                        tw.speed += boostSpeed;
+                        projectile.Damage += boostDamage;
+                        
+                    }
+                }
+            }
+        }
+
+        public override void Update(float FPS)
+        {
+            Boost();
+            base.Update(FPS);
         }
     }
 }

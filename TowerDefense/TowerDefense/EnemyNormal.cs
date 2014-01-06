@@ -10,7 +10,7 @@ namespace TowerDefense
     {
         // test
         //Constructer
-        public EnemyNormal(string name, float hp, int speed, int armor, int worth, Effect effect, string imagePath, PointF position, PointF endPosition, bool isClickable): base(name,hp,speed,armor,worth,effect,imagePath,position,endPosition,isClickable)
+        public EnemyNormal(string name, float hp, float speed, int armor, int worth, Effect effect, string imagePath, PointF position, PointF endPosition, bool isClickable): base(name,hp,speed,armor,worth,effect,imagePath,position,endPosition,isClickable)
         {
 
         }
