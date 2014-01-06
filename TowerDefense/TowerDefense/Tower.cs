@@ -14,26 +14,26 @@ namespace TowerDefense
 
         // Field
         private Stopwatch stopWatch;
-        private float speed;
+        public float speed;
         private int damage;
         private int cost;
         private float ranged;
+<<<<<<< HEAD
 
+=======
+        private GameWorld gw;
+        private Projectile bullet;
+        public Enemy target;
+>>>>>>> atk and bullet function
         // Property
         public float Speed
         {
             get { return speed; }
             set { speed = value; }
         }
-        public int Damage
-        {
-            get { return damage; }
-        }
-        public Stopwatch StopWatch
-        {
-            get { return stopWatch; }
-            set { stopWatch = value; }
-        }
+        
+       
+       
         /// <summary>
         /// The Constructor For The Tower Class
         /// </summary>
@@ -44,20 +44,47 @@ namespace TowerDefense
         /// <param name="imagePath"></param>
         /// <param name="position"></param>
         /// <param name="isClickAble"></param>
-        public Tower(float speed, int damage, int cost, float ranged, string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
+        public Tower(float speed, int cost, float ranged, Projectile bullet, string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
         {
             this.speed = speed;
-            this.damage = damage;
             this.cost = cost;
             this.ranged = ranged;
+            
+            
+        }
+
+        public void Atk()
+        {
+            for (int i = 0; i < gw.currentWave.Count ; i++)
+            {
+                if (Math.Sqrt(position.X * gw.currentWave[i].Position.X + position.Y * gw.currentWave[i].Position.Y)< ranged)
+                {
+                    stopWatch.Start();
+                    if (stopWatch.Elapsed.Milliseconds > speed)
+                    {
+                        gw.bullets.Add(bullet);
+                        if (target == null)
+                        {
+                            target = gw.currentWave[i];
+                        }
+
+                        stopWatch.Restart();
+                    }
+                }
+                else
+                {
+                    target = null;
+                }
+            }
+            
         }
         /// <summary>
         /// The Update function for the towers
         /// </summary>
         /// <param name="FPS"></param>
-        public virtual void Update(float FPS) 
+        public override void Update(float FPS) 
         {
-
+            Atk();
         }
 
     }
