@@ -17,7 +17,6 @@ namespace TowerDefense
         public float speed;
         private int cost;
         protected float ranged;
-
         private Projectile bullet;
 
 
@@ -34,8 +33,10 @@ namespace TowerDefense
             get { return bullet; }
             set { bullet = value; }
         }
-       
-       
+        public int Cost
+        {
+            get { return cost; }
+        }
         /// <summary>
         /// The Constructor For The Tower Class
         /// </summary>

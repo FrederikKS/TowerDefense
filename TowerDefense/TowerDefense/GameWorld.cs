@@ -16,6 +16,7 @@ namespace TowerDefense
     {
         TowerButton tb;
         public RectangleF mouseRect;
+        public RectangleF guiRect = new RectangleF();
         public List<TowerButton> tl;
 
         // Fields
@@ -46,6 +47,7 @@ namespace TowerDefense
         private int minDistStart = 3;
         public List<Environment> environment = new List<Environment>();
         public List<Tower> towers = new List<Tower>();
+        public List<Tower> tmpTowers = new List<Tower>();
         private List<PointF> checkpointList = new List<PointF>();
         public List<PointF> endPoints = new List<PointF>();
         private List<PointF> startPoints = new List<PointF>();
@@ -278,6 +280,7 @@ namespace TowerDefense
             mouseRect.Location = Form1.localMousePos;
             foreach (TowerButton tb in tl)
             {
+                tmpTowers = towers.ToList();
                 if (mouseRect.IntersectsWith(tb.CollisionRect))
                 {
                     int x = (((int)Math.Floor((decimal)Form1.guiPos.X / tileSizeX)) * tileSizeX);
@@ -319,11 +322,14 @@ namespace TowerDefense
                     }
                     #endregion
                     #region Sell
-                    foreach (Tower tower in towers)
+                    foreach (Tower tower in tmpTowers)
                     {
-                        if (mouseRect.IntersectsWith(tower.CollisionRect))
+                        if (guiRect.IntersectsWith(tower.CollisionRect))
                         {
-                            Sell(1, tower);
+                            if (Form1.drawBuildGUI == 2)
+                            {
+                                Sell(tower);
+                            }
                         }
                     }
                     #endregion
@@ -386,6 +392,7 @@ namespace TowerDefense
 
                 int tmpX = Form1.gui.ellipse.X + tileSizeX + (tileSizeX / 2);
                 int tmpY = Form1.gui.ellipse.Y + tileSizeY + (tileSizeY / 2);
+                guiRect = new RectangleF(tmpX, tmpY, 10, 10);
                 if (Form1.drawBuildGUI == 4)
                 {
                     if (tl.Count < 3)
@@ -412,6 +419,10 @@ namespace TowerDefense
                     }
                 }
             }
+            else
+            {
+                guiRect = new RectangleF(0, 0, 10, 10);
+            }
             dc.Clear(Color.White);
 
             //Drawing environment
@@ -422,7 +433,7 @@ namespace TowerDefense
             //Drawing towers
             for (int i = 0; i < towers.Count; i++)
             {
-                towers[i].Draw(dc);   
+                towers[i].Draw(dc);
             }
             //Drawing enemies
             for (int i = 0; i < currentWave.Count; i++)
@@ -431,10 +442,10 @@ namespace TowerDefense
                     currentWave[i].Draw(dc);
             }
             // Drawing Bullets
-            for (int i = 0; i < bullets.Count; i++)
-            {
-                bullets[i].Draw(dc);
-            }
+            //for (int i = 0; i < bullets.Count; i++)
+            //{
+            //    bullets[i].Draw(dc);
+            //}
 
             Font w = new Font("Arial", 14);
             Brush q = new SolidBrush(Color.White);
@@ -974,34 +985,19 @@ namespace TowerDefense
         /// <summary>
         /// The Sell Function
         /// </summary>
-        public void Sell(int towerSell, Tower tower)
+        public void Sell(Tower tower)
         {
-            switch (towerSell)
+            tmpTowers = towers.ToList();
+
+            foreach (Tower t in tmpTowers)
             {
-                case 1:
-                    towers.Remove(tower);
-                    gold += cost;
-                    break;
-                case 2:
-                    towers.Remove(tower);
-                    gold += cost;
-                    break;
-                case 3:
-                    towers.Remove(tower);
-                    gold += cost;
-                    break;
-                case 4:
-                    towers.Remove(tower);
-                    gold += cost;
-                    break;
-                case 5:
-                    towers.Remove(tower);
-                    gold += cost;
-                    break;
-                case 6:
-                    towers.Remove(tower);
-                    break;
+                if (t == tower)
+                {
+                    gold += t.Cost;
+                    towers.Remove(t);
+                }
             }
+
 
         }
         /// <summary>
