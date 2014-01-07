@@ -247,9 +247,9 @@ namespace TowerDefense
                     if (enemyNumber % 3 == 0)
                         waveEnemy[i].Add(new EnemyNormal("TestEnemyNormal", 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/96.jpg", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                     if (enemyNumber % 3 == 1)
-                        waveEnemy[i].Add(new EnemyEvade("TestEnemyEvade",false, 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/EvadePlaceHolder.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                        waveEnemy[i].Add(new EnemyEvade("TestEnemyEvade", false, 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/Resized/EvadeResized.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                     if (enemyNumber % 3 == 2)
-                        waveEnemy[i].Add(new EnemySlow("TestEnemySlow", 10, 10, 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/SlowPlaceHolder.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                        waveEnemy[i].Add(new EnemySlow("TestEnemySlow", 10, 10, 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/Resized/SlowResized.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                 }
             }
 
@@ -832,26 +832,26 @@ namespace TowerDefense
                     //Checkpoints
                     if (coordinateSystem[x][y] == 2)
                     {
-                        environmentList.Add(new Checkpoint(@"Graphic/Checkpoint1PlaceHolder.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Checkpoint(@"Graphic/Resized/Checkpoint1Resized.png", new PointF(tempX, tempY), false));
                     }
                     if (coordinateSystem[x][y] == 3)
                     {
-                        environmentList.Add(new Checkpoint(@"Graphic/Checkpoint2PlaceHolder.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Checkpoint(@"Graphic/Resized/Checkpoint2Resized.png", new PointF(tempX, tempY), false));
                     }
                     if (coordinateSystem[x][y] == 4)
                     {
-                        environmentList.Add(new Checkpoint(@"Graphic/Checkpoint3PlaceHolder.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Checkpoint(@"Graphic/Resized/Checkpoint3Resized.png", new PointF(tempX, tempY), false));
                     }
 
                     //Placing treasure chest
                     if (coordinateSystem[x][y] == 5)
                     {
-                        environmentList.Add(new Treasure(@"Graphic/TreasureChest.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Treasure(@"Graphic/Resized/TreasureResized.png", new PointF(tempX, tempY), false));
                     }
                     //Placing Water
                     if (coordinateSystem[x][y] == 10)
                     {
-                        environmentList.Add(new Water(@"Graphic/Water.png", new PointF(tempX, tempY), true));
+                        environmentList.Add(new Water(@"Graphic/Resized/WaterResized.png", new PointF(tempX, tempY), true));
                     }
                     //Placing Islands
                     if (coordinateSystem[x][y] == 11)
