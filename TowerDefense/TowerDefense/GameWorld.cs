@@ -313,50 +313,53 @@ namespace TowerDefense
                 {
                     int x = (((int)Math.Floor((decimal)Form1.guiPos.X / tileSizeX)) * tileSizeX);
                     int y = (((int)Math.Floor((decimal)Form1.guiPos.Y / tileSizeY)) * tileSizeY);
-                    #region Water Towers
-                    // Water Towers
-                    //Build Water Tower 1
-                    if (tb.Name == "Water_Tower1")
+                    if (!towers.Any(t => t.Position.X == x && t.Position.Y == y))
                     {
-                        Build(1, new PointF(x, y));
-                    }
-                    // Build Water Tower 2
-                    if (tb.Name == "Water_Tower2")
-                    {
-                        Build(2, new PointF(x, y));
-                    }
-                    // Build Water Tower 3
-                    if (tb.Name == "Water_Tower3")
-                    {
-                        Build(3, new PointF(x, y));
-                    }
-                    #endregion
-                    #region Land Towers
-                    // Land Towers
-                    // Build Land Tower 1
-                    if (tb.Name == "Land_Tower1")
-                    {
-                        Build(4, new PointF(x, y));
-                    }
-                    // Build Land Tower 2
-                    if (tb.Name == "Land_Tower2")
-                    {
-                        Build(5, new PointF(x, y));
-                    }
-                    // Build Land Tower 3
-                    if (tb.Name == "Land_Tower3")
-                    {
-                        Build(6, new PointF(x, y));
-                    }
-                    #endregion
-                    #region Sell
-                    foreach (Tower tower in tmpTowers)
-                    {
-                        if (guiRect.IntersectsWith(tower.CollisionRect))
+                        #region Water Towers
+                        // Water Towers
+                        //Build Water Tower 1
+                        if (tb.Name == "Water_Tower1")
                         {
-                            if (Form1.drawBuildGUI == 2)
+                            Build(1, new PointF(x, y));
+                        }
+                        // Build Water Tower 2
+                        if (tb.Name == "Water_Tower2")
+                        {
+                            Build(2, new PointF(x, y));
+                        }
+                        // Build Water Tower 3
+                        if (tb.Name == "Water_Tower3")
+                        {
+                            Build(3, new PointF(x, y));
+                        }
+                        #endregion
+                        #region Land Towers
+                        // Land Towers
+                        // Build Land Tower 1
+                        if (tb.Name == "Land_Tower1")
+                        {
+                            Build(4, new PointF(x, y));
+                        }
+                        // Build Land Tower 2
+                        if (tb.Name == "Land_Tower2")
+                        {
+                            Build(5, new PointF(x, y));
+                        }
+                        // Build Land Tower 3
+                        if (tb.Name == "Land_Tower3")
+                        {
+                            Build(6, new PointF(x, y));
+                        }
+                        #endregion
+                        #region Sell
+                        foreach (Tower tower in tmpTowers)
+                        {
+                            if (guiRect.IntersectsWith(tower.CollisionRect))
                             {
-                                Sell(tower);
+                                if (Form1.drawBuildGUI == 2)
+                                {
+                                    Sell(tower);
+                                }
                             }
                         }
                     }
@@ -1109,10 +1112,10 @@ namespace TowerDefense
         /// </summary>
         public void UpdatePath(Enemy enemy, ref List<PointF> endPoints, ref List<List<PointF>> path)
         {
-            //Check if enemy is positioned on top of his current endposition
-            if (enemy.Position == enemy.EndPosition)
+            if (enemy.Enabled)
             {
-                if (enemy.Enabled)
+                //Check if enemy is positioned on top of his current endposition
+                if (enemy.Position == enemy.EndPosition)
                 {
                     if (endPoints.Count == enemy.ReachedEndCounter)
                     {
@@ -1120,23 +1123,21 @@ namespace TowerDefense
                     }
 
                     //Check if enemy has been on all the points between his starting position and his end position
-                    if (enemy.ReachedPointCounter != path[enemy.ReachedEndCounter].Count)
+                    if (enemy.Enabled)
                     {
-                        enemy.ReachedPointCounter++;
-                        enemy.EndPosition = path[enemy.ReachedEndCounter][path[enemy.ReachedEndCounter].Count - enemy.ReachedPointCounter];
-
-                    }
-
-                    //If enemy has been on all points between start and end, set endposition to a point from endPoints list and reset reachedPointCounter.
-                    else
-                    {
-                        enemy.ReachedPointCounter = 0;
-                        enemy.EndPosition = new PointF(endPoints[enemy.ReachedEndCounter].X * tileSizeX, endPoints[enemy.ReachedEndCounter].Y * tileSizeY);
-                        enemy.ReachedEndCounter++;
-
-                        if (endPoints.Count == enemy.ReachedEndCounter)
+                        if (enemy.ReachedPointCounter != path[enemy.ReachedEndCounter].Count)
                         {
-                            enemy.Enabled = false;
+                            enemy.ReachedPointCounter++;
+                            enemy.EndPosition = path[enemy.ReachedEndCounter][path[enemy.ReachedEndCounter].Count - enemy.ReachedPointCounter];
+
+                        }
+
+                        //If enemy has been on all points between start and end, set endposition to a point from endPoints list and reset reachedPointCounter.
+                        if (enemy.ReachedPointCounter == path[enemy.ReachedEndCounter].Count)
+                        {
+                            enemy.ReachedPointCounter = 0;
+                            enemy.EndPosition = new PointF(endPoints[enemy.ReachedEndCounter].X * tileSizeX, endPoints[enemy.ReachedEndCounter].Y * tileSizeY);
+                            enemy.ReachedEndCounter++;
                         }
                     }
                 }

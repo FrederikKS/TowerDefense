@@ -210,6 +210,9 @@
     <Content Include="Highscore\Medium.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\explosion.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Tower1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

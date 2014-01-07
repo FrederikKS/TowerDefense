@@ -22,6 +22,8 @@ namespace TowerDefense
         private int reachedEndCounter = 0;
         private bool enabled = false;
 
+        private Image explosion = Image.FromFile(@"Images/explosion.png");
+
         #endregion
         //properties
         #region
@@ -146,6 +148,11 @@ namespace TowerDefense
         {
             MovementAI();
             base.Update(fps);
+        }
+
+        public void OnImpact(Graphics dc)
+        {
+            dc.DrawImage(explosion, this.position.X, this.position.Y, explosion.Width, explosion.Height);
         }
 
     }

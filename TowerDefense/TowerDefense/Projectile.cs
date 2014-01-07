@@ -17,6 +17,7 @@ namespace TowerDefense
         public float bulletSpeed;
         private Tower tw;
         private Enemy target;
+        Graphics dc;
 
 
  
@@ -59,6 +60,7 @@ namespace TowerDefense
             if (target.Position == position)
             {
                 target.HP = target.HP + target.Armor - damage;
+                target.OnImpact(dc);
                 if (target.HP <= 0)
                 {
                    Form1.gw.currentWave.Remove(target);
