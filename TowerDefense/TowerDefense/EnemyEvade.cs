@@ -21,15 +21,6 @@ namespace TowerDefense
         {
             this.isEvade = isEvade;
         }
-        //Functions
-        /// <summary>
-        /// Overrides Update function
-        /// </summary>
-        /// <param name="FPS"></param>
-        public override void Update(float FPS)
-        {
-
-        }
 
     }
 }

@@ -235,7 +235,7 @@ namespace TowerDefense
             if (path[0].Count > 0)
                 firstPoint = path[0].Last();
             else
-                firstPoint = endPoints[0];
+                firstPoint = new PointF(endPoints[0].X *tileSizeX, endPoints[0].Y * tileSizeY);
 
             //Instantiating and adding enemies to waves list
             for (int i = 0; i < 20; i++)
@@ -244,7 +244,12 @@ namespace TowerDefense
 
                 for (int enemyNumber = 0; enemyNumber < 10; enemyNumber++)
                 {
-                    waveEnemy[i].Add(new EnemyNormal("TestEnemy", 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/96.jpg", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                    if (enemyNumber % 3 == 0)
+                        waveEnemy[i].Add(new EnemyNormal("TestEnemyNormal", 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/96.jpg", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                    if (enemyNumber % 3 == 1)
+                        waveEnemy[i].Add(new EnemyEvade("TestEnemyEvade",false, 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/EvadePlaceHolder.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                    if (enemyNumber % 3 == 2)
+                        waveEnemy[i].Add(new EnemySlow("TestEnemySlow", 10, 10, 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/SlowPlaceHolder.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                 }
             }
 
@@ -1028,8 +1033,10 @@ namespace TowerDefense
                         if (enemy.Enabled)
                         {
                             enemy.ReachedPointCounter = 0;
+                            
                             enemy.EndPosition = new PointF(endPoints[enemy.ReachedEndCounter].X * tileSizeX, endPoints[enemy.ReachedEndCounter].Y * tileSizeY);
                             enemy.ReachedEndCounter++;
+                            
                         }
                     }
             }
