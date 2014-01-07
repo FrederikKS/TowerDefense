@@ -127,7 +127,7 @@ namespace TowerDefense
             }
 
             //Randomizing number of checkpoints in the map
-            int numberOfCheckpoints = rnd.Next(1, 3);
+            int numberOfCheckpoints = rnd.Next(2, 4);
             if (numberOfCheckpoints > 0)
             {
                 for (int i = 0; i < numberOfCheckpoints; i++)
@@ -184,7 +184,14 @@ namespace TowerDefense
             if (numberOfCheckpoints > 0)
                 for (int i = 0; i < numberOfCheckpoints; i++)
                 {
-                    checkpointList[i] = new PointF(rnd.Next(0, (int)worldSizeX), rnd.Next(0, (int)worldSizeY));
+                    checkpointList[i] = new PointF(rnd.Next(1, (int)worldSizeX-1), rnd.Next(1, (int)worldSizeY-1));
+                    //Making sure first checkpoint is not too close to start
+                    bool tempPosCheck = CheckLocation(grottoX, grottoY, (int)checkpointList[i].X, (int)checkpointList[i].Y, 2);
+                    while (!tempPosCheck)
+                    {
+                        checkpointList[i] = new PointF(rnd.Next(1, (int)worldSizeX - 1), rnd.Next(1, (int)worldSizeY - 1));
+                        tempPosCheck = CheckLocation(grottoX, grottoY, (int)checkpointList[i].X, (int)checkpointList[i].Y, 2);
+                    }
                     //Adding position of checkpoint to list of endpoints used for saving paths
                     endPoints.Add(new PointF(checkpointList[i].X, checkpointList[i].Y));
                     //Adding position of checkpoint to list of startpoints used for saving paths
@@ -818,6 +825,37 @@ namespace TowerDefense
                             coordinateSystem[x][y] = 13;
                     }
 
+                    //Giving value to wall tiles
+                    //Left Wall
+                    if (x == 0 && y > 0 && y < worldSizeY-1 && coordinateSystem[x][y] != 1)
+                        coordinateSystem[x][y] = 101;
+
+                    //Right Wall
+                    if (x == worldSizeX - 1 && y > 0 && y < worldSizeY-1 && coordinateSystem[x][y] != 1)
+                        coordinateSystem[x][y] = 102;
+
+                    //Top Wall
+                    if (x > 0 && y == 0 && x < worldSizeX - 1 && coordinateSystem[x][y] != 1)
+                        coordinateSystem[x][y] = 103;
+
+                    //Bot Wall
+                    if (x > 0 && y == worldSizeY - 1 && x < worldSizeX - 1 && coordinateSystem[x][y] != 1)
+                        coordinateSystem[x][y] = 104;
+
+                    //Giving value to corner tiles
+                    //Top left
+                    if (x == 0 && y == 0)
+                        coordinateSystem[x][y] = 105;
+                    //Top right
+                    if (x == worldSizeX-1 && y == 0)
+                        coordinateSystem[x][y] = 106;
+                    //Bottom left
+                    if (x == 0 && y == worldSizeY-1)
+                        coordinateSystem[x][y] = 107;
+                    //Bottom right
+                    if (x == worldSizeX-1 && y == worldSizeY-1)
+                        coordinateSystem[x][y] = 108;
+
                     //Giving checkpoints locations a value of 2 + checkpoint number, reaching a maximum value of 4 when there is 3 checkpoints in the map
                     if (checkpointList.Count() > 0)
                         for (int i = 0; i < checkpointList.Count; i++)
@@ -883,6 +921,50 @@ namespace TowerDefense
                     if (coordinateSystem[x][y] == 13)
                     {
                         environmentList.Add(new Rock(@"Graphic/Rock.png", new PointF(tempX, tempY), false));
+                    }
+
+                    //Placing Walls
+                    //Left
+                    if (coordinateSystem[x][y] == 101)
+                    {
+                        environmentList.Add(new Rock(@"Graphic/Resized/WallLeft.png", new PointF(tempX, tempY), false));
+                    }
+                    //Right
+                    if (coordinateSystem[x][y] == 102)
+                    {
+                        environmentList.Add(new Rock(@"Graphic/Resized/WallRight.png", new PointF(tempX, tempY), false));
+                    }
+                    //Top
+                    if (coordinateSystem[x][y] == 103)
+                    {
+                        environmentList.Add(new Rock(@"Graphic/Resized/WallTop.png", new PointF(tempX, tempY), false));
+                    }
+                    //Bot
+                    if (coordinateSystem[x][y] == 104)
+                    {
+                        environmentList.Add(new Rock(@"Graphic/Resized/WallBot.png", new PointF(tempX, tempY), false));
+                    }
+
+                    //Placing Corners
+                    //Top Left
+                    if (coordinateSystem[x][y] == 105)
+                    {
+                        environmentList.Add(new Rock(@"Graphic/Resized/CornerTopLeft.png", new PointF(tempX, tempY), false));
+                    }
+                    //Top Right
+                    if (coordinateSystem[x][y] == 106)
+                    {
+                        environmentList.Add(new Rock(@"Graphic/Resized/CornerTopRight.png", new PointF(tempX, tempY), false));
+                    }
+                    //Bot Left
+                    if (coordinateSystem[x][y] == 107)
+                    {
+                        environmentList.Add(new Rock(@"Graphic/Resized/CornerBotLeft.png", new PointF(tempX, tempY), false));
+                    }
+                    //Bot Right
+                    if (coordinateSystem[x][y] == 108)
+                    {
+                        environmentList.Add(new Rock(@"Graphic/Resized/CornerBotRight.png", new PointF(tempX, tempY), false));
                     }
                 }
             }
@@ -1030,13 +1112,14 @@ namespace TowerDefense
             //Check if enemy is positioned on top of his current endposition
             if (enemy.Position == enemy.EndPosition)
             {
-                if (endPoints.Count == enemy.ReachedEndCounter)
-                {
-                    enemy.Enabled = false;
-                }
-
-                //Check if enemy has been on all the points between his starting position and his end position
                 if (enemy.Enabled)
+                {
+                    if (endPoints.Count == enemy.ReachedEndCounter)
+                    {
+                        enemy.Enabled = false;
+                    }
+
+                    //Check if enemy has been on all the points between his starting position and his end position
                     if (enemy.ReachedPointCounter != path[enemy.ReachedEndCounter].Count)
                     {
                         enemy.ReachedPointCounter++;
@@ -1044,18 +1127,19 @@ namespace TowerDefense
 
                     }
 
-                //If enemy has been on all points between start and end, set endposition to a point from endPoints list and reset reachedPointCounter.
+                    //If enemy has been on all points between start and end, set endposition to a point from endPoints list and reset reachedPointCounter.
                     else
                     {
-                        if (enemy.Enabled)
+                        enemy.ReachedPointCounter = 0;
+                        enemy.EndPosition = new PointF(endPoints[enemy.ReachedEndCounter].X * tileSizeX, endPoints[enemy.ReachedEndCounter].Y * tileSizeY);
+                        enemy.ReachedEndCounter++;
+
+                        if (endPoints.Count == enemy.ReachedEndCounter)
                         {
-                            enemy.ReachedPointCounter = 0;
-                            
-                            enemy.EndPosition = new PointF(endPoints[enemy.ReachedEndCounter].X * tileSizeX, endPoints[enemy.ReachedEndCounter].Y * tileSizeY);
-                            enemy.ReachedEndCounter++;
-                            
+                            enemy.Enabled = false;
                         }
                     }
+                }
             }
         }
     }
