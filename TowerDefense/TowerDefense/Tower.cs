@@ -64,26 +64,30 @@ namespace TowerDefense
         {
             for (int i = 0; i < Form1.gw.currentWave.Count; i++)
             {
-                if (Math.Sqrt(position.X * Form1.gw.currentWave[i].Position.X + position.Y * Form1.gw.currentWave[i].Position.Y) < ranged)
+                if (Form1.gw.currentWave[i].Enabled)
                 {
-                    stopWatch.Start();
-                    if (stopWatch.Elapsed.Milliseconds > speed)
+                    if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.currentWave[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.currentWave[i].Position.Y), 2)) < ranged)
                     {
-
-                        if (target == null)
+                        stopWatch.Start();
+                        if (stopWatch.Elapsed.Milliseconds > speed)
                         {
-                            target = Form1.gw.currentWave[i];
-                        }
-                        if (bullet != null)
-                        bullet.Target = target;
 
-                        Form1.gw.bullets.Add(bullet);
-                        stopWatch.Restart();
+                            if (target == null)
+                            {
+                                target = Form1.gw.currentWave[i];
+                            }
+                            if (bullet != null)
+                            {
+                                bullet.Target = target;
+                            }
+                            Form1.gw.bullets.Add(bullet);
+                            stopWatch.Restart();
+                        }
                     }
-                }
-                else
-                {
-                    target = null;
+                    else
+                    {
+                        target = null;
+                    }
                 }
             }
 

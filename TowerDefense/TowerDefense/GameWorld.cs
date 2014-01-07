@@ -31,7 +31,9 @@ namespace TowerDefense
         private Stopwatch buildWatch = new Stopwatch();
         private Stopwatch enemyWatch = new Stopwatch();
         public List<Projectile> bullets = new List<Projectile>();
-
+        private bool enemySent = false;
+        private bool enemyDead = false;
+        private int enemydisabled = 0;
         // Fields for world creation
         private float worldSizeX;
         private float worldSizeY;
@@ -281,6 +283,20 @@ namespace TowerDefense
         /// </summary>
         public void Update()
         {
+            if (enemySent)
+            {
+                for (int i = 0; i < currentWave.Count; i++)
+                {
+                    if (currentWave[i].Enabled == false)
+                    {
+                        enemydisabled++;
+                    }
+                }
+                if (enemydisabled == 10)
+                {
+                    enemyDead = true;
+                }
+            }
             //Update mouse rectangle pos
             mouseRect.Location = Form1.localMousePos;
             foreach (TowerButton tb in tl)
@@ -892,6 +908,7 @@ namespace TowerDefense
             {
                 spawner.Enabled = false;
                 TimerEventCounter = 0;
+                enemySent = true;
             }
 
             if (spawner.Enabled)
@@ -924,7 +941,7 @@ namespace TowerDefense
 
                 case State.wave:
 
-                    if (currentWave.Count == 0)
+                    if (enemyDead == true)
                     {
                         if (!buildWatch.IsRunning)
                             buildWatch.Start();
@@ -952,13 +969,13 @@ namespace TowerDefense
                 // Water
                 case 1:
                     towers.Add(new TowerSlow(2, tileSizeX * 3, 5, 25, tileSizeX * 3, @"Towers/w1.png", position, true));
-                    towers[0].Bullet = new Projectile(100, 5, @"Towers/w2.png", position, false, towers[0]);
+                    towers[0].Bullet = new Projectile(100, 100, @"Towers/w2.png", position, false, towers[0]);
                     gold -= cost;
                     break;
 
                 case 2:
                     towers.Add(new TowerBoost(2, 3, 5, 35, 6, @"Towers/w2.png", position, true));
-                    towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
+                    towers[0].Bullet = new Projectile(10,100, @"Towers/w2.png", position, false, towers[0]);
                     gold -= cost;
                     break;
                 case 3:
