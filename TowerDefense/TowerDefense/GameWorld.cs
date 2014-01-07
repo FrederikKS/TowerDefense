@@ -18,7 +18,7 @@ namespace TowerDefense
         public RectangleF mouseRect;
         public RectangleF guiRect = new RectangleF();
         public List<TowerButton> tl;
-
+        GameObject go;
         // Fields
         private Random rnd = new Random();
         private DateTime lastFrameStarted = new DateTime();
@@ -184,7 +184,7 @@ namespace TowerDefense
             if (numberOfCheckpoints > 0)
                 for (int i = 0; i < numberOfCheckpoints; i++)
                 {
-                    checkpointList[i] = new PointF(rnd.Next(1, (int)worldSizeX-1), rnd.Next(1, (int)worldSizeY-1));
+                    checkpointList[i] = new PointF(rnd.Next(1, (int)worldSizeX - 1), rnd.Next(1, (int)worldSizeY - 1));
                     //Making sure first checkpoint is not too close to start
                     bool tempPosCheck = CheckLocation(grottoX, grottoY, (int)checkpointList[i].X, (int)checkpointList[i].Y, 2);
                     while (!tempPosCheck)
@@ -244,7 +244,7 @@ namespace TowerDefense
             if (path[0].Count > 0)
                 firstPoint = path[0].Last();
             else
-                firstPoint = new PointF(endPoints[0].X *tileSizeX, endPoints[0].Y * tileSizeY);
+                firstPoint = new PointF(endPoints[0].X * tileSizeX, endPoints[0].Y * tileSizeY);
 
             //Instantiating and adding enemies to waves list
             for (int i = 0; i < 20; i++)
@@ -258,7 +258,7 @@ namespace TowerDefense
                     if (enemyNumber % 3 == 1)
                         waveEnemy[i].Add(new EnemyEvade("TestEnemyEvade", false, 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/Resized/EvadeResized.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                     if (enemyNumber % 3 == 2)
-                        waveEnemy[i].Add(new EnemySlow("TestEnemySlow", 10, 10, 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/Resized/SlowResized.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                        waveEnemy[i].Add(new EnemySlow("TestEnemySlow", 10, 10, 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/Resized/SlowResized.png,Graphic/Resized/SlowResizedDown.png,Graphic/Resized/SlowResizedLeft.png,Graphic/Resized/SlowResizedRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                 }
             }
 
@@ -363,7 +363,7 @@ namespace TowerDefense
                             }
                         }
                     }
-                    #endregion
+                        #endregion
                 }
             }
             //Update all tower objects
@@ -649,32 +649,56 @@ namespace TowerDefense
             {
                 foreach (Node node in closedNodes)
                 {
+                    // Left
                     if (node.LocationX == tempNode.LocationX - 1 && node.LocationY == tempNode.LocationY && node.G == steps - counter)
                     {
                         path[pathNumber].Add(new PointF(node.LocationX * tileSizeX, node.LocationY * tileSizeY));
                         counter++;
                         tempNode = node;
+                        if (currentWave.Count >= 1)
+                        {
+                            go.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedLeft.png");
+                        }
+
                         break;
                     }
+                    // Right
                     if (node.LocationX == tempNode.LocationX + 1 && node.LocationY == tempNode.LocationY && node.G == steps - counter)
                     {
                         path[pathNumber].Add(new PointF(node.LocationX * tileSizeX, node.LocationY * tileSizeY));
                         counter++;
                         tempNode = node;
+                        if (currentWave.Count >= 1)
+                        {
+                            go.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedRight.png");
+                        }
+
                         break;
                     }
+                    // Down
                     if (node.LocationX == tempNode.LocationX && node.LocationY == tempNode.LocationY - 1 && node.G == steps - counter)
                     {
                         path[pathNumber].Add(new PointF(node.LocationX * tileSizeX, node.LocationY * tileSizeY));
                         counter++;
                         tempNode = node;
+                        if (currentWave.Count >= 1)
+                        {
+                            go.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedDown.png");
+                        }
+
                         break;
                     }
+                    // Up
                     if (node.LocationX == tempNode.LocationX && node.LocationY == tempNode.LocationY + 1 && node.G == steps - counter)
                     {
                         path[pathNumber].Add(new PointF(node.LocationX * tileSizeX, node.LocationY * tileSizeY));
                         counter++;
                         tempNode = node;
+                        if (currentWave.Count >= 1)
+                        {
+                            go.sprite = Image.FromFile(@"Graphic/Resized/SlowResized.png");
+                        }
+
                         break;
                     }
                 }
@@ -830,11 +854,11 @@ namespace TowerDefense
 
                     //Giving value to wall tiles
                     //Left Wall
-                    if (x == 0 && y > 0 && y < worldSizeY-1 && coordinateSystem[x][y] != 1)
+                    if (x == 0 && y > 0 && y < worldSizeY - 1 && coordinateSystem[x][y] != 1)
                         coordinateSystem[x][y] = 101;
 
                     //Right Wall
-                    if (x == worldSizeX - 1 && y > 0 && y < worldSizeY-1 && coordinateSystem[x][y] != 1)
+                    if (x == worldSizeX - 1 && y > 0 && y < worldSizeY - 1 && coordinateSystem[x][y] != 1)
                         coordinateSystem[x][y] = 102;
 
                     //Top Wall
@@ -850,13 +874,13 @@ namespace TowerDefense
                     if (x == 0 && y == 0)
                         coordinateSystem[x][y] = 105;
                     //Top right
-                    if (x == worldSizeX-1 && y == 0)
+                    if (x == worldSizeX - 1 && y == 0)
                         coordinateSystem[x][y] = 106;
                     //Bottom left
-                    if (x == 0 && y == worldSizeY-1)
+                    if (x == 0 && y == worldSizeY - 1)
                         coordinateSystem[x][y] = 107;
                     //Bottom right
-                    if (x == worldSizeX-1 && y == worldSizeY-1)
+                    if (x == worldSizeX - 1 && y == worldSizeY - 1)
                         coordinateSystem[x][y] = 108;
 
                     //Giving checkpoints locations a value of 2 + checkpoint number, reaching a maximum value of 4 when there is 3 checkpoints in the map
@@ -973,9 +997,6 @@ namespace TowerDefense
             }
         }
 
-
-
-
         /// <summary>
         /// Starts the current wave
         /// </summary>
@@ -1060,7 +1081,7 @@ namespace TowerDefense
 
                 case 2:
                     towers.Add(new TowerBoost(2, 3, 5, 35, 6, @"Towers/w2.png", position, true));
-                    towers[0].Bullet = new Projectile(10,100, @"Towers/w2.png", position, false, towers[0]);
+                    towers[0].Bullet = new Projectile(10, 100, @"Towers/w2.png", position, false, towers[0]);
                     gold -= cost;
                     break;
                 case 3:
