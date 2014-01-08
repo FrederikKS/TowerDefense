@@ -180,26 +180,6 @@ namespace TowerDefense
             //Adding grotto position to list of startpoints used for saving paths. Saved as first position in list
             startPoints.Add(new PointF(grottoX, grottoY));
 
-            //Location for checkpoints
-            if (numberOfCheckpoints > 0)
-                for (int i = 0; i < numberOfCheckpoints; i++)
-                {
-                    checkpointList[i] = new PointF(rnd.Next(1, (int)worldSizeX - 1), rnd.Next(1, (int)worldSizeY - 1));
-                    //Making sure first checkpoint is not too close to start
-                    bool tempPosCheck = CheckLocation(grottoX, grottoY, (int)checkpointList[i].X, (int)checkpointList[i].Y, 2);
-                    while (!tempPosCheck)
-                    {
-                        checkpointList[i] = new PointF(rnd.Next(1, (int)worldSizeX - 1), rnd.Next(1, (int)worldSizeY - 1));
-                        tempPosCheck = CheckLocation(grottoX, grottoY, (int)checkpointList[i].X, (int)checkpointList[i].Y, 2);
-                    }
-                    //Adding position of checkpoint to list of endpoints used for saving paths
-                    endPoints.Add(new PointF(checkpointList[i].X, checkpointList[i].Y));
-                    //Adding position of checkpoint to list of startpoints used for saving paths
-                    startPoints.Add(new PointF(checkpointList[i].X, checkpointList[i].Y));
-                }
-
-            //Adding treasure position to list of endpoints used for saving paths. Added as last position in list
-            endPoints.Add(new PointF(treasureX, treasureY));
 
             // Bool for checking validity of tile location
             validLocation = CheckLocation(grottoX, grottoY, treasureX, treasureY, minDistStart);
@@ -207,11 +187,48 @@ namespace TowerDefense
             //If location is not valid (if start is too close to finish), find a new location
             while (!validLocation)
             {
-                treasureX = rnd.Next(0, (int)worldSizeX);
-                treasureY = rnd.Next(0, (int)worldSizeY);
+                treasureX = rnd.Next(1, (int)worldSizeX - 1);
+                treasureY = rnd.Next(1, (int)worldSizeY - 2);
 
                 validLocation = CheckLocation(grottoX, grottoY, treasureX, treasureY, minDistStart);
             }
+
+            //Location for checkpoints
+            if (numberOfCheckpoints > 0)
+                for (int i = 0; i < numberOfCheckpoints; i++)
+                {
+                    checkpointList[i] = new PointF(rnd.Next(1, (int)worldSizeX - 1), rnd.Next(1, (int)worldSizeY - 1));
+                    //Making sure first checkpoint is not too close to start or treasurechest
+                    bool grottoCheck = CheckLocation(grottoX, grottoY, (int)checkpointList[i].X, (int)checkpointList[i].Y, 2);
+                    bool treasureCheck = CheckLocation(treasureX, treasureY, (int)checkpointList[i].X, (int)checkpointList[i].Y, 1);
+
+                    //Making sure this checkpoints is not positioned on another checkpoint
+                    bool otherCheckpointsCheck = true;
+                    for (int x = 0; x < i; x++)
+                    {
+                        otherCheckpointsCheck = CheckLocation((int)checkpointList[i].X, (int)checkpointList[i].Y, (int)checkpointList[x].X, (int)checkpointList[x].Y, 1);
+                    }
+
+                    //Keep rolling new checkpoints until they aren't on top or close to grotto, treasure or other checkpoints
+                    while (!grottoCheck || !treasureCheck || !otherCheckpointsCheck)
+                    {
+                        checkpointList[i] = new PointF(rnd.Next(1, (int)worldSizeX - 1), rnd.Next(1, (int)worldSizeY - 1));
+                        grottoCheck = CheckLocation(grottoX, grottoY, (int)checkpointList[i].X, (int)checkpointList[i].Y, 2);
+                        treasureCheck = CheckLocation(treasureX, treasureY, (int)checkpointList[i].X, (int)checkpointList[i].Y, 2);
+                        for (int x = 0; x < i; x++)
+                        {
+                            otherCheckpointsCheck = CheckLocation((int)checkpointList[i].X, (int)checkpointList[i].Y, (int)checkpointList[x].X, (int)checkpointList[x].Y, 1);
+                        }
+                    }
+                    //Adding position of checkpoint to list of endpoints used for saving paths
+                    endPoints.Add(new PointF(checkpointList[i].X, checkpointList[i].Y));
+                    //Adding position of checkpoint to list of startpoints used for saving paths
+                    startPoints.Add(new PointF(checkpointList[i].X, checkpointList[i].Y));
+                }
+
+
+            //Adding treasure position to list of endpoints used for saving paths. Added as last position in list
+            endPoints.Add(new PointF(treasureX, treasureY));
 
             #endregion
 
@@ -229,6 +246,14 @@ namespace TowerDefense
             //If a path cannot be found, perform generation again
             while (!CheckIfValidPath(pathAvailable, numberOfCheckpoints))
             {
+                //Clearing list of path in case it's already been used before
+                foreach (List<PointF> previousPath in path)
+                {
+                    previousPath.Clear();
+                }
+                //Clearing previous environment
+                environment.Clear();
+
                 //Perform world generation again
                 Randomizer(coordinateSystem, environment);
                 for (int i = 0; i < endPoints.Count; i++)
@@ -254,11 +279,11 @@ namespace TowerDefense
                 for (int enemyNumber = 0; enemyNumber < 10; enemyNumber++)
                 {
                     if (enemyNumber % 3 == 0)
-                        waveEnemy[i].Add(new EnemyNormal("TestEnemyNormal", 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/96.jpg", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                        waveEnemy[i].Add(new EnemyNormal("TestEnemyNormal", 100 * chosenDif, 9, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/96.jpg", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                     if (enemyNumber % 3 == 1)
-                        waveEnemy[i].Add(new EnemyEvade("TestEnemyEvade", false, 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/Resized/EvadeResized.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                        waveEnemy[i].Add(new EnemyEvade("TestEnemyEvade", false, 100 * chosenDif, 9, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/Resized/EvadeResized.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                     if (enemyNumber % 3 == 2)
-                        waveEnemy[i].Add(new EnemySlow("TestEnemySlow", 10, 10, 100 * chosenDif, 3, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/Resized/SlowResized.png,Graphic/Resized/SlowResizedDown.png,Graphic/Resized/SlowResizedLeft.png,Graphic/Resized/SlowResizedRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                        waveEnemy[i].Add(new EnemySlow("TestEnemySlow", 10, 10, 100 * chosenDif, 9, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/Resized/SlowResized.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                 }
             }
 
@@ -379,12 +404,12 @@ namespace TowerDefense
             }
 
             //Update all enemy objects
+            UpdatePath(ref currentWave, ref endPoints, ref path);
             foreach (Enemy enemy in currentWave)
             {
                 if (enemy.Enabled)
                 {
                     enemy.Update(currentFPS);
-                    UpdatePath(enemy, ref endPoints, ref path);
                 }
             }
         }
@@ -703,8 +728,6 @@ namespace TowerDefense
                     }
                 }
             }
-            if (path[pathNumber].Count > 0)
-                path[pathNumber].Remove(path[pathNumber].Last());
         }
 
         /// <summary>
@@ -1131,34 +1154,37 @@ namespace TowerDefense
         /// <summary>
         /// Updating the enemies' endposition, the point they will try to reach
         /// </summary>
-        public void UpdatePath(Enemy enemy, ref List<PointF> endPoints, ref List<List<PointF>> path)
+        public void UpdatePath(ref List<Enemy> currentWave, ref List<PointF> endPoints, ref List<List<PointF>> path)
         {
-            if (enemy.Enabled)
+            foreach (Enemy enemy in currentWave)
             {
-                //Check if enemy is positioned on top of his current endposition
-                if (enemy.Position == enemy.EndPosition)
+                if (enemy.Enabled)
                 {
-                    if (endPoints.Count == enemy.ReachedEndCounter)
+                    //Check if enemy is positioned on top of his current endposition
+                    if (enemy.Position == enemy.EndPosition)
                     {
-                        enemy.Enabled = false;
-                    }
+                        enemy.ReachedPointCounter++;
 
-                    //Check if enemy has been on all the points between his starting position and his end position
-                    if (enemy.Enabled)
-                    {
-                        if (enemy.ReachedPointCounter != path[enemy.ReachedEndCounter].Count)
+                        if (endPoints.Count == enemy.ReachedEndCounter)
                         {
-                            enemy.ReachedPointCounter++;
-                            enemy.EndPosition = path[enemy.ReachedEndCounter][path[enemy.ReachedEndCounter].Count - enemy.ReachedPointCounter];
-
+                            enemy.Enabled = false;
                         }
 
-                        //If enemy has been on all points between start and end, set endposition to a point from endPoints list and reset reachedPointCounter.
-                        if (enemy.ReachedPointCounter == path[enemy.ReachedEndCounter].Count)
+                        //Check if enemy has been on all the points between his starting position and his end position
+                        if (enemy.Enabled)
                         {
-                            enemy.ReachedPointCounter = 0;
-                            enemy.EndPosition = new PointF(endPoints[enemy.ReachedEndCounter].X * tileSizeX, endPoints[enemy.ReachedEndCounter].Y * tileSizeY);
-                            enemy.ReachedEndCounter++;
+                            if (enemy.ReachedPointCounter < path[enemy.ReachedEndCounter].Count + 1)
+                            {
+                                enemy.EndPosition = path[enemy.ReachedEndCounter][path[enemy.ReachedEndCounter].Count - enemy.ReachedPointCounter];
+                            }
+
+                            //If enemy has been on all points between start and end, set endposition to a point from endPoints list and reset reachedPointCounter.
+                            if (enemy.ReachedPointCounter == path[enemy.ReachedEndCounter].Count + 1)
+                            {
+                                enemy.EndPosition = new PointF(endPoints[enemy.ReachedEndCounter].X * tileSizeX, endPoints[enemy.ReachedEndCounter].Y * tileSizeY);
+                                enemy.ReachedEndCounter++;
+                                enemy.ReachedPointCounter = 0;
+                            }
                         }
                     }
                 }
