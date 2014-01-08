@@ -42,11 +42,13 @@ namespace TowerDefense
         private int offsetX = 96 / 2;
         private int offsetY = 96 / 2;
         private int[][] coordinateSystem;
+        private int[][] tempCoordinateSystem;
         private int grottoX;
         private int grottoY;
         private int treasureX;
         private int treasureY;
         private int minDistStart = 3;
+        private int numberOfCheckpoints;
         public List<Environment> environment = new List<Environment>();
         public List<Tower> towers = new List<Tower>();
         public List<Tower> tmpTowers = new List<Tower>();
@@ -62,6 +64,7 @@ namespace TowerDefense
         public List<Enemy> currentWave = new List<Enemy>();
         List<bool> pathAvailable = new List<bool>();
         public List<List<PointF>> path = new List<List<PointF>>();
+        private List<List<PointF>> tempPath;
         private int waveNumber = 0;
         private int listNumb;
         private int checkPoint;
@@ -127,7 +130,7 @@ namespace TowerDefense
             }
 
             //Randomizing number of checkpoints in the map
-            int numberOfCheckpoints = rnd.Next(2, 4);
+            numberOfCheckpoints = rnd.Next(2, 4);
             if (numberOfCheckpoints > 0)
             {
                 for (int i = 0; i < numberOfCheckpoints; i++)
@@ -240,7 +243,7 @@ namespace TowerDefense
             //Building enemy paths, depending on amount of checkpoints
             for (int i = 0; i < endPoints.Count; i++)
             {
-                RoadBuilder((int)startPoints[i].X, (int)startPoints[i].Y, (int)endPoints[i].X, (int)endPoints[i].Y, i);
+                RoadBuilder(ref coordinateSystem, (int)startPoints[i].X, (int)startPoints[i].Y, (int)endPoints[i].X, (int)endPoints[i].Y, i);
             }
 
             //If a path cannot be found, perform generation again
@@ -258,7 +261,7 @@ namespace TowerDefense
                 Randomizer(coordinateSystem, environment);
                 for (int i = 0; i < endPoints.Count; i++)
                 {
-                    RoadBuilder((int)startPoints[i].X, (int)startPoints[i].Y, (int)endPoints[i].X, (int)endPoints[i].Y, i);
+                    RoadBuilder(ref coordinateSystem, (int)startPoints[i].X, (int)startPoints[i].Y, (int)endPoints[i].X, (int)endPoints[i].Y, i);
                 }
             }
 
@@ -319,10 +322,10 @@ namespace TowerDefense
             {
                 for (int i = 0; i < currentWave.Count; i++)
                 {
-                    if (currentWave[i].Enabled == false)
-                    {
-                        enemydisabled++;
-                    }
+                    //if (currentWave[i].Enabled == false)
+                    //{
+                    //    enemydisabled++;
+                    //}
                 }
                 if (enemydisabled == 10)
                 {
@@ -393,10 +396,10 @@ namespace TowerDefense
                         #endregion
             }
             //Update all bullet objects
-            for (int i = 0; i < bullets.Count; i++)
+            /*for (int i = 0; i < bullets.Count; i++)
 			{
 			    bullets[i].Update(currentFPS);
-			} 
+			} */
             //Update all tower objects
             foreach (Tower tower in towers)
             {
@@ -504,10 +507,10 @@ namespace TowerDefense
                     currentWave[i].Draw(dc);
             }
             // Drawing Bullets
-            for (int i = 0; i < bullets.Count; i++)
+            /*for (int i = 0; i < bullets.Count; i++)
             {
                 bullets[i].Draw(dc);
-            }
+            }*/
 
             Font w = new Font("Arial", 14);
             Brush q = new SolidBrush(Color.White);
@@ -599,7 +602,7 @@ namespace TowerDefense
 
         #region Pathfinding A* algorithm
 
-        public void RoadBuilder(int startX, int startY, int endX, int endY, int pathNumber)
+        public void RoadBuilder(ref int[][] coordinateSystem, int startX, int startY, int endX, int endY, int pathNumber)
         {
             //Creating a list of nodes
             Node mainNode;
@@ -609,7 +612,7 @@ namespace TowerDefense
             openNodes.Add(mainNode);
 
             //Check nearby nodes
-            CheckNearbyNodes(ref mainNode, ref openNodes, ref closedNodes, startX, startY, endX, endY);
+            CheckNearbyNodes(ref coordinateSystem, ref mainNode, ref openNodes, ref closedNodes, startX, startY, endX, endY);
             mainNode.WasChecked = true;
             RemoveClosedNodesFromOpenNodesList(ref closedNodes, ref openNodes);
 
@@ -640,7 +643,7 @@ namespace TowerDefense
                 }
 
                 //Perform nearby node checks again
-                CheckNearbyNodes(ref mainNode, ref openNodes, ref closedNodes, startX, startY, endX, endY);
+                CheckNearbyNodes(ref coordinateSystem, ref mainNode, ref openNodes, ref closedNodes, startX, startY, endX, endY);
                 RemoveClosedNodesFromOpenNodesList(ref closedNodes, ref openNodes);
                 mainNode.WasChecked = true;
 
@@ -688,7 +691,7 @@ namespace TowerDefense
                         tempNode = node;
                         if (currentWave.Count >= 1)
                         {
-                            go.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedLeft.png");
+                            //go.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedLeft.png");
                         }
 
                         break;
@@ -701,7 +704,7 @@ namespace TowerDefense
                         tempNode = node;
                         if (currentWave.Count >= 1)
                         {
-                            go.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedRight.png");
+                            //go.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedRight.png");
                         }
 
                         break;
@@ -714,7 +717,7 @@ namespace TowerDefense
                         tempNode = node;
                         if (currentWave.Count >= 1)
                         {
-                            go.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedDown.png");
+                            //go.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedDown.png");
                         }
 
                         break;
@@ -727,7 +730,7 @@ namespace TowerDefense
                         tempNode = node;
                         if (currentWave.Count >= 1)
                         {
-                            go.sprite = Image.FromFile(@"Graphic/Resized/SlowResized.png");
+                            //go.sprite = Image.FromFile(@"Graphic/Resized/SlowResized.png");
                         }
 
                         break;
@@ -801,7 +804,7 @@ namespace TowerDefense
 
         //Saving path to PointF array
         //path.Add(new PointF(mainNode.LocationX, mainNode.LocationY));
-        public void CheckNearbyNodes(ref Node mainNode, ref List<Node> openNodes, ref List<Node> closedNodes, int startX, int startY, int endX, int endY)
+        public void CheckNearbyNodes(ref int[][] coordinateSystem, ref Node mainNode, ref List<Node> openNodes, ref List<Node> closedNodes, int startX, int startY, int endX, int endY)
         {
             //Node below main
             if (mainNode.LocationY < worldSizeY - 1)
@@ -1098,46 +1101,96 @@ namespace TowerDefense
         /// </summary>
         public void Build(int towerNumb, PointF position)
         {
-            switch (towerNumb)
-            {
-                #region Water
-                // Water
-                case 1:
-                    towers.Add(new TowerSlow(2, tileSizeX * 3, 500, 25, tileSizeX * 3, @"Towers/w1.png", position, true));
-                    towers[0].Bullet = new Projectile(100,5, @"Towers/w2.png", position, false, towers[0]);
-                    gold -= cost;
-                    break;
+            bool allowTower = true;
 
-                case 2:
-                    towers.Add(new TowerBoost(2, 3, 500, 35, 6, @"Towers/w2.png", position, true));
-                    towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
-                    gold -= cost;
-                    break;
-                case 3:
-                    towers.Add(new TowerStun(2, 500, 40, 7, @"Towers/w3.png", position, true));
-                    towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
-                    gold -= cost;
-                    break;
-                #endregion
-                #region Land
-                // Land
-                case 4:
-                    towers.Add(new TowerBoost(2, 3, 5, 35, 6, @"Towers/L1.png", position, true));
-                    towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
-                    gold -= cost;
-                    break;
-                case 5:
-                    towers.Add(new TowerSlow(2, 5, 5, 25, 6, @"Towers/L2.png", position, true));
-                    towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
-                    gold -= cost;
-                    break;
-                case 6:
-                    towers.Add(new TowerStun(2, 5, 40, 7, @"Towers/L3.png", position, true));
-                    towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
-                    gold -= cost;
-                    break;
-                #endregion
+            //Saving current path
+            tempPath = DuplicateList(path);
+
+            //Clearing current path
+            foreach (List<PointF> previousPath in path)
+            {
+                previousPath.Clear();
             }
+
+            //Clearing previous validPath bools
+            for (int i = 0; i < checkpointList.Count + 1; i++)
+            {
+                pathAvailable[i] = true;
+            }
+
+            //Resetting tempCoordinate System to prevent blocking towers from having a value
+            if (tempCoordinateSystem != null)
+                tempCoordinateSystem = null;
+
+            //taking a temporary copy of the coordinate system to check if a valid path is available after a tower has been built
+            tempCoordinateSystem = DuplicateCoordinateSystem(coordinateSystem);
+            tempCoordinateSystem[(int)position.X / tileSizeX][(int)position.Y / tileSizeY] = 110;
+
+            //Building enemy paths, depending on amount of checkpoints
+            for (int i = 0; i < endPoints.Count; i++)
+            {
+                RoadBuilder(ref tempCoordinateSystem, (int)startPoints[i].X, (int)startPoints[i].Y, (int)endPoints[i].X, (int)endPoints[i].Y, i);
+            }
+
+            //If path isn't available, use the old path instead and do not allow player to place a tower
+            if (!CheckIfValidPath(pathAvailable, numberOfCheckpoints))
+            {
+                path = DuplicateList(tempPath);
+
+                //Clearing current path
+                foreach (List<PointF> oldTempPath in tempPath)
+                {
+                    oldTempPath.Clear();
+                }
+                allowTower = false;
+            }
+            else
+            {
+                coordinateSystem[(int)position.X / tileSizeX][(int)position.Y / tileSizeY] = 110;
+                allowTower = true;
+            }
+
+            if (allowTower)
+                switch (towerNumb)
+                {
+                    #region Water
+                    // Water
+                    case 1:
+                        towers.Add(new TowerSlow(2, tileSizeX * 3, 5, 25, tileSizeX * 3, @"Towers/w1.png", position, true));
+                        towers[0].Bullet = new Projectile(100, 100, @"Towers/w2.png", position, false, towers[0]);
+                        gold -= cost;
+                        break;
+
+                    case 2:
+                        towers.Add(new TowerBoost(2, 3, 5, 35, 6, @"Towers/w2.png", position, true));
+                        towers[0].Bullet = new Projectile(10, 100, @"Towers/w2.png", position, false, towers[0]);
+                        gold -= cost;
+                        break;
+                    case 3:
+                        towers.Add(new TowerStun(2, 5, 40, 7, @"Towers/w3.png", position, true));
+                        towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
+                        gold -= cost;
+                        break;
+                    #endregion
+                    #region Land
+                    // Land
+                    case 4:
+                        towers.Add(new TowerBoost(2, 3, 5, 35, 6, @"Towers/L1.png", position, true));
+                        towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
+                        gold -= cost;
+                        break;
+                    case 5:
+                        towers.Add(new TowerSlow(2, 5, 5, 25, 6, @"Towers/L2.png", position, true));
+                        towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
+                        gold -= cost;
+                        break;
+                    case 6:
+                        towers.Add(new TowerStun(2, 5, 40, 7, @"Towers/L3.png", position, true));
+                        towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
+                        gold -= cost;
+                        break;
+                    #endregion
+                }
         }
         /// <summary>
         /// The Sell Function
@@ -1195,6 +1248,41 @@ namespace TowerDefense
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Making a deep copy of a list
+        /// </summary>
+        /// <param name="listToDuplicate"></param>
+        /// <returns></returns>
+        private List<List<PointF>> DuplicateList(List<List<PointF>> listToDuplicate)
+        {
+            List<List<PointF>> newList = new List<List<PointF>>();
+            for (int i = 0; i < listToDuplicate.Count; i++)
+            {
+                newList.Add(new List<PointF>());
+                for (int x = 0; x < listToDuplicate[i].Count; x++)
+                {
+                    newList[i].Add(new PointF(listToDuplicate[i][x].X, listToDuplicate[i][x].Y));
+                }
+            }
+
+            return newList;
+        }
+
+        //Duplicates a 2D jagged array to prevent cross references
+        private int[][] DuplicateCoordinateSystem(int[][] target)
+        {
+            int[][] newCoordinateSystem = new int[target.Count()][];
+            for (int i = 0; i < target.Count(); i++)
+            {
+                newCoordinateSystem[i] = new int[target[i].Count()];
+                for (int x = 0; x < target[i].Count(); x++)
+                {
+                    newCoordinateSystem[i][x] = target[i][x];
+                }
+            }
+            return newCoordinateSystem;
         }
     }
 }
