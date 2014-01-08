@@ -376,7 +376,9 @@ namespace TowerDefense
                             Build(6, new PointF(x, y));
                         }
                         #endregion
-                        #region Sell
+                        
+                }
+                    #region Sell
                         foreach (Tower tower in tmpTowers)
                         {
                             if (guiRect.IntersectsWith(tower.CollisionRect))
@@ -389,8 +391,12 @@ namespace TowerDefense
                         }
                     }
                         #endregion
-                }
             }
+            //Update all bullet objects
+            for (int i = 0; i < bullets.Count; i++)
+			{
+			    bullets[i].Update(currentFPS);
+			} 
             //Update all tower objects
             foreach (Tower tower in towers)
             {
@@ -405,13 +411,13 @@ namespace TowerDefense
 
             //Update all enemy objects
             UpdatePath(ref currentWave, ref endPoints, ref path);
-            foreach (Enemy enemy in currentWave)
-            {
-                if (enemy.Enabled)
+            for (int i = 0; i < currentWave.Count; i++)
+			{
+			 if (currentWave[i].Enabled)
                 {
-                    enemy.Update(currentFPS);
+                    currentWave[i].Update(currentFPS);
                 }
-            }
+			} 
         }
 
         /// <summary>
@@ -498,10 +504,10 @@ namespace TowerDefense
                     currentWave[i].Draw(dc);
             }
             // Drawing Bullets
-            //for (int i = 0; i < bullets.Count; i++)
-            //{
-            //    bullets[i].Draw(dc);
-            //}
+            for (int i = 0; i < bullets.Count; i++)
+            {
+                bullets[i].Draw(dc);
+            }
 
             Font w = new Font("Arial", 14);
             Brush q = new SolidBrush(Color.White);
@@ -1097,18 +1103,18 @@ namespace TowerDefense
                 #region Water
                 // Water
                 case 1:
-                    towers.Add(new TowerSlow(2, tileSizeX * 3, 5, 25, tileSizeX * 3, @"Towers/w1.png", position, true));
-                    towers[0].Bullet = new Projectile(100, 100, @"Towers/w2.png", position, false, towers[0]);
+                    towers.Add(new TowerSlow(2, tileSizeX * 3, 500, 25, tileSizeX * 3, @"Towers/w1.png", position, true));
+                    towers[0].Bullet = new Projectile(100,5, @"Towers/w2.png", position, false, towers[0]);
                     gold -= cost;
                     break;
 
                 case 2:
-                    towers.Add(new TowerBoost(2, 3, 5, 35, 6, @"Towers/w2.png", position, true));
-                    towers[0].Bullet = new Projectile(10, 100, @"Towers/w2.png", position, false, towers[0]);
+                    towers.Add(new TowerBoost(2, 3, 500, 35, 6, @"Towers/w2.png", position, true));
+                    towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
                     gold -= cost;
                     break;
                 case 3:
-                    towers.Add(new TowerStun(2, 5, 40, 7, @"Towers/w3.png", position, true));
+                    towers.Add(new TowerStun(2, 500, 40, 7, @"Towers/w3.png", position, true));
                     towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
                     gold -= cost;
                     break;

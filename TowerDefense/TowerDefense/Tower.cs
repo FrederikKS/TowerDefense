@@ -76,18 +76,16 @@ namespace TowerDefense
                             {
                                 target = Form1.gw.currentWave[i];
                             }
-                            else if (bullet != null)
+                            if (bullet != null)
                             {
                                 bullet.Target = target;
                             }
                             Form1.gw.bullets.Add(bullet);
+                            target = null;
                             stopWatch.Restart();
                         }
                     }
-                    else
-                    {
-                        target = null;
-                    }
+                    
                 
             }
 

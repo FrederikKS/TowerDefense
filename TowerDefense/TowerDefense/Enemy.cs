@@ -152,7 +152,7 @@ namespace TowerDefense
 
         public void OnImpact(Graphics dc)
         {
-            dc.DrawImage(explosion, this.position.X, this.position.Y, explosion.Width, explosion.Height);
+            //dc.DrawImage(explosion, this.position.X, this.position.Y, explosion.Width, explosion.Height);
         }
 
     }

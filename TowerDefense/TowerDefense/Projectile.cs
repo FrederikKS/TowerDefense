@@ -54,13 +54,17 @@ namespace TowerDefense
         /// </summary>
         public void MoveBullet()
         {
-            Vector2D direction = new Vector2D(target.Position.X - Position.X, target.Position.Y - Position.Y);
+            Vector2D direction = new Vector2D(target.Position.X - position.X, target.Position.Y - position.Y);
             direction.Normalize(bulletSpeed);
-            Position = new PointF(direction.X + Position.X, direction.Y + Position.Y);
-            if (target.Position == position)
+            position = new PointF(direction.X + position.X, direction.Y + position.Y);
+            if (target.Position.X >= position.X && position.X <= target.Position.X + 90 && target.Position.Y <= position.Y && position.Y <= target.Position.Y + 90)
             {
-                target.HP = target.HP + target.Armor - damage;
-                target.OnImpact(dc);
+                if (damage > 0)
+                {
+                    target.HP = target.HP + target.Armor - damage;
+                    target.OnImpact(dc);
+                }
+               
                 if (target.HP <= 0)
                 {
                    Form1.gw.currentWave.Remove(target);

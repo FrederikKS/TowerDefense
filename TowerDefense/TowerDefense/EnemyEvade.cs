@@ -40,10 +40,10 @@ namespace TowerDefense
 
                 for (int i = 0; i < Form1.gw.bullets.Count; i++)
                 {
-                    if (Form1.gw.bullets[i].Position == position)
-                    {
-                        Form1.gw.bullets[i].Damage = 0;
-                    }
+                    //if (Form1.gw.bullets[i].Position == position)
+                    //{
+                    //    Form1.gw.bullets[i].Damage = 0;
+                    //}
                 }
             }
         }
