@@ -30,11 +30,25 @@ namespace TowerDefense
 
         public void Slowing()
         {
+            // Runs through every enemy in currentWave, if they are within range they are slowed
+
             for (int i = 0; i < Form1.gw.currentWave.Count; i++)
             {
-                if (Math.Sqrt(position.X * Form1.gw.currentWave[i].Position.X + position.Y * Form1.gw.currentWave[i].Position.Y) > ranged && Form1.gw.currentWave[i].Speed != Form1.gw.currentWave[i].Speed - slow)
+                if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.currentWave[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.currentWave[i].Position.Y), 2)) < ranged)
                 {
-                    Form1.gw.currentWave[i].Speed -= slow;
+                    if (Form1.gw.currentWave[i].Speed >= 3)
+                    {
+                        Form1.gw.currentWave[i].Speed -= slow;
+                    }
+                }
+                // If they exit range once again, their original speed is restored
+
+                if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.currentWave[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.currentWave[i].Position.Y), 2)) > ranged)
+                {
+                    if (Form1.gw.currentWave[i].Speed <= 1)
+                    {
+                        Form1.gw.currentWave[i].Speed += slow;
+                    }
                 }
             }
         }

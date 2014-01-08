@@ -13,7 +13,7 @@ namespace TowerDefense
 
 
         //Fields
-        private int damage;
+        public int damage;
         public float bulletSpeed;
         private Tower tw;
         private Enemy target;
