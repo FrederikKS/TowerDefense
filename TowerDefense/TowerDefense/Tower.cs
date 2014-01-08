@@ -18,7 +18,7 @@ namespace TowerDefense
         private int cost;
         protected float ranged;
         private Projectile bullet;
-
+        
 
         public Enemy target;
  
@@ -64,8 +64,8 @@ namespace TowerDefense
         {
             for (int i = 0; i < Form1.gw.currentWave.Count; i++)
             {
-                if (Form1.gw.currentWave[i].Enabled)
-                {
+                
+                
                     if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.currentWave[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.currentWave[i].Position.Y), 2)) < ranged)
                     {
                         stopWatch.Start();
@@ -76,7 +76,7 @@ namespace TowerDefense
                             {
                                 target = Form1.gw.currentWave[i];
                             }
-                            if (bullet != null)
+                            else if (bullet != null)
                             {
                                 bullet.Target = target;
                             }
@@ -88,7 +88,7 @@ namespace TowerDefense
                     {
                         target = null;
                     }
-                }
+                
             }
 
         }
