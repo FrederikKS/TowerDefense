@@ -21,13 +21,12 @@ namespace TowerDefense
         private int reachedPointCounter = 0;
         private int reachedEndCounter = 0;
         private bool enabled = false;
-
         private Image explosion = Image.FromFile(@"Images/explosion.png");
-
+        
         #endregion
         //properties
         #region
-        public string Name 
+        public string Name
         {
             get { return name; }
             set { name = value; }
@@ -74,7 +73,8 @@ namespace TowerDefense
         }
         #endregion
         //constructor
-        public Enemy(string name, float hp, float speed, int armor, int worth, Effect effect, string imagePath, PointF position, PointF endPosition, bool isClickable): base(imagePath,position,isClickable)
+        public Enemy(string name, float hp, float speed, int armor, int worth, Effect effect, string imagePath, PointF position, PointF endPosition, bool isClickable)
+            : base(imagePath, position, isClickable)
         {
             this.name = name;
             this.hp = hp;
@@ -87,8 +87,9 @@ namespace TowerDefense
 
         public void MovementAI()
         {
+            PointF lastPos = new PointF(position.X, position.Y);
             int correction = 0;
-            
+
             if (position.X < endPosition.X)
             {
                 if (Math.Abs(position.X - endPosition.X) < speed)
@@ -110,11 +111,10 @@ namespace TowerDefense
                     position.X = position.X - correction;
                 }
                 else
-                position.X = position.X - speed;
+                    position.X = position.X - speed;
 
                 correction = 0;
             }
-
 
             if (position.Y < endPosition.Y)
             {
@@ -124,7 +124,7 @@ namespace TowerDefense
                     position.Y = position.Y + correction;
                 }
                 else
-                position.Y = position.Y + speed;
+                    position.Y = position.Y + speed;
 
                 correction = 0;
             }
@@ -137,10 +137,27 @@ namespace TowerDefense
                     position.Y = position.Y - correction;
                 }
                 else
-                position.Y = position.Y - speed;
+                    position.Y = position.Y - speed;
 
                 correction = 0;
+
             }
+            // Right
+            if (lastPos.X < position.X)
+                if (AnimationFrames.Count > 1)
+                    this.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedRight.png");
+            //Right
+            if (lastPos.X > position.X)
+                if (AnimationFrames.Count > 1)
+                    this.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedLeft.png");
+            // Up
+            if (lastPos.Y < position.Y)
+                if (AnimationFrames.Count > 1)
+                    this.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedDown.png");
+            // Down
+            if (lastPos.Y > position.Y)
+                if (AnimationFrames.Count > 1)
+                    this.sprite = Image.FromFile(@"Graphic/Resized/SlowResized.png");
 
         }
 
@@ -154,6 +171,77 @@ namespace TowerDefense
         {
             //dc.DrawImage(explosion, this.position.X, this.position.Y, explosion.Width, explosion.Height);
         }
-
+        //public override void UpdateAnimation(float fps)
+        //{
+        //    base.UpdateAnimation(fps);
+        //    // Left
+        //    if (lastPos.X < position.X)
+        //    {
+        //        if (AnimationFrames.Count > 1)
+        //        {
+        //            if (this is EnemyEvade)
+        //            {
+        //                this.sprite = Form1.gw.eLeft[1];
+        //                this.sprite = AnimationFrames[1];
+        //            }
+        //            else if (this is EnemySlow)
+        //            {
+        //                this.sprite = Form1.gw.eLeft[0];
+        //                this.sprite = AnimationFrames[1];
+        //            }
+        //        }
+        //    }
+        //    // Right
+        //    if (lastPos.X > position.X)
+        //    {
+        //        if (AnimationFrames.Count > 1)
+        //        {
+        //            if (this is EnemyEvade)
+        //            {
+        //                this.sprite = Form1.gw.eRight[1];
+        //                this.sprite = AnimationFrames[3];
+        //            }
+        //            else if (this is EnemySlow)
+        //            {
+        //                this.sprite = Form1.gw.eRight[0];
+        //                this.sprite = AnimationFrames[3];
+        //            }
+        //        }
+        //    }
+        //    // Up
+        //    if (lastPos.Y < position.Y)
+        //    {
+        //        if (AnimationFrames.Count > 1)
+        //        {
+        //            if (this is EnemyEvade)
+        //            {
+        //                this.sprite = Form1.gw.eTop[1];
+        //                this.sprite = AnimationFrames[0];
+        //            }
+        //            else if (this is EnemySlow)
+        //            {
+        //                this.sprite = Form1.gw.eTop[0];
+        //                this.sprite = AnimationFrames[0];
+        //            }
+        //        }
+        //    }
+        //    // Down
+        //    if (lastPos.Y > position.Y)
+        //    {
+        //        if (AnimationFrames.Count > 1)
+        //        {
+        //            if (this is EnemyEvade)
+        //            {
+        //                this.sprite = Form1.gw.eBot[1];
+        //                this.sprite = AnimationFrames[2];
+        //            }
+        //            else if (this is EnemySlow)
+        //            {
+        //                this.sprite = Form1.gw.eBot[0];
+        //                this.sprite = AnimationFrames[2];
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

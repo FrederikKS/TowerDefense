@@ -15,11 +15,10 @@ namespace TowerDefense
         public bool isClickable;
         protected PointF position;
         public Image sprite;
-        protected List<Image> animationFrames;
-        protected float currentFrameIndex;
+        private List<Image> animationFrames;
+        public float currentFrameIndex;
         private RectangleF collisionRect;
-        
-        
+        private PointF lastPos = new PointF(0, 0);
 
         #endregion
 
@@ -35,6 +34,16 @@ namespace TowerDefense
             get { return collisionRect; }
             set { collisionRect = value; }
         }
+        public Image Sprite
+        {
+            get { return sprite; }
+            set { sprite = value; }
+        }
+        public List<Image> AnimationFrames
+        {
+            get { return animationFrames; }
+            set { animationFrames = value; }
+        }
         #endregion
 
         /// <summary>
@@ -45,7 +54,7 @@ namespace TowerDefense
         /// <param name="isClickable"></param>
         public GameObject(string imagePath, PointF Position, bool isClickable)
         {
-            // Seperates the image path on ; enables multiple image paths
+            // Seperates the image path on "," enables multiple image paths
             string[] imagePaths = imagePath.Split(new char[] { ',' });
             this.Position = Position;
             sprite = Image.FromFile(imagePaths[0]);
@@ -59,7 +68,6 @@ namespace TowerDefense
             }
 
             //Set the sprite to the first image in the animation frames
-
             this.sprite = this.animationFrames[0];
         }
         
@@ -71,7 +79,7 @@ namespace TowerDefense
         /// <param name="fps"></param>
         public virtual void Update(float fps)
         {
-
+            
         }
 
         /// <summary>
@@ -93,8 +101,9 @@ namespace TowerDefense
 
             //Convert currentAnimationIndex to a integer (removing everything after the dot) and used it to 
             //get the correct image
+            
+           // sprite = animationFrames[(int)currentFrameIndex];
 
-            sprite = animationFrames[(int)currentFrameIndex];
             collisionRect = new RectangleF(Position.X, Position.Y, sprite.Width, sprite.Height);
         }
 
