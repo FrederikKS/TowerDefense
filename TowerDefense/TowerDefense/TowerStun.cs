@@ -32,7 +32,7 @@ namespace TowerDefense
         public TowerStun(float stunTime,float speed, int cost, float ranged, string imagePath, PointF position, bool isClickAble)
             : base(speed, cost, ranged, imagePath, position, isClickAble)
         {
-
+            this.Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, this);
         }
     }
 }

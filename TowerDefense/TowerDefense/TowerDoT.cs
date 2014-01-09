@@ -34,6 +34,7 @@ namespace TowerDefense
         {
             this.dmgOverTime = dmgOverTime;
             this.duration = duration;
+            this.Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, this);
         }
 
         public void DoT()

@@ -18,9 +18,6 @@ namespace TowerDefense
         private int cost;
         protected float ranged;
         private Projectile bullet;
-        
-
-        public Enemy target;
  
         // Property
         public float Speed
@@ -49,10 +46,14 @@ namespace TowerDefense
         /// <param name="isClickAble"></param>
         public Tower(float speed, int cost, float ranged, string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
         {
+
             this.speed = speed;
             this.cost = cost;
             this.ranged = ranged;
+
+            stopWatch.Start();
             
+
         }
 
         /// <summary>
@@ -64,31 +65,25 @@ namespace TowerDefense
         {
             for (int i = 0; i < Form1.gw.currentWave.Count; i++)
             {
-                
-                
-                    if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.currentWave[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.currentWave[i].Position.Y), 2)) < ranged)
+                if (Form1.gw.currentWave[i].Enabled)
+                if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.currentWave[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.currentWave[i].Position.Y), 2)) < ranged)
+                {
+                    if (stopWatch.ElapsedMilliseconds > speed)
                     {
-                        stopWatch.Start();
-                        if (stopWatch.Elapsed.Milliseconds > speed)
+                        if (bullet != null)
                         {
+                            bullet.Target = Form1.gw.currentWave[i];
+                            bullet.TargetID = i;
 
-                            if (target == null)
+                            if (Form1.gw.currentWave[i].Enabled)
                             {
-                                target = Form1.gw.currentWave[i];
+                                Form1.gw.bullets.Add(bullet);
+                                stopWatch.Restart();
                             }
-                            if (bullet != null)
-                            {
-                                bullet.Target = target;
-                            }
-                            Form1.gw.bullets.Add(bullet);
-                            target = null;
-                            stopWatch.Restart();
                         }
                     }
-                    
-                
+                }
             }
-
         }
         /// <summary>
         /// The Update function for the towers

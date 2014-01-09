@@ -48,23 +48,23 @@ namespace TowerDefense
             return (float)Math.Sqrt(Math.Pow(v1.X - v2.X, 2) + Math.Pow(v1.Y - v2.Y, 2));
         }
 
-        public void Normalize(float bulletSpeed)
+        public void Normalize()
         {
             if (X < 0)
             {
-                X = -bulletSpeed;
+                X = -1;
             }
             else
             {
-                X = bulletSpeed;
+                X = 1;
             }
             if (Y > 0)
             {
-                Y = bulletSpeed;
+                Y = 1;
             }
             else
             {
-                Y = -bulletSpeed;
+                Y = -1;
             }
         }
 

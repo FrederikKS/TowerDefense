@@ -33,6 +33,7 @@ namespace TowerDefense
         {
             this.boostDamage = boostDamage;
             this.boostSpeed = boostSpeed;
+            this.Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, this);
         }
 
         public void Boost()

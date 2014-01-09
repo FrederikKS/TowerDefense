@@ -322,10 +322,10 @@ namespace TowerDefense
             {
                 for (int i = 0; i < currentWave.Count; i++)
                 {
-                    if (currentWave[i].Enabled == false)
-                    {
-                        enemydisabled++;
-                    }
+                    //if (currentWave[i].Enabled == false)
+                    //{
+                    //    enemydisabled++;
+                    //}
                 }
                 if (enemydisabled == 10)
                 {
@@ -396,10 +396,13 @@ namespace TowerDefense
                         #endregion
             }
             //Update all bullet objects
-            /*for (int i = 0; i < bullets.Count; i++)
+            for (int i = 0; i < bullets.Count; i++)
 			{
-			    bullets[i].Update(currentFPS);
-			} */
+                if (bullets[i].Target.Enabled)
+                    bullets[i].Update(currentFPS);
+                else
+                    bullets.Remove(bullets[i]);
+			}
             //Update all tower objects
             foreach (Tower tower in towers)
             {
@@ -507,6 +510,7 @@ namespace TowerDefense
                     currentWave[i].Draw(dc);
             }
             // Drawing Bullets
+            if (bullets.Count > 0)
             for (int i = 0; i < bullets.Count; i++)
             {
                 bullets[i].Draw(dc);
@@ -1156,19 +1160,16 @@ namespace TowerDefense
                     #region Water
                     // Water
                     case 1:
-                        towers.Add(new TowerSlow(2, tileSizeX * 3, 5, 25, tileSizeX * 3, @"Towers/w1.png", position, true));
-                        towers[0].Bullet = new Projectile(100, 100, @"Towers/w2.png", position, false, towers[0]);
+                        towers.Add(new TowerSlow(2, tileSizeX * 3, 1000, 25, tileSizeX * 3, @"Towers/w1.png", position, true));
                         gold -= cost;
                         break;
 
                     case 2:
-                        towers.Add(new TowerBoost(2, 3, 5, 35, 6, @"Towers/w2.png", position, true));
-                        towers[0].Bullet = new Projectile(10, 100, @"Towers/w2.png", position, false, towers[0]);
+                        towers.Add(new TowerBoost(2, 3, 1000, 35, 6, @"Towers/w2.png", position, true));
                         gold -= cost;
                         break;
                     case 3:
-                        towers.Add(new TowerStun(2, 5, 40, 7, @"Towers/w3.png", position, true));
-                        towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
+                        towers.Add(new TowerStun(2, 1000, 40, 7, @"Towers/w3.png", position, true));
                         gold -= cost;
                         break;
                     #endregion
@@ -1176,17 +1177,14 @@ namespace TowerDefense
                     // Land
                     case 4:
                         towers.Add(new TowerBoost(2, 3, 5, 35, 6, @"Towers/L1.png", position, true));
-                        towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
                         gold -= cost;
                         break;
                     case 5:
                         towers.Add(new TowerSlow(2, 5, 5, 25, 6, @"Towers/L2.png", position, true));
-                        towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
                         gold -= cost;
                         break;
                     case 6:
                         towers.Add(new TowerStun(2, 5, 40, 7, @"Towers/L3.png", position, true));
-                        towers[0].Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, towers[0]);
                         gold -= cost;
                         break;
                     #endregion

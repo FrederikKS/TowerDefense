@@ -17,6 +17,7 @@ namespace TowerDefense
         public float bulletSpeed;
         private Tower tw;
         private Enemy target;
+        private int targetID;
         Graphics dc;
 
 
@@ -33,6 +34,11 @@ namespace TowerDefense
             get { return target; }
             set { target = value; }
         }
+        public int TargetID
+        {
+            get { return targetID; }
+            set { targetID = value; }
+        }
 
         /// <summary>
         /// Projectile Constructor
@@ -41,7 +47,7 @@ namespace TowerDefense
         /// <param name="imagePath"></param>
         /// <param name="position"></param>
         /// <param name="isClickable"></param>
-        public Projectile( int damage, float bulletSpeed, string imagePath, PointF position, bool isClickable, Tower fromTower ) : base(imagePath, position, isClickable)
+        public Projectile( int damage, float bulletSpeed, string imagePath, PointF position, bool isClickable, Tower fromTower) : base(imagePath, position, isClickable)
         {
             this.damage = damage;
             this.bulletSpeed = bulletSpeed;
@@ -50,28 +56,43 @@ namespace TowerDefense
         /// <summary>
         /// lucas
         /// Moves the bullet along a vector to target and give target damage
-        /// Remove bullet when bullet position are equal to target position
+        /// Remove bullet when bullet position is equal to target position
         /// </summary>
         public void MoveBullet()
         {
-            Vector2D direction = new Vector2D(target.Position.X - position.X, target.Position.Y - position.Y);
-            direction.Normalize(bulletSpeed);
-            position = new PointF(direction.X + position.X, direction.Y + position.Y);
-            if (target.Position.X >= position.X && position.X <= target.Position.X + 90 && target.Position.Y <= position.Y && position.Y <= target.Position.Y + 90)
+            if (Form1.gw.currentWave[targetID].Enabled)
             {
-                if (damage > 0)
+                target = Form1.gw.currentWave[targetID];
+                Vector2D direction = new Vector2D(target.Position.X - position.X, target.Position.Y - position.Y);
+                direction.Normalize();
+                if (direction.X > 0 && direction.Y > 0)
+                    position = new PointF(Math.Abs(direction.X * bulletSpeed) + position.X, Math.Abs(direction.Y * bulletSpeed) + position.Y);
+                if (direction.X > 0 && direction.Y < 0)
+                    position = new PointF(Math.Abs(direction.X * bulletSpeed) + position.X, position.Y - Math.Abs(direction.Y * bulletSpeed));
+                if (direction.X < 0 && direction.Y > 0)
+                    position = new PointF(position.X - Math.Abs(direction.X * bulletSpeed), Math.Abs(direction.Y * bulletSpeed) + position.Y);
+                if (direction.X < 0 && direction.Y < 0)
+                    position = new PointF(position.X - Math.Abs(direction.X * bulletSpeed), position.Y - Math.Abs(direction.Y * bulletSpeed));
+
+                if (target.Position.X >= position.X && position.X <= target.Position.X + 90 && target.Position.Y <= position.Y && position.Y <= target.Position.Y + 90)
                 {
-                    target.HP = target.HP + target.Armor - damage;
-                    target.OnImpact(dc);
+                    if (damage > 0)
+                    {
+                        Form1.gw.currentWave[targetID].HP = Form1.gw.currentWave[targetID].HP + Form1.gw.currentWave[targetID].Armor - damage;
+                        Form1.gw.currentWave[targetID].OnImpact(dc);
+                    }
+
+                    if (Form1.gw.currentWave[targetID].HP <= 0)
+                    {
+                        Form1.gw.currentWave[targetID].Enabled = false;
+                    }
+                    Form1.gw.bullets.Remove(this);
+                    position = tw.Position;
+
                 }
-               
-                if (target.HP <= 0)
-                {
-                   Form1.gw.currentWave.Remove(target);
-                }
-                Form1.gw.bullets.Remove(this);
-                
             }
+            else
+                Form1.gw.bullets.Remove(this);
         }
         public override void Update(float FPS)
         {

@@ -25,7 +25,7 @@ namespace TowerDefense
         public TowerSlow(float slow, int range, float speed, int cost, float ranged, string imagePath, PointF position, bool isClickAble)
             : base(speed, cost, range, imagePath, position, isClickAble)
         {
-
+            this.Bullet = new Projectile(100, 5, @"Towers/w2.png", position, false, this);
         }
 
         public void Slowing()
@@ -36,6 +36,7 @@ namespace TowerDefense
             {
                 if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.currentWave[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.currentWave[i].Position.Y), 2)) < ranged)
                 {
+                    if (Form1.gw.currentWave[i].Enabled)
                     if (Form1.gw.currentWave[i].Speed >= 3)
                     {
                         Form1.gw.currentWave[i].Speed -= slow;
@@ -45,6 +46,7 @@ namespace TowerDefense
 
                 if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.currentWave[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.currentWave[i].Position.Y), 2)) > ranged)
                 {
+                    if (Form1.gw.currentWave[i].Enabled)
                     if (Form1.gw.currentWave[i].Speed <= 1)
                     {
                         Form1.gw.currentWave[i].Speed += slow;
