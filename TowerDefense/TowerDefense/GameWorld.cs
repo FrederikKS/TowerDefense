@@ -507,10 +507,10 @@ namespace TowerDefense
                     currentWave[i].Draw(dc);
             }
             // Drawing Bullets
-            /*for (int i = 0; i < bullets.Count; i++)
+            for (int i = 0; i < bullets.Count; i++)
             {
                 bullets[i].Draw(dc);
-            }*/
+            }
 
             Font w = new Font("Arial", 14);
             Brush q = new SolidBrush(Color.White);
