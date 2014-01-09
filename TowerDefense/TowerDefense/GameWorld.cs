@@ -330,6 +330,7 @@ namespace TowerDefense
                 if (enemydisabled == 10)
                 {
                     enemyDead = true;
+                    
                 }
             }
             //Update mouse rectangle pos
@@ -401,7 +402,10 @@ namespace TowerDefense
                 if (bullets[i].Target.Enabled)
                     bullets[i].Update(currentFPS);
                 else
+                {
+                    bullets[i].Position = bullets[i].Tw.Position;
                     bullets.Remove(bullets[i]);
+                }
 			}
             //Update all tower objects
             foreach (Tower tower in towers)

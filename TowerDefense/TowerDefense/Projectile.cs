@@ -39,6 +39,11 @@ namespace TowerDefense
             get { return targetID; }
             set { targetID = value; }
         }
+        public Tower Tw
+        {
+            get { return tw; }
+            set { tw = value; }
+        }
 
         /// <summary>
         /// Projectile Constructor
