@@ -322,10 +322,10 @@ namespace TowerDefense
             {
                 for (int i = 0; i < currentWave.Count; i++)
                 {
-                    //if (currentWave[i].Enabled == false)
-                    //{
-                    //    enemydisabled++;
-                    //}
+                    if (currentWave[i].Enabled == false)
+                    {
+                        enemydisabled++;
+                    }
                 }
                 if (enemydisabled == 10)
                 {
@@ -380,7 +380,7 @@ namespace TowerDefense
                         }
                         #endregion
                         
-                }
+                    }
                     #region Sell
                         foreach (Tower tower in tmpTowers)
                         {
