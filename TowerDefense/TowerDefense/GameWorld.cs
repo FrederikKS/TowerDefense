@@ -81,12 +81,12 @@ namespace TowerDefense
         #endregion
         // Fields for building phase
 
-        public int gold = 125;
+        public int gold = 100;
         private int cost;
         private int chest;
         bool afford = true;
         Timer tAfford;
-
+        public float life;
         // Constructors
 
         public GameWorld(Graphics dc, Rectangle displayRectangle, float worldSizeX, float worldSizeY, float dif)
@@ -297,6 +297,18 @@ namespace TowerDefense
 
             //Starting buildwatch for the first time
             buildWatch.Start();
+            switch (Form1.difc)
+            {
+                case 1:
+                    life = 50;
+                    break;
+                case 2:
+                    life = 30;
+                    break;
+                case 3:
+                    life = 10;
+                    break;
+            }
         }
         /// <summary>
         /// Makes sure all the update functions is called every frames
@@ -536,7 +548,9 @@ namespace TowerDefense
             // Draw Gold count
 
             dc.DrawString(string.Format("Gold: {0}", gold), w, q, 30, 45);
+            // Draw life count
 
+            dc.DrawString(string.Format("Life: {0}", life), w, q, 30, 65);
             //Draw timer if build phase is on
             if (Enum.IsDefined(typeof(State), State.build))
             {
@@ -1272,6 +1286,7 @@ namespace TowerDefense
                         if (endPoints.Count == enemy.ReachedEndCounter)
                         {
                             enemy.Enabled = false;
+                            life--;
                         }
 
                         //Check if enemy has been on all the points between his starting position and his end position
