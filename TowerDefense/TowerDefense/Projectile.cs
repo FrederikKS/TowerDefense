@@ -83,8 +83,17 @@ namespace TowerDefense
                 {
                     if (damage > 0)
                     {
-                        Form1.gw.currentWave[targetID].HP = Form1.gw.currentWave[targetID].HP + Form1.gw.currentWave[targetID].Armor - damage;
-                        Form1.gw.currentWave[targetID].OnImpact(dc);
+                        if (target is EnemyEvade)
+                            if (CanHitEvadingEnemy((EnemyEvade) target))
+                            {
+                                Form1.gw.currentWave[targetID].HP = Form1.gw.currentWave[targetID].HP + Form1.gw.currentWave[targetID].Armor - damage;
+                                Form1.gw.currentWave[targetID].OnImpact(dc);
+                            }
+                            else
+                            {
+                                Form1.gw.currentWave[targetID].HP = Form1.gw.currentWave[targetID].HP + Form1.gw.currentWave[targetID].Armor - damage;
+                                Form1.gw.currentWave[targetID].OnImpact(dc);
+                            }
                     }
 
                     if (Form1.gw.currentWave[targetID].HP <= 0)
@@ -104,6 +113,14 @@ namespace TowerDefense
         {
             MoveBullet();
             base.Update(FPS);
+        }
+
+        public bool CanHitEvadingEnemy(EnemyEvade evader)
+        {
+            if (evader.IsEvade)
+                return false;
+            else
+            return true;
         }
     }
 }
