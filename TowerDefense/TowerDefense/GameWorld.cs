@@ -318,21 +318,7 @@ namespace TowerDefense
         /// </summary>
         public void Update()
         {
-            if (enemySent)
-            {
-                for (int i = 0; i < currentWave.Count; i++)
-                {
-                    //if (currentWave[i].Enabled == false)
-                    //{
-                    //    enemydisabled++;
-                    //}
-                }
-                if (enemydisabled == 10)
-                {
-                    enemyDead = true;
-                    
-                }
-            }
+            
             //Update mouse rectangle pos
             mouseRect.Location = Form1.localMousePos;
             foreach (TowerButton tb in tl)
@@ -421,14 +407,31 @@ namespace TowerDefense
 
             //Update all enemy objects
             UpdatePath(ref currentWave, ref endPoints, ref path);
-            for (int i = 0; i < currentWave.Count; i++)
-			{
-			 if (currentWave[i].Enabled)
+            foreach (Enemy enemy in currentWave)
+            {
+                if (enemy.Enabled)
                 {
-                    currentWave[i].Update(currentFPS);
+                    enemy.Update(currentFPS);
                 }
-			} 
+            }
+            // Control when enemy wave is dead
+            if (enemySent)
+            {
+                for (int i = 0; i < currentWave.Count; i++)
+                {
+                    if (currentWave[i].Enabled == false && currentWave[i].Check == false)
+                    {
+                        enemydisabled++;
+                        currentWave[i].Check = true;
+                    }
+                }
+                if (enemydisabled == currentWave.Count)
+                {
+                    enemyDead = true;
+                }
+            }
         }
+        
 
         /// <summary>
         /// Updates the animations of the game objects in the world
@@ -1073,15 +1076,19 @@ namespace TowerDefense
             switch (currentState)
             {
                 case State.build:
+                    if (!buildWatch.IsRunning)
+                    {
+                        buildWatch.Start();
+                    }
 
-                    if (buildWatch.Elapsed.Seconds > 2)
+                    if (buildWatch.Elapsed.Seconds > 15)
                     {
                         buildWatch.Stop();
                         buildWatch.Reset();
                         phase = "Wave";
-                        currentState = State.wave;
-                        StartWave();
                         waveNumber++;
+                        StartWave();
+                        currentState = State.wave;
                     }
                     break;
 
@@ -1089,18 +1096,14 @@ namespace TowerDefense
 
                     if (enemyDead == true)
                     {
-                        if (!buildWatch.IsRunning)
-                            buildWatch.Start();
-
-                        if (buildWatch.Elapsed.Seconds > 5)
-                        {
-                            phase = "Build phase";
-                            buildWatch.Reset();
-                            currentState = State.build;
-                        }
-
+                        phase = "Build phase";
+                        enemyDead = false;
+                        enemySent = false;
+                        enemydisabled = 0;
+                        currentState = State.build;
                     }
                     break;
+
 
             }
         }

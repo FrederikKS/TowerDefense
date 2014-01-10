@@ -21,6 +21,7 @@ namespace TowerDefense
         private int reachedPointCounter = 0;
         private int reachedEndCounter = 0;
         private bool enabled = false;
+        private bool check = false;
         private Image explosion = Image.FromFile(@"Images/explosion.png");
         
         #endregion
@@ -70,6 +71,11 @@ namespace TowerDefense
         {
             get { return enabled; }
             set { enabled = value; }
+        }
+        public bool Check
+        {
+            get { return check; }
+            set { check = value; }
         }
         #endregion
         //constructor
