@@ -57,7 +57,6 @@ namespace TowerDefense
             // Seperates the image path on "," enables multiple image paths
             string[] imagePaths = imagePath.Split(new char[] { ',' });
             this.Position = Position;
-            sprite = Image.FromFile(imagePaths[0]);
             this.animationFrames = new List<Image>();
 
             // Loop through imagepaths and add them to animation frames

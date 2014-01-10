@@ -286,11 +286,12 @@ namespace TowerDefense
                 for (int enemyNumber = 0; enemyNumber < 10; enemyNumber++)
                 {
                     if (enemyNumber % 3 == 0)
-                        waveEnemy[i].Add(new EnemyNormal("TestEnemyNormal", 100 * chosenDif, 9, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/96.jpg", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                       
+ waveEnemy[i].Add(new EnemyNormal("TestEnemyNormal", 100 * chosenDif, 9, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/heavyUp.png,Graphic/heavyLeft.png,Graphic/heavyDown.png,Graphic/heavyRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                     if (enemyNumber % 3 == 1)
-                        waveEnemy[i].Add(new EnemyEvade("TestEnemyEvade", false, 100 * chosenDif, 9, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/Resized/EvadeResized.png,Graphic/Resized/EvadeResizedLeft.png,Graphic/Resized/EvadeResizedDown.png,Graphic/Resized/EvadeResizedRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                        waveEnemy[i].Add(new EnemyEvade("TestEnemyEvade", false, 100 * chosenDif, 9, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/EvadeResized.png,Graphic/EvadeResizedLeft.png,Graphic/EvadeResizedDown.png,Graphic/EvadeResizedRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                     if (enemyNumber % 3 == 2)
-                        waveEnemy[i].Add(new EnemySlow("TestEnemySlow", 10, 10, 100 * chosenDif, 9, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/Resized/SlowResized.png,Graphic/Resized/SlowResizedLeft.png,Graphic/Resized/SlowResizedDown.png,Graphic/Resized/SlowResizedLeft.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                        waveEnemy[i].Add(new EnemySlow("TestEnemySlow", 10, 10, 100 * chosenDif, 9, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/slowUp.png,Graphic/slowLeft.png,Graphic/slowDown.png,Graphic/slowRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                 }
             }
 
@@ -712,10 +713,6 @@ namespace TowerDefense
                         path[pathNumber].Add(new PointF(node.LocationX * tileSizeX, node.LocationY * tileSizeY));
                         counter++;
                         tempNode = node;
-                        if (currentWave.Count >= 1)
-                        {
-                            //go.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedLeft.png");
-                        }
 
                         break;
                     }
@@ -725,10 +722,6 @@ namespace TowerDefense
                         path[pathNumber].Add(new PointF(node.LocationX * tileSizeX, node.LocationY * tileSizeY));
                         counter++;
                         tempNode = node;
-                        if (currentWave.Count >= 1)
-                        {
-                            //go.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedRight.png");
-                        }
 
                         break;
                     }
@@ -738,10 +731,6 @@ namespace TowerDefense
                         path[pathNumber].Add(new PointF(node.LocationX * tileSizeX, node.LocationY * tileSizeY));
                         counter++;
                         tempNode = node;
-                        if (currentWave.Count >= 1)
-                        {
-                            //go.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedDown.png");
-                        }
 
                         break;
                     }
@@ -751,11 +740,6 @@ namespace TowerDefense
                         path[pathNumber].Add(new PointF(node.LocationX * tileSizeX, node.LocationY * tileSizeY));
                         counter++;
                         tempNode = node;
-                        if (currentWave.Count >= 1)
-                        {
-                            //go.sprite = Image.FromFile(@"Graphic/Resized/SlowResized.png");
-                        }
-
                         break;
                     }
                 }
@@ -968,31 +952,31 @@ namespace TowerDefense
                     //Checkpoints
                     if (coordinateSystem[x][y] == 2)
                     {
-                        environmentList.Add(new Checkpoint(@"Graphic/Resized/Checkpoint1Resized.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Checkpoint(@"Graphic/Checkpoint1Resized.png", new PointF(tempX, tempY), false));
                     }
                     if (coordinateSystem[x][y] == 3)
                     {
-                        environmentList.Add(new Checkpoint(@"Graphic/Resized/Checkpoint2Resized.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Checkpoint(@"Graphic/Checkpoint2Resized.png", new PointF(tempX, tempY), false));
                     }
                     if (coordinateSystem[x][y] == 4)
                     {
-                        environmentList.Add(new Checkpoint(@"Graphic/Resized/Checkpoint3Resized.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Checkpoint(@"Graphic/Checkpoint3Resized.png", new PointF(tempX, tempY), false));
                     }
 
                     //Placing treasure chest
                     if (coordinateSystem[x][y] == 5)
                     {
-                        environmentList.Add(new Treasure(@"Graphic/Resized/TreasureResized.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Treasure(@"Graphic/TreasureResized.png", new PointF(tempX, tempY), false));
                     }
                     //Placing Water
                     if (coordinateSystem[x][y] == 10)
                     {
-                        environmentList.Add(new Water(@"Graphic/Resized/WaterResized.png", new PointF(tempX, tempY), true));
+                        environmentList.Add(new Water(@"Graphic/water.png", new PointF(tempX, tempY), true));
                     }
                     //Placing Islands
                     if (coordinateSystem[x][y] == 11)
                     {
-                        environmentList.Add(new Island(@"Graphic/LandResized.png", new PointF(tempX, tempY), true));
+                        environmentList.Add(new Island(@"Graphic/land.png", new PointF(tempX, tempY), true));
                     }
                     //Placing lighthouses
                     if (coordinateSystem[x][y] == 12)
@@ -1009,44 +993,44 @@ namespace TowerDefense
                     //Left
                     if (coordinateSystem[x][y] == 101)
                     {
-                        environmentList.Add(new Rock(@"Graphic/Resized/WallLeft.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/WallLeft.png", new PointF(tempX, tempY), false));
                     }
                     //Right
                     if (coordinateSystem[x][y] == 102)
                     {
-                        environmentList.Add(new Rock(@"Graphic/Resized/WallRight.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/WallRight.png", new PointF(tempX, tempY), false));
                     }
                     //Top
                     if (coordinateSystem[x][y] == 103)
                     {
-                        environmentList.Add(new Rock(@"Graphic/Resized/WallTop.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/WallTop.png", new PointF(tempX, tempY), false));
                     }
                     //Bot
                     if (coordinateSystem[x][y] == 104)
                     {
-                        environmentList.Add(new Rock(@"Graphic/Resized/WallBot.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/WallBot.png", new PointF(tempX, tempY), false));
                     }
 
                     //Placing Corners
                     //Top Left
                     if (coordinateSystem[x][y] == 105)
                     {
-                        environmentList.Add(new Rock(@"Graphic/Resized/CornerTopLeft.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/CornerTopLeft.png", new PointF(tempX, tempY), false));
                     }
                     //Top Right
                     if (coordinateSystem[x][y] == 106)
                     {
-                        environmentList.Add(new Rock(@"Graphic/Resized/CornerTopRight.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/CornerTopRight.png", new PointF(tempX, tempY), false));
                     }
                     //Bot Left
                     if (coordinateSystem[x][y] == 107)
                     {
-                        environmentList.Add(new Rock(@"Graphic/Resized/CornerBotLeft.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/CornerBotLeft.png", new PointF(tempX, tempY), false));
                     }
                     //Bot Right
                     if (coordinateSystem[x][y] == 108)
                     {
-                        environmentList.Add(new Rock(@"Graphic/Resized/CornerBotRight.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/CornerBotRight.png", new PointF(tempX, tempY), false));
                     }
                 }
             }
@@ -1182,7 +1166,7 @@ namespace TowerDefense
                     case 1:
                         if (gold >= 25)
                         {
-                            towers.Add(new TowerSlow(2, tileSizeX * 3, 1000, 25, tileSizeX * 3, @"Towers/w1.png", position, true));
+                            towers.Add(new TowerSlow(2, tileSizeX * 3, 1000, 25, tileSizeX * 3, @"Towers/shipTower.png", position, true));
                             gold -= towers[0].Cost;
                         }
                         else
@@ -1194,7 +1178,7 @@ namespace TowerDefense
                     case 2:
                         if (gold >= 40)
                         {
-                            towers.Add(new TowerBoost(2, 3, 1000, 35, 6, @"Towers/w2.png", position, true));
+                            towers.Add(new TowerBoost(10, 3, 1000, 35, 6, @"Towers/WhirlPool.png", position, true));
                             gold -= towers[0].Cost;
                         }
                         else
@@ -1220,7 +1204,7 @@ namespace TowerDefense
                     case 4:
                         if (gold >= 25)
                         {
-                            towers.Add(new TowerBoost(2, 3, 5, 35, 6, @"Towers/L1.png", position, true));
+                            towers.Add(new TowerBoost(2, 3, 5, 35, 6, @"Towers/ArrowTower.png", position, true));
                             gold -= towers[0].Cost;
                         }
                         else

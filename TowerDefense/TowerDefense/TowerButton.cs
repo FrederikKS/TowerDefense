@@ -65,24 +65,20 @@ namespace TowerDefense
 
                 if (Form1.drawBuildGUI == 4)
                 {
-                    dc.DrawImage(Image.FromFile(@"Towers/L1.png"), new Point(tmpX + 50, tmpY));
+                    dc.DrawImage(Image.FromFile(@"Towers/ArrowTowerBtn.png"), new Point(tmpX + 50, tmpY));
                     dc.DrawImage(Image.FromFile(@"Towers/L2.png"), new Point(tmpX - 120, tmpY));
                     dc.DrawImage(Image.FromFile(@"Towers/L3.png"), new Point(tmpX - 30, tmpY - 120));
-                    //dc.FillRectangle(Brushes.Brown, collisionRect);
                 }
                 if (Form1.drawBuildGUI == 3)
                 {
-                    dc.DrawImage(Image.FromFile(@"Towers/w1.png"), new Point(tmpX + 50, tmpY));
-                    dc.DrawImage(Image.FromFile(@"Towers/w2.png"), new Point(tmpX - 120, tmpY));
+                    dc.DrawImage(Image.FromFile(@"Towers/shipTowerBtn.png"), new Point(tmpX + 50, tmpY));
+                    dc.DrawImage(Image.FromFile(@"Towers/WhirlpoolBtn.png"), new Point(tmpX - 120, tmpY));
                     dc.DrawImage(Image.FromFile(@"Towers/w3.png"), new Point(tmpX - 30, tmpY - 120));
-                    //dc.FillRectangle(Brushes.Blue, collisionRect);
                 }
                 if (Form1.drawBuildGUI == 2)
                 {
                     dc.DrawImage(Image.FromFile(@"Towers/st.png"), new Point(tmpX - 30, tmpY - 120));
-                    //dc.FillRectangle(Brushes.Red, collisionRect);
                 }
-                // Draw The TowerButton
 
             }
         }

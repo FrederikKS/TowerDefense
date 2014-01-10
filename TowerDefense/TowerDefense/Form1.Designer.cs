@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pnl_Main = new System.Windows.Forms.Panel();
             this.pnl_high = new System.Windows.Forms.Panel();
             this.pnl_submit = new System.Windows.Forms.Panel();
@@ -64,7 +65,7 @@
             this.pnl_Main.Controls.Add(this.btn_dif);
             this.pnl_Main.Location = new System.Drawing.Point(12, 12);
             this.pnl_Main.Name = "pnl_Main";
-            this.pnl_Main.Size = new System.Drawing.Size(657, 445);
+            this.pnl_Main.Size = new System.Drawing.Size(1219, 445);
             this.pnl_Main.TabIndex = 0;
             // 
             // pnl_high
@@ -74,7 +75,7 @@
             this.pnl_high.Controls.Add(this.btn_highHard);
             this.pnl_high.Controls.Add(this.btn_highMedium);
             this.pnl_high.Controls.Add(this.btn_highEasy);
-            this.pnl_high.Location = new System.Drawing.Point(131, 157);
+            this.pnl_high.Location = new System.Drawing.Point(294, 159);
             this.pnl_high.Name = "pnl_high";
             this.pnl_high.Size = new System.Drawing.Size(446, 262);
             this.pnl_high.TabIndex = 4;
@@ -174,9 +175,10 @@
             // 
             // btn_exit
             // 
-            this.btn_exit.Location = new System.Drawing.Point(25, 280);
+            this.btn_exit.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_exit.BackgroundImage")));
+            this.btn_exit.Location = new System.Drawing.Point(25, 218);
             this.btn_exit.Name = "btn_exit";
-            this.btn_exit.Size = new System.Drawing.Size(75, 23);
+            this.btn_exit.Size = new System.Drawing.Size(184, 95);
             this.btn_exit.TabIndex = 3;
             this.btn_exit.Text = "Exit Game";
             this.btn_exit.UseVisualStyleBackColor = true;
@@ -184,9 +186,10 @@
             // 
             // btn_high
             // 
-            this.btn_high.Location = new System.Drawing.Point(24, 180);
+            this.btn_high.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_high.BackgroundImage")));
+            this.btn_high.Location = new System.Drawing.Point(24, 118);
             this.btn_high.Name = "btn_high";
-            this.btn_high.Size = new System.Drawing.Size(75, 23);
+            this.btn_high.Size = new System.Drawing.Size(184, 95);
             this.btn_high.TabIndex = 2;
             this.btn_high.Text = "Highscore";
             this.btn_high.UseVisualStyleBackColor = true;
@@ -197,7 +200,7 @@
             this.pnl_dif.Controls.Add(this.btn_Hard);
             this.pnl_dif.Controls.Add(this.btn_Medium);
             this.pnl_dif.Controls.Add(this.btn_easy);
-            this.pnl_dif.Location = new System.Drawing.Point(131, 13);
+            this.pnl_dif.Location = new System.Drawing.Point(294, 16);
             this.pnl_dif.Name = "pnl_dif";
             this.pnl_dif.Size = new System.Drawing.Size(446, 103);
             this.pnl_dif.TabIndex = 1;
@@ -205,7 +208,7 @@
             // 
             // btn_Hard
             // 
-            this.btn_Hard.Location = new System.Drawing.Point(343, 36);
+            this.btn_Hard.Location = new System.Drawing.Point(351, 36);
             this.btn_Hard.Name = "btn_Hard";
             this.btn_Hard.Size = new System.Drawing.Size(75, 23);
             this.btn_Hard.TabIndex = 2;
@@ -215,7 +218,7 @@
             // 
             // btn_Medium
             // 
-            this.btn_Medium.Location = new System.Drawing.Point(185, 36);
+            this.btn_Medium.Location = new System.Drawing.Point(193, 36);
             this.btn_Medium.Name = "btn_Medium";
             this.btn_Medium.Size = new System.Drawing.Size(75, 23);
             this.btn_Medium.TabIndex = 1;
@@ -225,7 +228,7 @@
             // 
             // btn_easy
             // 
-            this.btn_easy.Location = new System.Drawing.Point(37, 36);
+            this.btn_easy.Location = new System.Drawing.Point(45, 36);
             this.btn_easy.Name = "btn_easy";
             this.btn_easy.Size = new System.Drawing.Size(75, 23);
             this.btn_easy.TabIndex = 0;
@@ -235,9 +238,10 @@
             // 
             // btn_dif
             // 
-            this.btn_dif.Location = new System.Drawing.Point(25, 49);
+            this.btn_dif.BackgroundImage = global::TowerDefense.Properties.Resources.menu_b;
+            this.btn_dif.Location = new System.Drawing.Point(24, 16);
             this.btn_dif.Name = "btn_dif";
-            this.btn_dif.Size = new System.Drawing.Size(75, 23);
+            this.btn_dif.Size = new System.Drawing.Size(182, 96);
             this.btn_dif.TabIndex = 0;
             this.btn_dif.Text = "Difficulty";
             this.btn_dif.UseVisualStyleBackColor = true;
@@ -252,10 +256,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(1342, 882);
+            this.BackgroundImage = global::TowerDefense.Properties.Resources.menu_bg;
+            this.ClientSize = new System.Drawing.Size(1342, 768);
             this.Controls.Add(this.pnl_Main);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Tower Defence";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.pnl_Main.ResumeLayout(false);
             this.pnl_high.ResumeLayout(false);

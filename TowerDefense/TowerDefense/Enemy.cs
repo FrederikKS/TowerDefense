@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using System.Diagnostics;
 namespace TowerDefense
 {
     public abstract class Enemy : GameObject
@@ -23,8 +22,8 @@ namespace TowerDefense
         private int reachedEndCounter = 0;
         private bool enabled = false;
         private bool check = false;
-        private bool stun = false;
         private Image explosion = Image.FromFile(@"Images/explosion.png");
+
         #endregion
         //properties
         #region
@@ -33,6 +32,7 @@ namespace TowerDefense
             get { return name; }
             set { name = value; }
         }
+
         public float HP
         {
             get { return hp; }
@@ -150,20 +150,81 @@ namespace TowerDefense
             }
             // Right
             if (lastPos.X < position.X)
+            {
                 if (AnimationFrames.Count > 1)
-                    this.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedRight.png");
-            //Right
+                {
+                    if (this is EnemySlow)
+                    {
+                        this.sprite = this.AnimationFrames[3];
+                    }
+                    if (this is EnemyEvade)
+                    {
+                        this.sprite = this.AnimationFrames[3];
+                    }
+                    if (this is EnemyNormal)
+                    {
+                        this.sprite = this.AnimationFrames[3];
+                    }
+                }
+            }
+
+            //left
             if (lastPos.X > position.X)
+            {
                 if (AnimationFrames.Count > 1)
-                    this.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedLeft.png");
-            // Up
-            if (lastPos.Y < position.Y)
-                if (AnimationFrames.Count > 1)
-                    this.sprite = Image.FromFile(@"Graphic/Resized/SlowResizedDown.png");
+                {
+                    if (this is EnemySlow)
+                    {
+                        this.sprite = this.AnimationFrames[1];
+                    }
+                    if (this is EnemyEvade)
+                    {
+                        this.sprite = this.AnimationFrames[1];
+                    }
+                    if (this is EnemyNormal)
+                    {
+                        this.sprite = this.AnimationFrames[1];
+                    }
+                }
+            }
             // Down
-            if (lastPos.Y > position.Y)
+            if (lastPos.Y < position.Y)
+            {
                 if (AnimationFrames.Count > 1)
-                    this.sprite = Image.FromFile(@"Graphic/Resized/SlowResized.png");
+                {
+                    if (this is EnemySlow)
+                    {
+                        this.sprite = this.AnimationFrames[2];
+                    }
+                    if (this is EnemyEvade)
+                    {
+                        this.sprite = this.AnimationFrames[2];
+                    }
+                    if (this is EnemyNormal)
+                    {
+                        this.sprite = this.AnimationFrames[2];
+                    }
+                }
+            }
+            // Up
+            if (lastPos.Y > position.Y)
+            {
+                if (AnimationFrames.Count > 1)
+                {
+                    if (this is EnemySlow)
+                    {
+                        this.sprite = this.AnimationFrames[0];
+                    }
+                    if (this is EnemyEvade)
+                    {
+                        this.sprite = this.AnimationFrames[0];
+                    }
+                    if (this is EnemyNormal)
+                    {
+                        this.sprite = this.AnimationFrames[0];
+                    }
+                }
+            }
 
         }
 
@@ -177,77 +238,6 @@ namespace TowerDefense
         {
             //dc.DrawImage(explosion, this.position.X, this.position.Y, explosion.Width, explosion.Height);
         }
-        //public override void UpdateAnimation(float fps)
-        //{
-        //    base.UpdateAnimation(fps);
-        //    // Left
-        //    if (lastPos.X < position.X)
-        //    {
-        //        if (AnimationFrames.Count > 1)
-        //        {
-        //            if (this is EnemyEvade)
-        //            {
-        //                this.sprite = Form1.gw.eLeft[1];
-        //                this.sprite = AnimationFrames[1];
-        //            }
-        //            else if (this is EnemySlow)
-        //            {
-        //                this.sprite = Form1.gw.eLeft[0];
-        //                this.sprite = AnimationFrames[1];
-        //            }
-        //        }
-        //    }
-        //    // Right
-        //    if (lastPos.X > position.X)
-        //    {
-        //        if (AnimationFrames.Count > 1)
-        //        {
-        //            if (this is EnemyEvade)
-        //            {
-        //                this.sprite = Form1.gw.eRight[1];
-        //                this.sprite = AnimationFrames[3];
-        //            }
-        //            else if (this is EnemySlow)
-        //            {
-        //                this.sprite = Form1.gw.eRight[0];
-        //                this.sprite = AnimationFrames[3];
-        //            }
-        //        }
-        //    }
-        //    // Up
-        //    if (lastPos.Y < position.Y)
-        //    {
-        //        if (AnimationFrames.Count > 1)
-        //        {
-        //            if (this is EnemyEvade)
-        //            {
-        //                this.sprite = Form1.gw.eTop[1];
-        //                this.sprite = AnimationFrames[0];
-        //            }
-        //            else if (this is EnemySlow)
-        //            {
-        //                this.sprite = Form1.gw.eTop[0];
-        //                this.sprite = AnimationFrames[0];
-        //            }
-        //        }
-        //    }
-        //    // Down
-        //    if (lastPos.Y > position.Y)
-        //    {
-        //        if (AnimationFrames.Count > 1)
-        //        {
-        //            if (this is EnemyEvade)
-        //            {
-        //                this.sprite = Form1.gw.eBot[1];
-        //                this.sprite = AnimationFrames[2];
-        //            }
-        //            else if (this is EnemySlow)
-        //            {
-        //                this.sprite = Form1.gw.eBot[0];
-        //                this.sprite = AnimationFrames[2];
-        //            }
-        //        }
-        //    }
-        //}
+        
     }
 }
