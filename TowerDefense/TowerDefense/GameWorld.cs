@@ -18,7 +18,10 @@ namespace TowerDefense
         public RectangleF mouseRect;
         public RectangleF guiRect = new RectangleF();
         public List<TowerButton> tl;
-        GameObject go;
+        GameObject go; 
+        Font w = new Font("Arial", 14);
+        Brush q = new SolidBrush(Color.White);
+
         // Fields
         private Random rnd = new Random();
         private DateTime lastFrameStarted = new DateTime();
@@ -78,10 +81,11 @@ namespace TowerDefense
         #endregion
         // Fields for building phase
 
-        private int gold;
+        public int gold = 125;
         private int cost;
         private int chest;
-
+        bool afford = true;
+        Timer tAfford;
 
         // Constructors
 
@@ -318,7 +322,7 @@ namespace TowerDefense
         /// </summary>
         public void Update()
         {
-            
+
             //Update mouse rectangle pos
             mouseRect.Location = Form1.localMousePos;
             foreach (TowerButton tb in tl)
@@ -366,25 +370,25 @@ namespace TowerDefense
                             Build(6, new PointF(x, y));
                         }
                         #endregion
-                        
+
                     }
                     #region Sell
-                        foreach (Tower tower in tmpTowers)
+                    foreach (Tower tower in tmpTowers)
+                    {
+                        if (guiRect.IntersectsWith(tower.CollisionRect))
                         {
-                            if (guiRect.IntersectsWith(tower.CollisionRect))
+                            if (Form1.drawBuildGUI == 2)
                             {
-                                if (Form1.drawBuildGUI == 2)
-                                {
-                                    Sell(tower);
-                                }
+                                Sell(tower);
                             }
                         }
                     }
-                        #endregion
+                }
+                    #endregion
             }
             //Update all bullet objects
             for (int i = 0; i < bullets.Count; i++)
-			{
+            {
                 if (bullets[i].Target.Enabled)
                     bullets[i].Update(currentFPS);
                 else
@@ -392,7 +396,7 @@ namespace TowerDefense
                     bullets[i].Position = bullets[i].Tw.Position;
                     bullets.Remove(bullets[i]);
                 }
-			}
+            }
             //Update all tower objects
             foreach (Tower tower in towers)
             {
@@ -431,7 +435,7 @@ namespace TowerDefense
                 }
             }
         }
-        
+
 
         /// <summary>
         /// Updates the animations of the game objects in the world
@@ -464,9 +468,9 @@ namespace TowerDefense
         {
             if (Form1.guiIsClicked)
             {
-
                 int tmpX = Form1.gui.ellipse.X + tileSizeX + (tileSizeX / 2);
                 int tmpY = Form1.gui.ellipse.Y + tileSizeY + (tileSizeY / 2);
+                
                 guiRect = new RectangleF(tmpX, tmpY, 10, 10);
                 if (Form1.drawBuildGUI == 4)
                 {
@@ -518,14 +522,19 @@ namespace TowerDefense
             }
             // Drawing Bullets
             if (bullets.Count > 0)
-            for (int i = 0; i < bullets.Count; i++)
-            {
-                bullets[i].Draw(dc);
-            }
+                for (int i = 0; i < bullets.Count; i++)
+                {
+                    bullets[i].Draw(dc);
+                }
 
-            Font w = new Font("Arial", 14);
-            Brush q = new SolidBrush(Color.White);
+            // Drawing Phase count
+
+
             dc.DrawString(string.Format("Phase: {0}", phase), w, q, 30, 5);
+
+            // Draw Gold count
+
+            dc.DrawString(string.Format("Gold: {0}", gold), w, q, 30, 45);
 
             //Draw timer if build phase is on
             if (Enum.IsDefined(typeof(State), State.build))
@@ -540,7 +549,10 @@ namespace TowerDefense
                     tb.DrawMe(dc);
                 }
             }
-
+            if (afford == false)
+            {
+                dc.DrawString(string.Format("You cant afford this tower!"), w, q, 100, 100);
+            }
             buffer.Render();
 
         }
@@ -1113,7 +1125,8 @@ namespace TowerDefense
         public void Build(int towerNumb, PointF position)
         {
             bool allowTower = true;
-
+            int tmpX = Form1.gui.ellipse.X + tileSizeX + (tileSizeX / 2);
+            int tmpY = Form1.gui.ellipse.Y + tileSizeY + (tileSizeY / 2);
             //Saving current path
             tempPath = DuplicateList(path);
 
@@ -1167,32 +1180,75 @@ namespace TowerDefense
                     #region Water
                     // Water
                     case 1:
-                        towers.Add(new TowerSlow(2, tileSizeX * 3, 1000, 25, tileSizeX * 3, @"Towers/w1.png", position, true));
-                        gold -= cost;
+                        if (gold >= 25)
+                        {
+                            towers.Add(new TowerSlow(2, tileSizeX * 3, 1000, 25, tileSizeX * 3, @"Towers/w1.png", position, true));
+                            gold -= towers[0].Cost;
+                        }
+                        else
+                        {
+                            CantAfford();
+                        }
                         break;
 
                     case 2:
-                        towers.Add(new TowerBoost(2, 3, 1000, 35, 6, @"Towers/w2.png", position, true));
-                        gold -= cost;
+                        if (gold >= 40)
+                        {
+                            towers.Add(new TowerBoost(2, 3, 1000, 35, 6, @"Towers/w2.png", position, true));
+                            gold -= towers[0].Cost;
+                        }
+                        else
+                        {
+                            CantAfford();
+                        }
                         break;
+
                     case 3:
-                        towers.Add(new TowerStun(2, 1000, 40, 7, @"Towers/w3.png", position, true));
-                        gold -= cost;
+                        if (gold >= 30)
+                        {
+                            towers.Add(new TowerStun(2, 1000, 40, 7, @"Towers/w3.png", position, true));
+                            gold -= towers[0].Cost;
+                        }
+                        else
+                        {
+                            CantAfford();
+                        }
                         break;
                     #endregion
                     #region Land
                     // Land
                     case 4:
-                        towers.Add(new TowerBoost(2, 3, 5, 35, 6, @"Towers/L1.png", position, true));
-                        gold -= cost;
+                        if (gold >= 25)
+                        {
+                            towers.Add(new TowerBoost(2, 3, 5, 35, 6, @"Towers/L1.png", position, true));
+                            gold -= towers[0].Cost;
+                        }
+                        else
+                        {
+                            CantAfford();
+                        }
                         break;
                     case 5:
-                        towers.Add(new TowerSlow(2, 5, 5, 25, 6, @"Towers/L2.png", position, true));
-                        gold -= cost;
+                        if (gold >= 40)
+                        {
+                            towers.Add(new TowerSlow(2, 5, 5, 25, 6, @"Towers/L2.png", position, true));
+                            gold -= towers[0].Cost;
+                        }
+                        else
+                        {
+                            CantAfford();
+                        }
                         break;
                     case 6:
-                        towers.Add(new TowerStun(2, 5, 40, 7, @"Towers/L3.png", position, true));
-                        gold -= cost;
+                        if (gold >= 30)
+                        {
+                            towers.Add(new TowerStun(2, 5, 40, 7, @"Towers/L3.png", position, true));
+                            gold -= towers[0].Cost;
+                        }
+                        else
+                        {
+                            CantAfford();
+                        }
                         break;
                     #endregion
                 }
@@ -1208,7 +1264,7 @@ namespace TowerDefense
             {
                 if (t == tower)
                 {
-                    gold += t.Cost;
+                    gold += t.Cost / 2;
                     towers.Remove(t);
                 }
             }
@@ -1289,5 +1345,20 @@ namespace TowerDefense
             }
             return newCoordinateSystem;
         }
+        private void CantAfford()
+        {
+            tAfford = new Timer(3000);
+            tAfford.Enabled = true;
+            afford = false;
+            tAfford.Elapsed += new ElapsedEventHandler(CantAffordTrue);
+            
+        }
+        private void CantAffordTrue(object source, ElapsedEventArgs e)
+        {
+            afford = true;
+            tAfford.Enabled = false;
+        }
     }
+
+    
 }

@@ -90,6 +90,7 @@ namespace TowerDefense
                     if (Form1.gw.currentWave[targetID].HP <= 0)
                     {
                         Form1.gw.currentWave[targetID].Enabled = false;
+                        Form1.gw.gold += Form1.gw.currentWave[targetID].Worth;
                     }
                     Form1.gw.bullets.Remove(this);
                     position = tw.Position;
