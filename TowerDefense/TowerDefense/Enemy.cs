@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Diagnostics;
 namespace TowerDefense
 {
     public abstract class Enemy : GameObject
@@ -22,8 +23,8 @@ namespace TowerDefense
         private int reachedEndCounter = 0;
         private bool enabled = false;
         private bool check = false;
+        private bool stun = false;
         private Image explosion = Image.FromFile(@"Images/explosion.png");
-        
         #endregion
         //properties
         #region
@@ -32,7 +33,6 @@ namespace TowerDefense
             get { return name; }
             set { name = value; }
         }
-
         public float HP
         {
             get { return hp; }

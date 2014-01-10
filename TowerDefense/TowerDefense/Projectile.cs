@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace TowerDefense
 {
@@ -19,7 +20,6 @@ namespace TowerDefense
         private Enemy target;
         private int targetID;
         Graphics dc;
-
 
  
 

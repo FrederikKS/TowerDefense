@@ -38,26 +38,26 @@ namespace TowerDefense
 
         public void Boost()
         {
-            // Runs through the list of placed towers and if they are within the range of the boost tower, they are boosted,
+            // Runs through the list of bullets and if they are within the range of the boost tower, they are boosted,
             // if tower is sold, then the boost is removed.
 
-            //for (int i = 0; i < Form1.gw.bullets.Count; i++)
-            //{
-            //    if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.bullets[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.bullets[i].Position.Y), 2)) < ranged)
-            //    {
-            //        if (Form1.gw.bullets[i].damage != 4)
-            //        {
-            //            Form1.gw.bullets[i].damage += boostDamage;
-            //        }
-            //    }
-            //    else if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.bullets[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.bullets[i].Position.Y), 2)) > ranged)
-            //    {
-            //        if (Form1.gw.bullets[i].damage >= 6)
-            //        {
-            //            Form1.gw.bullets[i].damage -= boostDamage;
-            //        }
-            //    }
-            //}
+            for (int i = 0; i < Form1.gw.bullets.Count; i++)
+            {
+                if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.bullets[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.bullets[i].Position.Y), 2)) > ranged)
+                {
+                    if (Form1.gw.bullets[i].damage == 25)
+                    {
+                        Form1.gw.bullets[i].damage += boostDamage;
+                    }
+                }
+                else if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.bullets[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.bullets[i].Position.Y), 2)) < ranged)
+                {
+                    if (Form1.gw.bullets[i].damage > 50)
+                    {
+                        Form1.gw.bullets[i].damage -= boostDamage;
+                    }
+                }
+            }
         }
         public override void Update(float FPS)
         {

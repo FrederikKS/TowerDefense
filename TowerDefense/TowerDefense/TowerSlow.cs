@@ -25,7 +25,8 @@ namespace TowerDefense
         public TowerSlow(float slow, int range, float speed, int cost, float ranged, string imagePath, PointF position, bool isClickAble)
             : base(speed, cost, range, imagePath, position, isClickAble)
         {
-            this.Bullet = new Projectile(100, 5, @"Towers/w2.png", position, false, this);
+            this.slow = slow;
+            this.Bullet = new Projectile(25, 5, @"Towers/w2.png", position, false, this);
         }
 
         public void Slowing()
