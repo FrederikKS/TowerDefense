@@ -36,8 +36,7 @@ namespace TowerDefense
             {
                 if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.currentWave[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.currentWave[i].Position.Y), 2)) < ranged)
                 {
-                    if (Form1.gw.currentWave[i].Enabled)
-                    if (Form1.gw.currentWave[i].Speed >= 3)
+                    if (Form1.gw.currentWave[i].Speed > slow + 1)
                     {
                         Form1.gw.currentWave[i].Speed -= slow;
                     }
@@ -46,10 +45,9 @@ namespace TowerDefense
 
                 if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.currentWave[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.currentWave[i].Position.Y), 2)) > ranged)
                 {
-                    if (Form1.gw.currentWave[i].Enabled)
-                    if (Form1.gw.currentWave[i].Speed <= 1)
+                    if (Form1.gw.currentWave[i].Speed == slow + 1)
                     {
-                        Form1.gw.currentWave[i].Speed += slow;
+                        Form1.gw.currentWave[i].Speed = 9;
                     }
                 }
             }

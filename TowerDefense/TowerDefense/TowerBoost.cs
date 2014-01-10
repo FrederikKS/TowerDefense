@@ -40,44 +40,25 @@ namespace TowerDefense
         {
             // Runs through the list of placed towers and if they are within the range of the boost tower, they are boosted,
             // if tower is sold, then the boost is removed.
-            for (int i = 0; i < Form1.gw.towers.Count; i++)
-            {
-                if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.towers[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.towers[i].Position.Y), 2)) < ranged)
-                {
-                    if (Form1.gw.towers[i].speed != 8)
-                    {
-                        Form1.gw.towers[i].speed += boostSpeed;
-                    }
-                }
-                else if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.towers[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.towers[i].Position.Y), 2)) > ranged)
-                {
-                    if (Form1.gw.towers[i].speed >= 10)
-                    {
-                        Form1.gw.towers[i].speed -= boostSpeed;
-                    }
-                }
-            }
-            // Runs through the list of projectiles and if they are within the range of the boost tower, they are boosted.
 
-            for (int i = 0; i < Form1.gw.bullets.Count; i++)
-            {
-                if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.bullets[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.bullets[i].Position.Y), 2)) < ranged)
-                {
-                    if (Form1.gw.bullets[i].damage != 4)
-                    {
-                        Form1.gw.bullets[i].damage += boostDamage;
-                    }
-                }
-                else if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.bullets[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.bullets[i].Position.Y), 2)) > ranged)
-                {
-                    if (Form1.gw.bullets[i].damage >= 6)
-                    {
-                        Form1.gw.bullets[i].damage -= boostDamage;
-                    }
-                }
-            }
+            //for (int i = 0; i < Form1.gw.bullets.Count; i++)
+            //{
+            //    if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.bullets[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.bullets[i].Position.Y), 2)) < ranged)
+            //    {
+            //        if (Form1.gw.bullets[i].damage != 4)
+            //        {
+            //            Form1.gw.bullets[i].damage += boostDamage;
+            //        }
+            //    }
+            //    else if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.bullets[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.bullets[i].Position.Y), 2)) > ranged)
+            //    {
+            //        if (Form1.gw.bullets[i].damage >= 6)
+            //        {
+            //            Form1.gw.bullets[i].damage -= boostDamage;
+            //        }
+            //    }
+            //}
         }
-
         public override void Update(float FPS)
         {
             Boost();

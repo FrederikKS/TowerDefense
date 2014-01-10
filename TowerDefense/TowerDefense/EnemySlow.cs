@@ -30,5 +30,32 @@ namespace TowerDefense
             this.eRange = eRange;
         }
 
+        public void EnemySlowing()
+        {
+            for (int i = 0; i < Form1.gw.towers.Count; i++)
+            {
+                if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.towers[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.towers[i].Position.Y), 2)) < eRange)
+                {
+                    if (Form1.gw.towers[i].speed == 5)
+                    {
+                        Form1.gw.towers[i].speed -= eSlow;
+                    }
+                }
+                else if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.towers[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.towers[i].Position.Y), 2)) > eRange)
+                {
+                    if (Form1.gw.towers[i].speed == eSlow + 1)
+                    {
+                        Form1.gw.towers[i].speed = 5;
+                    }
+                }
+            }
+        }
+
+        public override void Update(float fps)
+        {
+            EnemySlowing();
+            base.Update(fps);           
+        }
+
     }
 }
