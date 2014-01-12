@@ -18,7 +18,7 @@ namespace TowerDefense
         public RectangleF mouseRect;
         public RectangleF guiRect = new RectangleF();
         public List<TowerButton> tl;
-        GameObject go; 
+        GameObject go;
         Font w = new Font("Arial", 14);
         Brush q = new SolidBrush(Color.White);
 
@@ -29,7 +29,7 @@ namespace TowerDefense
         private Graphics dc;
         private string phase = "Build Phase";
         private BufferedGraphics buffer;
-        private State currentState = State.build;
+        public State currentState = State.build;
         private Stopwatch stopWatch = new Stopwatch();
         private Stopwatch buildWatch = new Stopwatch();
         private Stopwatch enemyWatch = new Stopwatch();
@@ -286,8 +286,7 @@ namespace TowerDefense
                 for (int enemyNumber = 0; enemyNumber < 10; enemyNumber++)
                 {
                     if (enemyNumber % 3 == 0)
-                       
- waveEnemy[i].Add(new EnemyNormal("TestEnemyNormal", 100 * chosenDif, 9, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/heavyUp.png,Graphic/heavyLeft.png,Graphic/heavyDown.png,Graphic/heavyRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                        waveEnemy[i].Add(new EnemyNormal("TestEnemyNormal", 100 * chosenDif, 9, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/heavyUp.png,Graphic/heavyLeft.png,Graphic/heavyDown.png,Graphic/heavyRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                     if (enemyNumber % 3 == 1)
                         waveEnemy[i].Add(new EnemyEvade("TestEnemyEvade", false, 100 * chosenDif, 9, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/EvadeResized.png,Graphic/EvadeResizedLeft.png,Graphic/EvadeResizedDown.png,Graphic/EvadeResizedRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                     if (enemyNumber % 3 == 2)
@@ -483,8 +482,10 @@ namespace TowerDefense
             {
                 int tmpX = Form1.gui.ellipse.X + tileSizeX + (tileSizeX / 2);
                 int tmpY = Form1.gui.ellipse.Y + tileSizeY + (tileSizeY / 2);
-                
+
                 guiRect = new RectangleF(tmpX, tmpY, 10, 10);
+                //if (this.currentWave is State.build)
+                //{
                 if (Form1.drawBuildGUI == 4)
                 {
                     if (tl.Count < 3)
@@ -510,10 +511,8 @@ namespace TowerDefense
                         tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 30, tmpY - 120), "Sell_Tower", "Towers/st.png", 3));
                     }
                 }
-            }
-            else
-            {
-                guiRect = new RectangleF(0, 0, 10, 10);
+                //}
+
             }
             dc.Clear(Color.White);
 
@@ -568,9 +567,23 @@ namespace TowerDefense
             {
                 dc.DrawString(string.Format("You cant afford this tower!"), w, q, 100, 100);
             }
-            buffer.Render();
 
+            if (life <= 0)
+            {
+                environment.Clear();
+                towers.Clear();
+                tmpTowers.Clear();
+                checkpointList.Clear();
+                endPoints.Clear();
+                startPoints.Clear();
+                SolidBrush sb = new SolidBrush(Color.Black);
+                dc.FillRectangle(sb, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
+                dc.DrawString(string.Format("You are dead"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2);
+                dc.DrawString(string.Format("Press ESC to exit the game!"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2);
+            }
+            buffer.Render();
         }
+
         /// <summary>
         /// Checking If The Location Of The Treasure Island Is On A Valid Location
         /// </summary>
@@ -1350,7 +1363,7 @@ namespace TowerDefense
             tAfford.Enabled = true;
             afford = false;
             tAfford.Elapsed += new ElapsedEventHandler(CantAffordTrue);
-            
+
         }
         private void CantAffordTrue(object source, ElapsedEventArgs e)
         {
@@ -1359,5 +1372,5 @@ namespace TowerDefense
         }
     }
 
-    
+
 }

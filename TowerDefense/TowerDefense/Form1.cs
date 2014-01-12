@@ -30,15 +30,25 @@ namespace TowerDefense
 
         public Form1()
         {
+
             InitializeComponent();
             // Enable the timer and timer interval
             timer1.Enabled = true;
             timer1.Interval = 40;
             // Menu
+            // Pnl Visible
             pnl_Main.Visible = true;
             pnl_dif.Visible = false;
             pnl_high.Visible = false;
-            pnl_submit.Visible = false;
+            pnl_name.Visible = false;
+            // pnl & btn colors
+            pnl_Main.BackColor = Color.Transparent;
+            pnl_dif.BackColor = Color.Transparent;
+            pnl_high.BackColor = Color.Transparent;
+            pnl_name.BackColor = Color.Blue;
+            btn_dif.BackColor = Color.Transparent;
+            btn_high.BackColor = Color.Transparent;
+            btn_exit.BackColor = Color.Transparent;
             // GUI
             MouseUp += new MouseEventHandler(Form1_MouseUp);
             MouseDown += new MouseEventHandler(Form1_MouseDown);
@@ -92,11 +102,11 @@ namespace TowerDefense
                 {
                     gw = new GameWorld(CreateGraphics(), this.DisplayRectangle, 14, 8, difc);
                 }
-
-
+                if (gw.life <= 0)
+                {
+                    pnl_name.Visible = true;
+                }
                 gw.GameLoop();
-
-
             }
         }
         #region Highscore
@@ -112,7 +122,6 @@ namespace TowerDefense
             string path = @"Highscore/Easy.txt";
             string readText = File.ReadAllText(path);
             rtb_highscore.Text = readText.ToString();
-            pnl_submit.Visible = true;
         }
 
         private void btn_highMedium_Click(object sender, EventArgs e)
@@ -121,7 +130,6 @@ namespace TowerDefense
             string path = @"Highscore/Medium.txt";
             string readText = File.ReadAllText(path);
             rtb_highscore.Text = readText.ToString();
-            pnl_submit.Visible = true;
             // bla
         }
 
@@ -131,7 +139,6 @@ namespace TowerDefense
             string path = @"Highscore/Hard.txt";
             string readText = File.ReadAllText(path);
             rtb_highscore.Text = readText.ToString();
-            pnl_submit.Visible = true;
         }
 
         private void btn_submit_Click(object sender, EventArgs e)
@@ -139,19 +146,19 @@ namespace TowerDefense
             if (highscoreC == 1)
             {
                 string path = @"Highscore/Easy.txt";
-                string text = "\nName: " + txt_name.Text + "\n" + "Lives Remaining: " + txt_health.Text + " out of 10 \n --------------------";
+                string text = "\nName: " + txt_name.Text + "\n" + "Lives Remaining: out of 10 \n --------------------";
                 File.AppendAllText(path, text);
             }
             if (highscoreC == 2)
             {
                 string path = @"C:\Users\Mikkel\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\Highscore\Medium.txt";
-                string text = "\nName: " + txt_name.Text + "\n" + "Lives Remaining: " + txt_health.Text + " out of 5\n --------------------";
+                string text = "\nName: " + txt_name.Text + "\n" + "Lives Remaining:  out of 5\n --------------------";
                 File.AppendAllText(path, text);
             }
             if (highscoreC == 3)
             {
                 string path = @"C:\Users\Mikkel\Documents\GitHub\TowerDefense\TowerDefense\TowerDefense\Highscore\Hard.txt";
-                string text = "\nName: " + txt_name.Text + "\n" + "Lives Remaining: " + txt_health.Text + " out of 3\n --------------------";
+                string text = "\nName: " + txt_name.Text + "\n" + "Lives Remaining: out of 3\n --------------------";
                 File.AppendAllText(path, text);
             }
         }
@@ -175,6 +182,7 @@ namespace TowerDefense
             {
                 drawBuildGUI = 0;
                 gw.tl.Clear();
+                gw.guiRect = new RectangleF(0, 0, 10, 10);
             }
             guiIsClicked = false;
         }
