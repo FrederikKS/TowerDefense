@@ -580,7 +580,7 @@ namespace TowerDefense
                 dc.DrawString(string.Format("Press ESC to exit the game!"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2 + 30);
             }
             // Won
-            if (Form1.difc == waveComplete)
+            if (Form1.difc * 10 == waveComplete)
             {
                 environment.Clear();
                 towers.Clear();
@@ -1021,7 +1021,7 @@ namespace TowerDefense
                     //Placing lighthouses
                     if (coordinateSystem[x][y] == 12)
                     {
-                        environmentList.Add(new Lighthouse(@"Graphic/LighthousePlaceHolder.jpg", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Lighthouse(@"Graphic/lighthouse.png", new PointF(tempX, tempY), false));
                     }
                     //Placing rocks
                     if (coordinateSystem[x][y] == 13)
