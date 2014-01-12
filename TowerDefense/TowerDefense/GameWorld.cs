@@ -14,14 +14,12 @@ namespace TowerDefense
 
     public class GameWorld
     {
-        TowerButton tb;
         public RectangleF mouseRect;
         public RectangleF guiRect = new RectangleF();
         public List<TowerButton> tl;
-        GameObject go;
         Font w = new Font("Arial", 14);
         Brush q = new SolidBrush(Color.White);
-
+        private int waveComplete;
         // Fields
         private Random rnd = new Random();
         private DateTime lastFrameStarted = new DateTime();
@@ -81,7 +79,7 @@ namespace TowerDefense
         #endregion
         // Fields for building phase
 
-        public int gold = 100;
+        public int gold = 10000;
         private int cost;
         private int chest;
         bool afford = true;
@@ -484,34 +482,34 @@ namespace TowerDefense
                 int tmpY = Form1.gui.ellipse.Y + tileSizeY + (tileSizeY / 2);
 
                 guiRect = new RectangleF(tmpX, tmpY, 10, 10);
-                //if (this.currentWave is State.build)
-                //{
-                if (Form1.drawBuildGUI == 4)
+                if (currentState == State.build)
                 {
-                    if (tl.Count < 3)
+                    if (Form1.drawBuildGUI == 4)
                     {
-                        tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX + 50, tmpY), "Land_Tower1", "Towers/w1.png", 1));
-                        tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 120, tmpY), "Land_Tower2", "Towers/w2.png", 2));
-                        tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 30, tmpY - 120), "Land_Tower3", "Towers/w3.png", 3));
+                        if (tl.Count < 3)
+                        {
+                            tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX + 50, tmpY), "Land_Tower1", "Towers/w1.png", 1));
+                            tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 120, tmpY), "Land_Tower2", "Towers/w2.png", 2));
+                            tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 30, tmpY - 120), "Land_Tower3", "Towers/w3.png", 3));
+                        }
+                    }
+                    if (Form1.drawBuildGUI == 3)
+                    {
+                        if (tl.Count < 3)
+                        {
+                            tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX + 50, tmpY), "Water_Tower1", "Towers/w1.png", 1));
+                            tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 120, tmpY), "Water_Tower2", "Towers/w2.png", 2));
+                            tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 30, tmpY - 120), "Water_Tower3", "Towers/w3.png", 3));
+                        }
+                    }
+                    if (Form1.drawBuildGUI == 2)
+                    {
+                        if (tl.Count < 1)
+                        {
+                            tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 30, tmpY - 120), "Sell_Tower", "Towers/st.png", 3));
+                        }
                     }
                 }
-                if (Form1.drawBuildGUI == 3)
-                {
-                    if (tl.Count < 3)
-                    {
-                        tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX + 50, tmpY), "Water_Tower1", "Towers/w1.png", 1));
-                        tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 120, tmpY), "Water_Tower2", "Towers/w2.png", 2));
-                        tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 30, tmpY - 120), "Water_Tower3", "Towers/w3.png", 3));
-                    }
-                }
-                if (Form1.drawBuildGUI == 2)
-                {
-                    if (tl.Count < 1)
-                    {
-                        tl.Add(new TowerButton(new Size(75, 75), new Point(tmpX - 30, tmpY - 120), "Sell_Tower", "Towers/st.png", 3));
-                    }
-                }
-                //}
 
             }
             dc.Clear(Color.White);
@@ -567,7 +565,7 @@ namespace TowerDefense
             {
                 dc.DrawString(string.Format("You cant afford this tower!"), w, q, 100, 100);
             }
-
+            // Lost
             if (life <= 0)
             {
                 environment.Clear();
@@ -579,7 +577,22 @@ namespace TowerDefense
                 SolidBrush sb = new SolidBrush(Color.Black);
                 dc.FillRectangle(sb, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
                 dc.DrawString(string.Format("You are dead"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2);
-                dc.DrawString(string.Format("Press ESC to exit the game!"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2);
+                dc.DrawString(string.Format("Press ESC to exit the game!"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2 + 30);
+            }
+            // Won
+            if (Form1.difc == waveComplete)
+            {
+                environment.Clear();
+                towers.Clear();
+                tmpTowers.Clear();
+                checkpointList.Clear();
+                endPoints.Clear();
+                startPoints.Clear();
+                SolidBrush sb = new SolidBrush(Color.Black);
+                dc.FillRectangle(sb, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
+                dc.DrawString(string.Format("You Won!"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2);
+                dc.DrawString(string.Format("Press ESC to exit the game!"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2 + 30);
+
             }
             buffer.Render();
         }
@@ -1124,6 +1137,7 @@ namespace TowerDefense
                         enemySent = false;
                         enemydisabled = 0;
                         currentState = State.build;
+                        waveComplete++;
                     }
                     break;
 

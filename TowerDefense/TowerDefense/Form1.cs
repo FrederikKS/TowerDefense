@@ -40,7 +40,6 @@ namespace TowerDefense
             pnl_Main.Visible = true;
             pnl_dif.Visible = false;
             pnl_high.Visible = false;
-            pnl_name.Visible = false;
             // pnl & btn colors
             pnl_Main.BackColor = Color.Transparent;
             pnl_dif.BackColor = Color.Transparent;
@@ -96,13 +95,14 @@ namespace TowerDefense
                 }
                 if (drawBuildGUI > 1 && drawBuildGUI < 6)
                 {
-                    gui.DrawGUI(CreateGraphics());
+                    if (gw.currentState == State.build)
+                        gui.DrawGUI(CreateGraphics());
                 }
                 if (gw == null)
                 {
                     gw = new GameWorld(CreateGraphics(), this.DisplayRectangle, 14, 8, difc);
                 }
-                if (gw.life <= 0)
+                if (gw.life <= 1)
                 {
                     pnl_name.Visible = true;
                 }

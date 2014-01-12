@@ -31,10 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pnl_Main = new System.Windows.Forms.Panel();
-            this.pnl_high = new System.Windows.Forms.Panel();
+            this.pnl_name = new System.Windows.Forms.Panel();
             this.btn_submit = new System.Windows.Forms.Button();
             this.lbl_name = new System.Windows.Forms.Label();
             this.txt_name = new System.Windows.Forms.TextBox();
+            this.pnl_high = new System.Windows.Forms.Panel();
             this.rtb_highscore = new System.Windows.Forms.RichTextBox();
             this.btn_highHard = new System.Windows.Forms.Button();
             this.btn_highMedium = new System.Windows.Forms.Button();
@@ -47,11 +48,10 @@
             this.btn_easy = new System.Windows.Forms.Button();
             this.btn_dif = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.pnl_name = new System.Windows.Forms.Panel();
             this.pnl_Main.SuspendLayout();
+            this.pnl_name.SuspendLayout();
             this.pnl_high.SuspendLayout();
             this.pnl_dif.SuspendLayout();
-            this.pnl_name.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnl_Main
@@ -67,16 +67,17 @@
             this.pnl_Main.Size = new System.Drawing.Size(1219, 744);
             this.pnl_Main.TabIndex = 0;
             // 
-            // pnl_high
+            // pnl_name
             // 
-            this.pnl_high.Controls.Add(this.rtb_highscore);
-            this.pnl_high.Controls.Add(this.btn_highHard);
-            this.pnl_high.Controls.Add(this.btn_highMedium);
-            this.pnl_high.Controls.Add(this.btn_highEasy);
-            this.pnl_high.Location = new System.Drawing.Point(217, 159);
-            this.pnl_high.Name = "pnl_high";
-            this.pnl_high.Size = new System.Drawing.Size(574, 341);
-            this.pnl_high.TabIndex = 4;
+            this.pnl_name.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.pnl_name.Controls.Add(this.btn_submit);
+            this.pnl_name.Controls.Add(this.lbl_name);
+            this.pnl_name.Controls.Add(this.txt_name);
+            this.pnl_name.Location = new System.Drawing.Point(797, 16);
+            this.pnl_name.Name = "pnl_name";
+            this.pnl_name.Size = new System.Drawing.Size(253, 142);
+            this.pnl_name.TabIndex = 5;
+            this.pnl_name.Visible = false;
             // 
             // btn_submit
             // 
@@ -103,6 +104,17 @@
             this.txt_name.Name = "txt_name";
             this.txt_name.Size = new System.Drawing.Size(100, 20);
             this.txt_name.TabIndex = 5;
+            // 
+            // pnl_high
+            // 
+            this.pnl_high.Controls.Add(this.rtb_highscore);
+            this.pnl_high.Controls.Add(this.btn_highHard);
+            this.pnl_high.Controls.Add(this.btn_highMedium);
+            this.pnl_high.Controls.Add(this.btn_highEasy);
+            this.pnl_high.Location = new System.Drawing.Point(217, 159);
+            this.pnl_high.Name = "pnl_high";
+            this.pnl_high.Size = new System.Drawing.Size(574, 341);
+            this.pnl_high.TabIndex = 4;
             // 
             // rtb_highscore
             // 
@@ -227,17 +239,6 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // pnl_name
-            // 
-            this.pnl_name.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.pnl_name.Controls.Add(this.btn_submit);
-            this.pnl_name.Controls.Add(this.lbl_name);
-            this.pnl_name.Controls.Add(this.txt_name);
-            this.pnl_name.Location = new System.Drawing.Point(797, 16);
-            this.pnl_name.Name = "pnl_name";
-            this.pnl_name.Size = new System.Drawing.Size(253, 142);
-            this.pnl_name.TabIndex = 5;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -250,10 +251,10 @@
             this.Text = "Tower Defence";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.pnl_Main.ResumeLayout(false);
-            this.pnl_high.ResumeLayout(false);
-            this.pnl_dif.ResumeLayout(false);
             this.pnl_name.ResumeLayout(false);
             this.pnl_name.PerformLayout();
+            this.pnl_high.ResumeLayout(false);
+            this.pnl_dif.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
