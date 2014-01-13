@@ -120,6 +120,9 @@
     <Content Include="Graphic\boost.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Graphic\CannonBall.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Graphic\canonDOwn.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

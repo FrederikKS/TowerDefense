@@ -10,8 +10,6 @@ namespace TowerDefense
         //Fields
         private int locationX;
         private int locationY;
-        private int nodeLocationX;
-        private int nodeLocationY;
         private int f;
         private int g;
         private int h;

@@ -18,10 +18,9 @@ namespace TowerDefense
         private Tower tw;
         private Enemy target;
         private int targetID;
+        private float correctionX = 0;
+        private float correctionY = 0;
         Graphics dc;
-
-
- 
 
         //Properties
         public int Damage
@@ -71,25 +70,72 @@ namespace TowerDefense
                 Vector2D direction = new Vector2D(target.Position.X - position.X, target.Position.Y - position.Y);
                 direction.Normalize();
                 if (direction.X > 0 && direction.Y > 0)
-                    position = new PointF(Math.Abs(direction.X * bulletSpeed) + position.X, Math.Abs(direction.Y * bulletSpeed) + position.Y);
-                if (direction.X > 0 && direction.Y < 0)
-                    position = new PointF(Math.Abs(direction.X * bulletSpeed) + position.X, position.Y - Math.Abs(direction.Y * bulletSpeed));
-                if (direction.X < 0 && direction.Y > 0)
-                    position = new PointF(position.X - Math.Abs(direction.X * bulletSpeed), Math.Abs(direction.Y * bulletSpeed) + position.Y);
-                if (direction.X < 0 && direction.Y < 0)
-                    position = new PointF(position.X - Math.Abs(direction.X * bulletSpeed), position.Y - Math.Abs(direction.Y * bulletSpeed));
+                {
+                    if (bulletSpeed > Math.Abs(target.Position.X - position.X))
+                        correctionX = Math.Abs(target.Position.X - position.X);
+                    else
+                        correctionX = bulletSpeed;
+                    if (bulletSpeed > Math.Abs(target.Position.Y - position.Y))
+                        correctionY = Math.Abs(target.Position.Y - position.Y);
+                    else
+                        correctionY = bulletSpeed;
 
-                if (target.Position.X >= position.X && position.X <= target.Position.X + 90 && target.Position.Y <= position.Y && position.Y <= target.Position.Y + 90)
+                    position = new PointF(Math.Abs(direction.X * correctionX) + position.X, Math.Abs(direction.Y * correctionY) + position.Y);
+                }
+                if (direction.X > 0 && direction.Y < 0)
+                {
+                    if (bulletSpeed > Math.Abs(target.Position.X - position.X))
+                        correctionX = Math.Abs(target.Position.X - position.X);
+                    else
+                        correctionX = bulletSpeed;
+                    if (bulletSpeed > Math.Abs(target.Position.Y - position.Y))
+                        correctionY = Math.Abs(target.Position.Y - position.Y);
+                    else
+                        correctionY = bulletSpeed;
+
+                    position = new PointF(Math.Abs(direction.X * correctionX) + position.X, position.Y - Math.Abs(direction.Y * correctionY));
+                }
+
+                if (direction.X < 0 && direction.Y > 0)
+                {
+                    if (bulletSpeed > Math.Abs(target.Position.X - position.X))
+                        correctionX = Math.Abs(target.Position.X - position.X);
+                    else
+                        correctionX = bulletSpeed;
+                    if (bulletSpeed > Math.Abs(target.Position.Y - position.Y))
+                        correctionY = Math.Abs(target.Position.Y - position.Y);
+                    else
+                        correctionY = bulletSpeed;
+
+                    position = new PointF(position.X - Math.Abs(direction.X * correctionX), Math.Abs(direction.Y * correctionY) + position.Y);
+                }
+
+                if (direction.X < 0 && direction.Y < 0)
+                {
+                    if (bulletSpeed > Math.Abs(target.Position.X - position.X))
+                        correctionX = Math.Abs(target.Position.X - position.X);
+                    else
+                        correctionX = bulletSpeed;
+                    if (bulletSpeed > Math.Abs(target.Position.Y - position.Y))
+                        correctionY = Math.Abs(target.Position.Y - position.Y);
+                    else
+                        correctionY = bulletSpeed;
+
+                    position = new PointF(position.X - Math.Abs(direction.X * correctionX), position.Y - Math.Abs(direction.Y * correctionY));
+                }
+                if (target.Position.X + Form1.gw.offsetX >= position.X + Form1.gw.offsetX && position.X + Form1.gw.offsetX <= target.Position.X + Form1.gw.offsetX + 90 && target.Position.Y + Form1.gw.offsetY <= position.Y + Form1.gw.offsetY && position.Y + Form1.gw.offsetY <= target.Position.Y + Form1.gw.offsetY + 90)
                 {
                     if (damage > 0)
                     {
-                        if (target is EnemyEvade)
+                        if (Form1.gw.currentWave[targetID] is EnemyEvade)
                         {
-                            if (CanHitEvadingEnemy((EnemyEvade)target))
+                            if (CanHitEvadingEnemy((EnemyEvade)Form1.gw.currentWave[targetID]))
                             {
                                 Form1.gw.currentWave[targetID].HP = Form1.gw.currentWave[targetID].HP + Form1.gw.currentWave[targetID].Armor - damage;
                                 Form1.gw.currentWave[targetID].OnImpact(dc);
                             }
+                            else
+                                Form1.gw.bullets.Remove(this);
                         }
                         else
                         {
@@ -107,6 +153,8 @@ namespace TowerDefense
                     position = tw.Position;
 
                 }
+                correctionX = 0;
+                correctionY = 0;
             }
             else
                 Form1.gw.bullets.Remove(this);

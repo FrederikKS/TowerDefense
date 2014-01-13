@@ -19,7 +19,6 @@ namespace TowerDefense
         public List<TowerButton> tl;
         Font w = new Font("Arial", 14);
         Brush q = new SolidBrush(Color.White);
-        private int waveComplete;
         // Fields
         private Random rnd = new Random();
         private DateTime lastFrameStarted = new DateTime();
@@ -40,8 +39,8 @@ namespace TowerDefense
         private float worldSizeY;
         public int tileSizeX = 96;
         public int tileSizeY = 96;
-        private int offsetX = 96 / 2;
-        private int offsetY = 96 / 2;
+        public int offsetX = 96 / 2;
+        public int offsetY = 96 / 2;
         private int[][] coordinateSystem;
         private int[][] tempCoordinateSystem;
         private int grottoX;
@@ -67,8 +66,6 @@ namespace TowerDefense
         public List<List<PointF>> path = new List<List<PointF>>();
         private List<List<PointF>> tempPath;
         private int waveNumber = 0;
-        private int listNumb;
-        private int checkPoint;
         private float chosenDif;
         private string waveName = "";
         private string waveNext = "";
@@ -286,11 +283,11 @@ namespace TowerDefense
                 for (int enemyNumber = 0; enemyNumber < 10; enemyNumber++)
                 {
                     if (i % 3 == 0)
-                        waveEnemy[i].Add(new EnemyNormal("TestEnemyNormal", 100 * chosenDif, 9, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/heavyUp.png,Graphic/heavyLeft.png,Graphic/heavyDown.png,Graphic/heavyRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                        waveEnemy[i].Add(new EnemyNormal("TestEnemyNormal", 100 * chosenDif, 20, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/heavyUp.png,Graphic/heavyLeft.png,Graphic/heavyDown.png,Graphic/heavyRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                     if (i % 3 == 1)
-                        waveEnemy[i].Add(new EnemyEvade("TestEnemyEvade", false, 100 * chosenDif, 9, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/EvadeResized.png,Graphic/EvadeResizedLeft.png,Graphic/EvadeResizedDown.png,Graphic/EvadeResizedRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                        waveEnemy[i].Add(new EnemyEvade("TestEnemyEvade", false, 100 * chosenDif, 20, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/EvadeResized.png,Graphic/EvadeResizedLeft.png,Graphic/EvadeResizedDown.png,Graphic/EvadeResizedRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                     if (i % 3 == 2)
-                        waveEnemy[i].Add(new EnemySlow("TestEnemySlow", 10, 10, 100 * chosenDif, 9, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/slowUp.png,Graphic/slowLeft.png,Graphic/slowDown.png,Graphic/slowRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                        waveEnemy[i].Add(new EnemySlow("TestEnemySlow", 10, 10, 100 * chosenDif, 20, 0, 10, new Effect(@"Graphic/GrottoPlaceHolder.png", new PointF(0, 0), false), @"Graphic/slowUp.png,Graphic/slowLeft.png,Graphic/slowDown.png,Graphic/slowRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
                 }
             }
 
@@ -456,7 +453,7 @@ namespace TowerDefense
                 waveName = "Slow";
 
             //Update nextWave
-            if (waveNumber < waveEnemy.Count)
+            if (waveNumber + 1 < waveEnemy.Count)
             {
                 if (waveEnemy[waveNumber + 1][0] is EnemyNormal)
                     waveNext = "Normal";
@@ -465,6 +462,8 @@ namespace TowerDefense
                 if (waveEnemy[waveNumber + 1][0] is EnemySlow)
                     waveNext = "Slow";
             }
+            else
+                waveNext = "Victory";
 
         }
 
@@ -1109,7 +1108,7 @@ namespace TowerDefense
         public void StartWave()
         {
             currentWave = waveEnemy[waveNumber];
-            spawner = new Timer(3000);
+            spawner = new Timer(2000);
             spawner.Enabled = true;
             spawner.Elapsed += new ElapsedEventHandler(SpawnWave);
         }
