@@ -84,16 +84,18 @@ namespace TowerDefense
                     if (damage > 0)
                     {
                         if (target is EnemyEvade)
-                            if (CanHitEvadingEnemy((EnemyEvade) target))
+                        {
+                            if (CanHitEvadingEnemy((EnemyEvade)target))
                             {
                                 Form1.gw.currentWave[targetID].HP = Form1.gw.currentWave[targetID].HP + Form1.gw.currentWave[targetID].Armor - damage;
                                 Form1.gw.currentWave[targetID].OnImpact(dc);
                             }
-                            else
-                            {
-                                Form1.gw.currentWave[targetID].HP = Form1.gw.currentWave[targetID].HP + Form1.gw.currentWave[targetID].Armor - damage;
-                                Form1.gw.currentWave[targetID].OnImpact(dc);
-                            }
+                        }
+                        else
+                        {
+                            Form1.gw.currentWave[targetID].HP = Form1.gw.currentWave[targetID].HP + Form1.gw.currentWave[targetID].Armor - damage;
+                            Form1.gw.currentWave[targetID].OnImpact(dc);
+                        }
                     }
 
                     if (Form1.gw.currentWave[targetID].HP <= 0)
