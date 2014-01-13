@@ -77,9 +77,9 @@
     <Compile Include="TowerBoost.cs" />
     <Compile Include="TowerButton.cs" />
     <Compile Include="TowerDoT.cs" />
+    <Compile Include="TowerNormal.cs" />
     <Compile Include="TowerSlow.cs" />
     <Compile Include="TowerStun.cs" />
-    <Compile Include="TowerType.cs" />
     <Compile Include="Treasure.cs" />
     <Compile Include="Vector2D.cs" />
     <Compile Include="Water.cs" />
@@ -96,7 +96,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -111,37 +111,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Graphic\ArrowTower.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Graphic\ArrowTowerBtn.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Graphic\boost.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Graphic\CannonBall.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Graphic\canonDOwn.png">
+    <Content Include="Graphic\Checkpoint1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Graphic\canonLeft.png">
+    <Content Include="Graphic\Checkpoint2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Graphic\canonRight.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Graphic\canonUp.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Graphic\Checkpoint1Resized.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Graphic\Checkpoint2Resized.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Graphic\Checkpoint3Resized.png">
+    <Content Include="Graphic\Checkpoint3.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Graphic\CornerBotLeft.png">
@@ -168,7 +147,7 @@
     <Content Include="Graphic\EvadeResizedRight.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Graphic\GrottoPlaceHolder.png">
+    <Content Include="Graphic\Grotto.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Graphic\heavyDown.png">
@@ -186,9 +165,6 @@
     <Content Include="Graphic\land.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Graphic\LandResized.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Graphic\lighthouse.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -201,13 +177,13 @@
     <Content Include="Graphic\menu_bg.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Graphic\Rock.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Graphic\RockResized.png">
+    <Content Include="Graphic\mermaid.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Graphic\rocks.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphic\Sell.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Graphic\shipTowerDown.png">
@@ -237,13 +213,7 @@
     <Content Include="Graphic\tower.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Graphic\Treasure-chest.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Graphic\TreasureResized.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Graphic\væke.png">
+    <Content Include="Graphic\TreasureChest.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Graphic\WallBot.png">
@@ -259,9 +229,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Graphic\water.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Graphic\Whirlpool.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Highscore\Easy.txt">
@@ -291,6 +258,7 @@
     <Content Include="Towers\ArrowTowerBtn.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Towers\CannonDown.png" />
     <Content Include="Towers\L1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -298,6 +266,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Towers\L3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Towers\LightCannons.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Towers\mermaid.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Towers\shipTower.png">

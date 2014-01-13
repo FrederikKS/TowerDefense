@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace TowerDefense
 {
-    class TowerDoT : TowerType
+    class TowerDoT : Tower
     {
         // test
 

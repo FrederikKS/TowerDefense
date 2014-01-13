@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace TowerDefense
 {
-    public class TowerSlow : TowerType
+    public class TowerSlow : Tower
     {
         // Field
         private float slow;
@@ -25,7 +25,6 @@ namespace TowerDefense
         public TowerSlow(float slow, int range, float speed, int cost, float ranged, string imagePath, PointF position, bool isClickAble)
             : base(speed, cost, range, imagePath, position, isClickAble)
         {
-            this.Bullet = new Projectile(100, 20, @"Graphic/CannonBall.png", position, false, this);
             this.slow = slow;
             this.range = range;
         }
@@ -36,21 +35,18 @@ namespace TowerDefense
 
             for (int i = 0; i < Form1.gw.currentWave.Count; i++)
             {
-                if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.currentWave[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.currentWave[i].Position.Y), 2)) < ranged)
+                if (Math.Sqrt(Math.Pow(Math.Abs(this.Position.X - Form1.gw.currentWave[i].Position.X), 2) + Math.Pow(Math.Abs(this.Position.Y - Form1.gw.currentWave[i].Position.Y), 2)) < range)
                 {
-                    if (Form1.gw.currentWave[i].Speed > slow + 1)
+                    if (Form1.gw.currentWave[i].Speed == Form1.gw.currentWave[i].SpeedOriginal)
                     {
-                        Form1.gw.currentWave[i].Speed -= slow;
+                        Form1.gw.currentWave[i].Speed = Form1.gw.currentWave[i].Speed * slow;
                     }
                 }
                 // If they exit range once again, their original speed is restored
 
-                if (Math.Sqrt(Math.Pow(Math.Abs(position.X - Form1.gw.currentWave[i].Position.X), 2) + Math.Pow(Math.Abs(position.Y - Form1.gw.currentWave[i].Position.Y), 2)) > ranged)
+                if (Math.Sqrt(Math.Pow(Math.Abs(this.Position.X - Form1.gw.currentWave[i].Position.X), 2) + Math.Pow(Math.Abs(this.Position.Y - Form1.gw.currentWave[i].Position.Y), 2)) > range && Form1.gw.currentWave[i].Speed != Form1.gw.currentWave[i].SpeedOriginal)
                 {
-                    if (Form1.gw.currentWave[i].Speed == slow + 1)
-                    {
-                        Form1.gw.currentWave[i].Speed = 9;
-                    }
+                    Form1.gw.currentWave[i].Speed = Form1.gw.currentWave[i].SpeedOriginal;
                 }
             }
         }

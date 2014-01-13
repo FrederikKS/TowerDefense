@@ -11,7 +11,6 @@ namespace TowerDefense
     {
         public Treasure(string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
         {
-            // test
         }
     }
 }

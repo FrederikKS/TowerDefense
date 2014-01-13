@@ -10,14 +10,15 @@ namespace TowerDefense
 {
     public abstract class Tower : GameObject
     {
-        // test
-
+        
         // Field
         private Stopwatch stopWatch = new Stopwatch();
         public float speed;
         private int cost;
         protected float ranged;
         private Projectile bullet;
+        private bool boosted = false;
+        private int savedDamage;
  
         // Property
         public float Speed
@@ -33,6 +34,16 @@ namespace TowerDefense
         public int Cost
         {
             get { return cost; }
+        }
+        public bool Boosted
+        {
+            get { return boosted; }
+            set { boosted = value; }
+        }
+        public int SavedDamage
+        {
+            get { return savedDamage; }
+            set { savedDamage = value; }
         }
         /// <summary>
         /// The Constructor For The Tower Class

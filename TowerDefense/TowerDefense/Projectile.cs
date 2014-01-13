@@ -123,7 +123,8 @@ namespace TowerDefense
 
                     position = new PointF(position.X - Math.Abs(direction.X * correctionX), position.Y - Math.Abs(direction.Y * correctionY));
                 }
-                if (target.Position.X + Form1.gw.offsetX >= position.X + Form1.gw.offsetX && position.X + Form1.gw.offsetX <= target.Position.X + Form1.gw.offsetX && target.Position.Y + Form1.gw.offsetY <= position.Y + Form1.gw.offsetY && position.Y + Form1.gw.offsetY <= target.Position.Y + Form1.gw.offsetY)
+                if (position.X < target.Position.X + 10 && position.X > target.Position.X - 10 && position.Y < target.Position.Y + 10 && position.Y > target.Position.Y - 10)
+                //if (target.Position.X + Form1.gw.offsetX >= position.X + Form1.gw.offsetX && position.X + Form1.gw.offsetX <= target.Position.X + Form1.gw.offsetX && target.Position.Y + Form1.gw.offsetY <= position.Y + Form1.gw.offsetY && position.Y + Form1.gw.offsetY <= target.Position.Y + Form1.gw.offsetY)
                 {
                     if (damage > 0)
                     {

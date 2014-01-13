@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TowerDefense.Checkpoint" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Checkpoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Effect" Collapsed="true">
+    <Position X="18.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Effect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Enemy" Collapsed="true">
+    <Position X="23" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQDCAgQAAAIAIACAACAAIQBQAAEBQAAFABAABQAgQA=</HashCode>
+      <FileName>Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.EnemyEvade" Collapsed="true">
+    <Position X="20.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAABABAAAAAQAAAAQBAAAAAA=</HashCode>
+      <FileName>EnemyEvade.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.EnemyNormal" Collapsed="true">
+    <Position X="23" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EnemyNormal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.EnemySlow" Collapsed="true">
+    <Position X="25.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAQAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAIQAAAA=</HashCode>
+      <FileName>EnemySlow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Environment" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Environment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Form1" Collapsed="true">
+    <Position X="39" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QBUAKBFACKAAjtAIgAGQAACCIBAAYAAiAAIABIAQAEA=</HashCode>
+      <FileName>Form1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.GameObject" Collapsed="true">
+    <Position X="18.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAAAAAAAAgAgAEAAKAAAIBIAAAAQAEAAAAAAAAA=</HashCode>
+      <FileName>GameObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.GameWorld" Collapsed="true">
+    <Position X="40.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAUUJY9ABaABogDoYVAKQEAATAICoihAICrHRJQVoAQ=</HashCode>
+      <FileName>GameWorld.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Grotto" Collapsed="true">
+    <Position X="14" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Grotto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.GUI" Collapsed="true">
+    <Position X="42.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>GUI.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Island" Collapsed="true">
+    <Position X="2.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Island.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Lighthouse" Collapsed="true">
+    <Position X="7.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Lighthouse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Node" Collapsed="true">
+    <Position X="39" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAACAAAAAAAIAAAACAAAAAAAYQAAAGEAAAAA=</HashCode>
+      <FileName>Node.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.OneTime" Collapsed="true">
+    <Position X="34.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>OneTime.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Program" Collapsed="true">
+    <Position X="40.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Projectile" Collapsed="true">
+    <Position X="16.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQKAAAAAgABAIAAAASAAAhAACIAAAAoAAAAAAAA=</HashCode>
+      <FileName>Projectile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Rock" Collapsed="true">
+    <Position X="5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Tower" Collapsed="true">
+    <Position X="32" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAIAAAAAAAAAAAAABABAACQAQAAABgAAAAQAAA=</HashCode>
+      <FileName>Tower.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.TowerBoost" Collapsed="true">
+    <Position X="32" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAAEAAAAAAAAAAAAAAIAAQACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TowerBoost.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.TowerButton" Collapsed="true">
+    <Position X="40.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAQAAAAAAAAAAgEAAAIQAAAAEAAAAAEAAAAAAAgA=</HashCode>
+      <FileName>TowerButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.TowerDoT" Collapsed="true">
+    <Position X="36.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAABIAAAACAAAAAAAAABAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TowerDoT.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.TowerSlow" Collapsed="true">
+    <Position X="27.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAEAAEABAA=</HashCode>
+      <FileName>TowerNormal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.TowerStun" Collapsed="true">
+    <Position X="29.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TowerStun.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Treasure" Collapsed="true">
+    <Position X="9.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Treasure.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Water" Collapsed="true">
+    <Position X="11.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Water.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Properties.Resources" Collapsed="true">
+    <Position X="42.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEQAAAQAAAAAAAAAAAAAAIIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefense.Properties.Settings" Collapsed="true">
+    <Position X="39" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="TowerDefense.Vector2D" Collapsed="true">
+    <Position X="39" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAcAUAAABAAAAAAABAAAAAAAAAYAA=</HashCode>
+      <FileName>Vector2D.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="TowerDefense.State" Collapsed="true">
+    <Position X="39" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIgAAAAAAAA=</HashCode>
+      <FileName>GameWorld.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

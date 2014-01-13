@@ -13,6 +13,7 @@ namespace TowerDefense
         #region
         private float hp;
         private float speed;
+        private float speedOriginal;
         private int armor;
         private int worth;
         private Effect effect;
@@ -77,6 +78,11 @@ namespace TowerDefense
             get { return check; }
             set { check = value; }
         }
+        public float SpeedOriginal
+        {
+            get { return speedOriginal; }
+            set { speedOriginal = value; }
+        }
         #endregion
         //constructor
         public Enemy(string name, float hp, float speed, int armor, int worth, Effect effect, string imagePath, PointF position, PointF endPosition, bool isClickable)
@@ -85,6 +91,7 @@ namespace TowerDefense
             this.name = name;
             this.hp = hp;
             this.speed = speed;
+            this.speedOriginal = speed;
             this.armor = armor;
             this.worth = worth;
             this.effect = effect;

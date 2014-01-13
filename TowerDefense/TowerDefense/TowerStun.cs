@@ -8,12 +8,12 @@ using System.Timers;
 
 namespace TowerDefense
 {
-    public class TowerStun : TowerType
+    public class TowerStun : Tower
     {
         // test
 
         // Fields
-        private float stunTime;
+        private float stunTime = 0;
         // Property
         public float StunTime
         {
