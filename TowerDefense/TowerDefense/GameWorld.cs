@@ -607,7 +607,7 @@ namespace TowerDefense
                 dc.DrawString(string.Format("Press ESC to exit the game!"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2 + 30);
             }
             // Won
-            if (Form1.difc * 10 == waveComplete)
+            if (waveNumber == waveEnemy.Count)
             {
                 environment.Clear();
                 towers.Clear();
@@ -1164,7 +1164,6 @@ namespace TowerDefense
                         enemydisabled = 0;
                         currentState = State.build;
                         waveNumber++;
-                        waveComplete++;
                     }
                     break;
 
