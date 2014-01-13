@@ -1172,6 +1172,7 @@ namespace TowerDefense
         /// <summary>
         /// The Build Function
         /// </summary>
+        /// 
         public void Build(int towerNumb, PointF position)
         {
             bool allowTower = true;
@@ -1315,6 +1316,29 @@ namespace TowerDefense
                 if (t == tower)
                 {
                     gold += t.Cost / 2;
+                    coordinateSystem[(int)t.Position.X / tileSizeX][(int)t.Position.Y / tileSizeY] = 10;
+                    
+                    //Perform path generation again
+
+                    //Clearing current path
+                    foreach (List<PointF> previousPath in path)
+                    {
+                        previousPath.Clear();
+                    }
+
+                    //Clearing previous validPath bools
+                    for (int i = 0; i < checkpointList.Count + 1; i++)
+                    {
+                        pathAvailable[i] = true;
+                    }
+
+                    //Building enemy paths, depending on amount of checkpoints
+                    for (int i = 0; i < endPoints.Count; i++)
+                    {
+                        RoadBuilder(ref coordinateSystem, (int)startPoints[i].X, (int)startPoints[i].Y, (int)endPoints[i].X, (int)endPoints[i].Y, i);
+                    }
+
+                    //Remove tower from list
                     towers.Remove(t);
                 }
             }
