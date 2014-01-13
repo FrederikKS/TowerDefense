@@ -44,7 +44,6 @@ namespace TowerDefense
             pnl_Main.BackColor = Color.Transparent;
             pnl_dif.BackColor = Color.Transparent;
             pnl_high.BackColor = Color.Transparent;
-            pnl_name.BackColor = Color.Blue;
             btn_dif.BackColor = Color.Transparent;
             btn_high.BackColor = Color.Transparent;
             btn_exit.BackColor = Color.Transparent;
@@ -62,20 +61,32 @@ namespace TowerDefense
 
         private void btn_easy_Click(object sender, EventArgs e)
         {
-            difc = 1;
-            pnl_Main.Visible = false;
+            if (!string.IsNullOrEmpty(txt_name.Text))
+            {
+                difc = 1;
+                pnl_Main.Visible = false;
+            }
+
         }
 
         private void btn_Medium_Click(object sender, EventArgs e)
         {
-            difc = 2;
-            pnl_Main.Visible = false;
+            if (!string.IsNullOrEmpty(txt_name.Text))
+            {
+                difc = 2;
+                pnl_Main.Visible = false;
+            }
+
         }
 
         private void btn_Hard_Click(object sender, EventArgs e)
         {
-            difc = 3;
-            pnl_Main.Visible = false;
+            if (!string.IsNullOrEmpty(txt_name.Text))
+            {
+                difc = 3;
+                pnl_Main.Visible = false;
+            }
+
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -101,10 +112,6 @@ namespace TowerDefense
                 if (gw == null)
                 {
                     gw = new GameWorld(CreateGraphics(), this.DisplayRectangle, 14, 8, difc);
-                }
-                if (gw.life <= 1)
-                {
-                    pnl_name.Visible = true;
                 }
                 gw.GameLoop();
             }
