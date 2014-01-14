@@ -111,6 +111,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Blackmoor_Tides_Loop.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Graphic\CannonBall.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

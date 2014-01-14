@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Diagnostics;
 using System.Timers;
+using IrrKlang;
 
 
 namespace TowerDefense
@@ -56,6 +57,7 @@ namespace TowerDefense
         public List<PointF> endPoints = new List<PointF>();
         private List<PointF> startPoints = new List<PointF>();
         private bool validLocation;
+        ISoundEngine engine = new ISoundEngine();
 
         #region Fields for wave
         // Fields for wave
@@ -113,6 +115,7 @@ namespace TowerDefense
 
             //Starting FPS timert
             lastFrameStarted = DateTime.Now;
+            
 
             #region Instantiating coordinate system and grotto/checkpoints/treasure location
             // Instantiating coordinate system
@@ -307,6 +310,8 @@ namespace TowerDefense
                     life = 10;
                     break;
             }
+            engine.Play2D("Blackmoor_Tides_Loop.wav", true);
+           
         }
         /// <summary>
         /// Makes sure all the update functions is called every frames
