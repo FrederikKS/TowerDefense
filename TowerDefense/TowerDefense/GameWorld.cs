@@ -1064,7 +1064,7 @@ namespace TowerDefense
                             environmentList.Add(new Grotto(@"Graphic/GrottoTop.png", new PointF(tempX, tempY)));
                         if (y == (worldSizeY*tileSizeY) - tileSizeY)
                             environmentList.Add(new Grotto(@"Graphic/GrottoBot.png", new PointF(tempX, tempY)));
-                        if (x == (worldSizeX*tileSizeX)
+                        if (x == (worldSizeX*tileSizeX))
                             environmentList.Add(new Grotto(@"Graphic/GrottoRight.png", new PointF(tempX, tempY)));
                         if (x == 0)
                             environmentList.Add(new Grotto(@"Graphic/GrottoLeft.png", new PointF(tempX, tempY)));
