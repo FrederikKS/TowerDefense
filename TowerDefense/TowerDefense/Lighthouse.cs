@@ -9,7 +9,6 @@ namespace TowerDefense
 {
     class Lighthouse : Environment
     {
-        // test
         // Constructor for lighthouse
         
         public Lighthouse(string imagePath, PointF position) : base(imagePath, position)

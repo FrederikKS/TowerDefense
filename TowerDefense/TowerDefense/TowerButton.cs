@@ -40,7 +40,8 @@ namespace TowerDefense
         // Functions
 
         /// <summary>
-        /// TowerButton COnstructor
+        /// Tobias
+        /// TowerButton Constructor
         /// </summary>
         /// <param name="mySize"></param>
         /// <param name="myPosition"></param>
@@ -53,6 +54,7 @@ namespace TowerDefense
         }
 
         /// <summary>
+        /// Tobias
         /// Draws The rectangle
         /// </summary>
         /// <param name="dc"></param>

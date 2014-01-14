@@ -20,7 +20,6 @@ namespace TowerDefense
         private int targetID;
         private float correctionX = 0;
         private float correctionY = 0;
-        Graphics dc;
 
         //Properties
         public int Damage
@@ -58,7 +57,7 @@ namespace TowerDefense
             this.tw = fromTower;
         }
         /// <summary>
-        /// lucas
+        /// Lucas & Frederik
         /// Moves the bullet along a vector to target and give target damage
         /// Remove bullet when bullet position is equal to target position
         /// </summary>
@@ -123,8 +122,9 @@ namespace TowerDefense
 
                     position = new PointF(position.X - Math.Abs(direction.X * correctionX), position.Y - Math.Abs(direction.Y * correctionY));
                 }
+
+                //Checks if projectile's position is close enough to 'hit' enemy
                 if (position.X < target.Position.X + 10 && position.X > target.Position.X - 10 && position.Y < target.Position.Y + 10 && position.Y > target.Position.Y - 10)
-                //if (target.Position.X + Form1.gw.offsetX >= position.X + Form1.gw.offsetX && position.X + Form1.gw.offsetX <= target.Position.X + Form1.gw.offsetX && target.Position.Y + Form1.gw.offsetY <= position.Y + Form1.gw.offsetY && position.Y + Form1.gw.offsetY <= target.Position.Y + Form1.gw.offsetY)
                 {
                     if (damage > 0)
                     {
@@ -133,7 +133,7 @@ namespace TowerDefense
                             if (CanHitEvadingEnemy((EnemyEvade)Form1.gw.currentWave[targetID]))
                             {
                                 Form1.gw.currentWave[targetID].HP = Form1.gw.currentWave[targetID].HP + Form1.gw.currentWave[targetID].Armor - damage;
-                                Form1.gw.currentWave[targetID].OnImpact(dc);
+                                Form1.gw.currentWave[targetID].OnImpact();
                             }
                             else
                                 Form1.gw.bullets.Remove(this);
@@ -141,7 +141,7 @@ namespace TowerDefense
                         else
                         {
                             Form1.gw.currentWave[targetID].HP = Form1.gw.currentWave[targetID].HP + Form1.gw.currentWave[targetID].Armor - damage;
-                            Form1.gw.currentWave[targetID].OnImpact(dc);
+                            Form1.gw.currentWave[targetID].OnImpact();
                         }
                     }
 
@@ -166,12 +166,17 @@ namespace TowerDefense
             base.Update(FPS);
         }
 
+        /// <summary>
+        /// Checks if targeted enemy is evading
+        /// </summary>
+        /// <param name="evader"></param>
+        /// <returns></returns>
         public bool CanHitEvadingEnemy(EnemyEvade evader)
         {
             if (evader.IsEvade)
                 return false;
             else
-            return true;
+                return true;
         }
     }
 }

@@ -10,7 +10,6 @@ namespace TowerDefense
 {
     class TowerDoT : Tower
     {
-        // test
 
         //Fields
         private float dmgOverTime;
@@ -29,7 +28,16 @@ namespace TowerDefense
             set { duration = value; }
         }
 
-        //Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dmgOverTime"></param>
+        /// <param name="duration"></param>
+        /// <param name="speed"></param>
+        /// <param name="cost"></param>
+        /// <param name="ranged"></param>
+        /// <param name="imagePath"></param>
+        /// <param name="position"></param>
         public TowerDoT(float dmgOverTime, float duration, float speed, int cost, int ranged,string imagePath, PointF position) : base(speed, cost, ranged, imagePath, position)
         {
             this.dmgOverTime = dmgOverTime;

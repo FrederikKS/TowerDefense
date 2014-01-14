@@ -9,6 +9,11 @@ namespace TowerDefense
 {    
     public abstract class Environment : GameObject
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="imagePath"></param>
+        /// <param name="position"></param>
         public Environment(string imagePath, PointF position) : base(imagePath, position)
         {
             

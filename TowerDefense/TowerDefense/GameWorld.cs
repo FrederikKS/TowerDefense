@@ -78,7 +78,7 @@ namespace TowerDefense
         #endregion
         // Fields for building phase
 
-        public int gold = 200;
+        public int gold = 100;
         bool afford = true;
         Timer tAfford;
         public float life;
@@ -101,6 +101,9 @@ namespace TowerDefense
         // Functions
 
         /// <summary>
+        /// Frederik - Instantiating coordinate system & building world layout
+        /// Tobias - tl and mouseRect
+        /// Lucas - Buildwatch & Life
         /// Creates the world layout
         /// </summary>
         public void SetupWorld()
@@ -265,8 +268,6 @@ namespace TowerDefense
                 }
             }
 
-            #endregion
-
             //First point enemy should move to, in case first path is empty
             PointF firstPoint;
             if (path[0].Count > 0)
@@ -282,13 +283,15 @@ namespace TowerDefense
                 for (int enemyNumber = 0; enemyNumber < 10; enemyNumber++)
                 {
                     if (i % 3 == 0)
-                        waveEnemy[i].Add(new EnemyNormal("TestEnemyNormal", 10 * chosenDif + (i * 5), 20, 0, 10, new Effect(@"Graphic/GrottoTop.png", new PointF(0, 0)), @"Graphic/heavyUp.png,Graphic/heavyLeft.png,Graphic/heavyDown.png,Graphic/heavyRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint));
+                        waveEnemy[i].Add(new EnemyNormal("EnemyNormal", 10 * chosenDif + (i * 5), 10, 0, 3, new Effect(@"Graphic/GrottoTop.png", new PointF(0, 0)), @"Graphic/heavyUp.png,Graphic/heavyLeft.png,Graphic/heavyDown.png,Graphic/heavyRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint));
                     if (i % 3 == 1)
-                        waveEnemy[i].Add(new EnemyEvade("TestEnemyEvade", false, 10 * chosenDif + (i * 5), 20, 0, 10, new Effect(@"Graphic/GrottoTop.png", new PointF(0, 0)), @"Graphic/EvadeResized.png,Graphic/EvadeResizedLeft.png,Graphic/EvadeResizedDown.png,Graphic/EvadeResizedRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint));
+                        waveEnemy[i].Add(new EnemyEvade("EnemyEvade", false, 10 * chosenDif + (i * 5), 10, 0, 4, new Effect(@"Graphic/GrottoTop.png", new PointF(0, 0)), @"Graphic/EvadeTop.png,Graphic/EvadeLeft.png,Graphic/EvadeBot.png,Graphic/EvadeRight.png,Graphic/EvadeTopEvading.png,Graphic/EvadeLeftEvading.png,Graphic/EvadeBotEvading.png,Graphic/EvadeRightEvading.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint));
                     if (i % 3 == 2)
-                        waveEnemy[i].Add(new EnemySlow("TestEnemySlow", 10, 10, 10 * chosenDif + (i * 5), 20, 0, 10, new Effect(@"Graphic/GrottoTop.png", new PointF(0, 0)), @"Graphic/slowUp.png,Graphic/slowLeft.png,Graphic/slowDown.png,Graphic/slowRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint));
+                        waveEnemy[i].Add(new EnemySlow("EnemySlow", (float)0.50, tileSizeX * 3, 10 * chosenDif + (i * 5), 10, 0, 5, new Effect(@"Graphic/GrottoTop.png", new PointF(0, 0)), @"Graphic/slowUp.png,Graphic/slowLeft.png,Graphic/slowDown.png,Graphic/slowRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint));
                 }
             }
+            #endregion
+
 
             //Starting buildwatch for the first time
             buildWatch.Start();
@@ -326,6 +329,9 @@ namespace TowerDefense
 
         }
         /// <summary>
+        /// Tobias - Build towers
+        /// Mikkel & Lucas - Sell towers
+        /// All - Update lists
         /// Updates the gameworld on every frame
         /// </summary>
         public void Update()
@@ -400,13 +406,7 @@ namespace TowerDefense
             //Update all bullet objects
             for (int i = 0; i < bullets.Count; i++)
             {
-                if (bullets[i].Target.Enabled)
-                    bullets[i].Update(currentFPS);
-                else
-                {
-                    bullets[i].Position = bullets[i].Tw.Position;
-                    bullets.Remove(bullets[i]);
-                }
+               bullets[i].Update(currentFPS);
             }
             //Update all tower objects
             foreach (Tower tower in towers)
@@ -495,10 +495,14 @@ namespace TowerDefense
         }
 
         /// <summary>
+        /// Tobias - TowerButtons, GUI, Win/Loss GUI
+        /// Lucas - Gold, Life, GameState
+        /// Frederik - Current Wave, Next Wave
         /// Draws The World
         /// </summary>
         public void Draw()
         {
+            dc.Clear(Color.White);
             if (Form1.guiIsClicked)
             {
                 int tmpX = Form1.gui.ellipse.X + tileSizeX + (tileSizeX / 2);
@@ -535,7 +539,6 @@ namespace TowerDefense
                 }
 
             }
-            dc.Clear(Color.White);
 
             //Drawing environment
             for (int i = 0; i < environment.Count; i++)
@@ -560,9 +563,7 @@ namespace TowerDefense
                     bullets[i].Draw(dc);
                 }
 
-            // Drawing Phase count
-
-
+            // Drawing Phase
             dc.DrawString(string.Format("Phase: {0}", phase), w, q, 30, 5);
 
             // Draw Gold count
@@ -626,6 +627,7 @@ namespace TowerDefense
         }
 
         /// <summary>
+        /// Frederik
         /// Checking If The Location Of The Treasure Island Is On A Valid Location
         /// </summary>
         /// <param name="startX"></param>
@@ -638,6 +640,7 @@ namespace TowerDefense
             return openNodes.Any(p => p.LocationX == mainNode.LocationX + xModifier && p.LocationY == mainNode.LocationY + yModifier);
         }
         /// <summary>
+        /// Frederik
         /// Checking If The Location Of The Treasure Island Is On A Valid Location And Is Minimum Px From Start
         /// </summary>
         /// <param name="startX"></param>
@@ -682,6 +685,7 @@ namespace TowerDefense
                 return true;
         }
         /// <summary>
+        /// Frederik
         /// Builds The Road The Enemies Will Follow
         /// </summary>
         /// <param name="worldSizeX"></param>
@@ -761,6 +765,7 @@ namespace TowerDefense
         }
 
         /// <summary>
+        /// Frederik
         /// Building enemy path and storing it in a list of PointF values
         /// </summary>
         /// <param name="closedNodes"></param>
@@ -815,6 +820,7 @@ namespace TowerDefense
         }
 
         /// <summary>
+        /// Frederik
         /// Checks if a valid path is available or the map should be remade
         /// </summary>
         /// <param name="pathAvailable"></param>
@@ -831,6 +837,7 @@ namespace TowerDefense
         }
 
         /// <summary>
+        /// Frederik
         /// Shortcut for checking if node is out of bounds
         /// </summary>
         /// <param name="x"></param>
@@ -843,6 +850,7 @@ namespace TowerDefense
         }
 
         /// <summary>
+        /// Frederik
         /// Checks if list already contains specific node
         /// </summary>
         /// <param name="nodeList"></param>
@@ -861,6 +869,7 @@ namespace TowerDefense
         }
 
         /// <summary>
+        /// Frederik
         /// Removes duplicated notes in list of open nodes
         /// </summary>
         /// <param name="closedNodes"></param>
@@ -877,8 +886,18 @@ namespace TowerDefense
             }
         }
 
-        //Saving path to PointF array
-        //path.Add(new PointF(mainNode.LocationX, mainNode.LocationY));
+        /// <summary>
+        /// Frederik
+        /// Checks nearby nodes to see if position is valid for pathing
+        /// </summary>
+        /// <param name="coordinateSystem"></param>
+        /// <param name="mainNode"></param>
+        /// <param name="openNodes"></param>
+        /// <param name="closedNodes"></param>
+        /// <param name="startX"></param>
+        /// <param name="startY"></param>
+        /// <param name="endX"></param>
+        /// <param name="endY"></param>
         public void CheckNearbyNodes(ref int[][] coordinateSystem, ref Node mainNode, ref List<Node> openNodes, ref List<Node> closedNodes, int startX, int startY, int endX, int endY)
         {
             //Node below main
@@ -936,10 +955,12 @@ namespace TowerDefense
 
         #endregion
         /// <summary>
+        /// Frederik
         /// Assigning values to positions in the coordinate system, defining which environment object will be placed on that coordinate.
         /// Then it places that environment object on the tile and adds the object to gameworld's list of environment objects
         /// </summary>
         /// <param name="coordinateSystem"></param>
+        /// <param name="environmentList"></param>
         public void Randomizer(int[][] coordinateSystem, List<Environment> environmentList)
         {
             if (environmentList.Count == 0)
@@ -1132,6 +1153,7 @@ namespace TowerDefense
         }
 
         /// <summary>
+        /// Frederik
         /// Starts the current wave
         /// </summary>
         public void StartWave()
@@ -1199,9 +1221,10 @@ namespace TowerDefense
             }
         }
         /// <summary>
+        /// Lucas & Mikkel - building towers
+        /// Frederik - Reworking enemy path when placing tower
         /// The Build Function
         /// </summary>
-        /// 
         public void Build(int towerNumb, PointF position)
         {
             bool allowTower = true;
@@ -1274,9 +1297,9 @@ namespace TowerDefense
                         break;
 
                     case 2:
-                        if (gold >= 40)
+                        if (gold >= 60)
                         {
-                            towers.Add(new TowerBoost((float)0.3, 15, 1000, 40, tileSizeX * 3, @"Towers/mermaid.png", position));
+                            towers.Add(new TowerBoost((float)0.3, 15, 1000, 60, tileSizeX * 3, @"Towers/mermaid.png", position));
                             gold -= towers[0].Cost;
                         }
                         else
@@ -1286,9 +1309,9 @@ namespace TowerDefense
                         break;
 
                     case 3:
-                        if (gold >= 60)
+                        if (gold >= 80)
                         {
-                            towers.Add(new TowerSlow((float)0.3, tileSizeX * 3, 1000, 60, tileSizeX * 3, @"Towers/Whirlpool.png", position));
+                            towers.Add(new TowerSlow((float)0.3, tileSizeX * 3, 1000, 80, tileSizeX * 3, @"Towers/Whirlpool.png", position));
                             gold -= towers[0].Cost;
                             slowTowerOwned = true;
                         }
@@ -1301,9 +1324,9 @@ namespace TowerDefense
                     #region Land
                     // Land
                     case 4:
-                        if (gold >= 25)
+                        if (gold >= 30)
                         {
-                            towers.Add(new TowerNormal(10, 2000, 25, tileSizeX * 3, @"Towers/LightCannons.png", position));
+                            towers.Add(new TowerNormal(10, 2000, 30, tileSizeX * 3, @"Towers/LightCannons.png", position));
                             gold -= towers[0].Cost;
                         }
                         else
@@ -1313,9 +1336,9 @@ namespace TowerDefense
 
                         break;
                     case 5:
-                        if (gold >= 40)
+                        if (gold >= 50)
                         {
-                            towers.Add(new TowerNormal(30, 5000, 40, tileSizeX * 3, @"Towers/CannonDown.png", position));
+                            towers.Add(new TowerNormal(30, 5000, 50, tileSizeX * 3, @"Towers/CannonDown.png", position));
                             gold -= towers[0].Cost;
                         }
                         else
@@ -1339,6 +1362,8 @@ namespace TowerDefense
                 }
         }
         /// <summary>
+        /// Lucas & Mikkel - selling tower
+        /// Frederik - Reworking enemy path if tower is sold
         /// The Sell Function
         /// </summary>
         public void Sell(Tower tower)
@@ -1380,6 +1405,7 @@ namespace TowerDefense
 
         }
         /// <summary>
+        /// Frederik
         /// Updating the enemies' endposition, the point they will try to reach
         /// </summary>
         public void UpdatePath(ref List<Enemy> currentWave, ref List<PointF> endPoints, ref List<List<PointF>> path)
@@ -1421,6 +1447,7 @@ namespace TowerDefense
         }
 
         /// <summary>
+        /// Frederik
         /// Making a deep copy of a list
         /// </summary>
         /// <param name="listToDuplicate"></param>
@@ -1440,7 +1467,13 @@ namespace TowerDefense
             return newList;
         }
 
-        //Duplicates a 2D jagged array to prevent cross references
+        
+        /// <summary>
+        /// Frederik
+        /// Duplicates a 2D jagged array to prevent cross references
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
         private int[][] DuplicateCoordinateSystem(int[][] target)
         {
             int[][] newCoordinateSystem = new int[target.Count()][];
@@ -1454,6 +1487,11 @@ namespace TowerDefense
             }
             return newCoordinateSystem;
         }
+
+        /// <summary>
+        /// Tobias
+        /// Informs player that he cannot afford the tower he chose
+        /// </summary>
         private void CantAfford()
         {
             tAfford = new Timer(3000);
@@ -1462,6 +1500,13 @@ namespace TowerDefense
             tAfford.Elapsed += new ElapsedEventHandler(CantAffordTrue);
 
         }
+
+        /// <summary>
+        /// Tobias
+        /// Stops the CantAfford() message from being shown
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         private void CantAffordTrue(object source, ElapsedEventArgs e)
         {
             afford = true;

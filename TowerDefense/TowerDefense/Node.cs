@@ -52,7 +52,14 @@ namespace TowerDefense
             set { wasChecked = value; }
         }
 
-        //Constructor
+        /// <summary>
+        /// Constructor for nodes
+        /// </summary>
+        /// <param name="locationX"></param>
+        /// <param name="locationY"></param>
+        /// <param name="endX"></param>
+        /// <param name="endY"></param>
+        /// <param name="parentNodeGValue"></param>
         public Node(int locationX, int locationY, int endX, int endY, int parentNodeGValue)
         {
             this.locationX = locationX;

@@ -13,15 +13,6 @@ namespace TowerDefense
         private float slow;
         private int range;
         // Property
-        public float Slow
-        {
-            get { return slow; }
-        }
-        public int Range
-        {
-            get { return range; }
-        }
-
         public TowerSlow(float slow, int range, float speed, int cost, float ranged, string imagePath, PointF position)
             : base(speed, cost, range, imagePath, position)
         {
@@ -29,6 +20,10 @@ namespace TowerDefense
             this.range = range;
         }
 
+        /// <summary>
+        /// Mikkel
+        /// Slows nearby enemies
+        /// </summary>
         public void Slowing()
         {
             // Runs through every enemy in currentWave, if they are within range they are slowed

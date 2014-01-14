@@ -10,8 +10,6 @@ namespace TowerDefense
 {
     public class TowerStun : Tower
     {
-        // test
-
         // Fields
         private float stunTime = 0;
         // Property

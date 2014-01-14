@@ -18,13 +18,20 @@ namespace TowerDefense
         protected float ranged;
         private Projectile bullet;
         private bool boosted = false;
+        private bool slowed = false;
         private int savedDamage;
+        private float savedSpeed;
  
         // Property
         public float Speed
         {
             get { return speed; }
             set { speed = value; }
+        }
+        public float SavedSpeed
+        {
+            get { return savedSpeed; }
+            set { savedSpeed = value; }
         }
         public Projectile Bullet
         {
@@ -45,6 +52,11 @@ namespace TowerDefense
             get { return savedDamage; }
             set { savedDamage = value; }
         }
+        public bool Slowed
+        {
+            get { return slowed; }
+            set { slowed = value; }
+        }
         /// <summary>
         /// The Constructor For The Tower Class
         /// </summary>
@@ -61,6 +73,7 @@ namespace TowerDefense
             this.speed = speed;
             this.cost = cost;
             this.ranged = ranged;
+            this.savedSpeed = speed;
 
             stopWatch.Start();
             
@@ -68,7 +81,7 @@ namespace TowerDefense
         }
 
         /// <summary>
-        /// lucas
+        /// Lucas
         /// checks if enemy are in range and checks if cooldown is down
         /// mark the enemy target
         /// </summary>

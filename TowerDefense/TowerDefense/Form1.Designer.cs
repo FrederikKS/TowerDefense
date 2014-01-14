@@ -31,9 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pnl_Main = new System.Windows.Forms.Panel();
-            this.btn_submit = new System.Windows.Forms.Button();
-            this.lbl_name = new System.Windows.Forms.Label();
-            this.txt_name = new System.Windows.Forms.TextBox();
             this.pnl_high = new System.Windows.Forms.Panel();
             this.rtb_highscore = new System.Windows.Forms.RichTextBox();
             this.btn_highHard = new System.Windows.Forms.Button();
@@ -42,7 +39,10 @@
             this.btn_exit = new System.Windows.Forms.Button();
             this.btn_high = new System.Windows.Forms.Button();
             this.pnl_dif = new System.Windows.Forms.Panel();
+            this.btn_submit = new System.Windows.Forms.Button();
             this.btn_Hard = new System.Windows.Forms.Button();
+            this.txt_name = new System.Windows.Forms.TextBox();
+            this.lbl_name = new System.Windows.Forms.Label();
             this.btn_Medium = new System.Windows.Forms.Button();
             this.btn_easy = new System.Windows.Forms.Button();
             this.btn_dif = new System.Windows.Forms.Button();
@@ -63,32 +63,6 @@
             this.pnl_Main.Name = "pnl_Main";
             this.pnl_Main.Size = new System.Drawing.Size(1165, 490);
             this.pnl_Main.TabIndex = 0;
-            // 
-            // btn_submit
-            // 
-            this.btn_submit.Location = new System.Drawing.Point(683, 24);
-            this.btn_submit.Name = "btn_submit";
-            this.btn_submit.Size = new System.Drawing.Size(75, 23);
-            this.btn_submit.TabIndex = 9;
-            this.btn_submit.Text = "Submit";
-            this.btn_submit.UseVisualStyleBackColor = true;
-            this.btn_submit.Click += new System.EventHandler(this.btn_submit_Click);
-            // 
-            // lbl_name
-            // 
-            this.lbl_name.AutoSize = true;
-            this.lbl_name.Location = new System.Drawing.Point(574, 6);
-            this.lbl_name.Name = "lbl_name";
-            this.lbl_name.Size = new System.Drawing.Size(41, 15);
-            this.lbl_name.TabIndex = 7;
-            this.lbl_name.Text = "Name";
-            // 
-            // txt_name
-            // 
-            this.txt_name.Location = new System.Drawing.Point(577, 24);
-            this.txt_name.Name = "txt_name";
-            this.txt_name.Size = new System.Drawing.Size(100, 20);
-            this.txt_name.TabIndex = 5;
             // 
             // pnl_high
             // 
@@ -179,6 +153,16 @@
             this.pnl_dif.TabIndex = 1;
             this.pnl_dif.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
+            // btn_submit
+            // 
+            this.btn_submit.Location = new System.Drawing.Point(683, 24);
+            this.btn_submit.Name = "btn_submit";
+            this.btn_submit.Size = new System.Drawing.Size(75, 23);
+            this.btn_submit.TabIndex = 9;
+            this.btn_submit.Text = "Submit";
+            this.btn_submit.UseVisualStyleBackColor = true;
+            this.btn_submit.Click += new System.EventHandler(this.btn_submit_Click);
+            // 
             // btn_Hard
             // 
             this.btn_Hard.BackgroundImage = global::TowerDefense.Properties.Resources.menu_b;
@@ -189,6 +173,22 @@
             this.btn_Hard.Text = "Hard";
             this.btn_Hard.UseVisualStyleBackColor = true;
             this.btn_Hard.Click += new System.EventHandler(this.btn_Hard_Click);
+            // 
+            // txt_name
+            // 
+            this.txt_name.Location = new System.Drawing.Point(577, 24);
+            this.txt_name.Name = "txt_name";
+            this.txt_name.Size = new System.Drawing.Size(100, 20);
+            this.txt_name.TabIndex = 5;
+            // 
+            // lbl_name
+            // 
+            this.lbl_name.AutoSize = true;
+            this.lbl_name.Location = new System.Drawing.Point(574, 6);
+            this.lbl_name.Name = "lbl_name";
+            this.lbl_name.Size = new System.Drawing.Size(35, 13);
+            this.lbl_name.TabIndex = 7;
+            this.lbl_name.Text = "Name";
             // 
             // btn_Medium
             // 
@@ -233,7 +233,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.BackgroundImage = global::TowerDefense.Properties.Resources.menu_bg;
-            this.ClientSize = new System.Drawing.Size(1354, 808);
+            this.ClientSize = new System.Drawing.Size(1337, 742);
             this.Controls.Add(this.pnl_Main);
             this.Name = "Form1";
             this.Text = "Tower Defence";

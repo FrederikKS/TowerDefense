@@ -9,7 +9,6 @@ namespace TowerDefense
 {
     class Island : Environment
     {
-        // test
         // Constructor for island
 
         public Island(string imagePath, PointF position) : base(imagePath, position)

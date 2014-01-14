@@ -10,7 +10,6 @@ namespace TowerDefense
     class Checkpoint : Environment
     {
         // Constructor for Checkpoint
-        // test
         public Checkpoint(string imagePath, PointF position) : base(imagePath, position)
         {
             

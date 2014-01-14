@@ -28,11 +28,6 @@ namespace TowerDefense
         #endregion
         //properties
         #region
-        public string Name
-        {
-            get { return name; }
-            set { name = value; }
-        }
 
         public float HP
         {
@@ -98,6 +93,11 @@ namespace TowerDefense
             this.endPosition = endPosition;
         }
 
+        /// <summary>
+        /// Frederik - Movement
+        /// Tobias - Sprite update
+        /// Moves enemy along path
+        /// </summary>
         public void MovementAI()
         {
             PointF lastPos = new PointF(position.X, position.Y);
@@ -155,6 +155,7 @@ namespace TowerDefense
                 correction = 0;
 
             }
+            EnemyEvade temp;
             // Right
             if (lastPos.X < position.X)
             {
@@ -166,7 +167,14 @@ namespace TowerDefense
                     }
                     if (this is EnemyEvade)
                     {
-                        this.sprite = this.AnimationFrames[3];
+                        temp = (EnemyEvade)this;
+
+                        if (!temp.IsEvade)
+                            this.sprite = this.AnimationFrames[3];
+                        else
+                            this.sprite = this.AnimationFrames[7];
+
+                        temp = null;
                     }
                     if (this is EnemyNormal)
                     {
@@ -186,7 +194,14 @@ namespace TowerDefense
                     }
                     if (this is EnemyEvade)
                     {
-                        this.sprite = this.AnimationFrames[1];
+                        temp = (EnemyEvade)this;
+
+                        if (!temp.IsEvade)
+                            this.sprite = this.AnimationFrames[1];
+                        else
+                            this.sprite = this.AnimationFrames[5];
+
+                        temp = null;
                     }
                     if (this is EnemyNormal)
                     {
@@ -205,7 +220,14 @@ namespace TowerDefense
                     }
                     if (this is EnemyEvade)
                     {
-                        this.sprite = this.AnimationFrames[2];
+                        temp = (EnemyEvade)this;
+                        
+                        if (!temp.IsEvade)
+                            this.sprite = this.AnimationFrames[2];
+                        else
+                            this.sprite = this.AnimationFrames[6];
+
+                        temp = null;
                     }
                     if (this is EnemyNormal)
                     {
@@ -224,7 +246,14 @@ namespace TowerDefense
                     }
                     if (this is EnemyEvade)
                     {
-                        this.sprite = this.AnimationFrames[0];
+                        temp = (EnemyEvade)this;
+
+                        if (!temp.IsEvade)
+                            this.sprite = this.AnimationFrames[0];
+                        else
+                            this.sprite = this.AnimationFrames[4];
+
+                        temp = null;
                     }
                     if (this is EnemyNormal)
                     {
@@ -241,7 +270,10 @@ namespace TowerDefense
             base.Update(fps);
         }
 
-        public void OnImpact(Graphics dc)
+        /// <summary>
+        /// Performs this action when enemy is hit with a projectile. Will be used for effects
+        /// </summary>
+        public void OnImpact()
         {
             //dc.DrawImage(explosion, this.position.X, this.position.Y, explosion.Width, explosion.Height);
         }

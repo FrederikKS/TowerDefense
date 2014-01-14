@@ -10,10 +10,9 @@ namespace TowerDefense
     class Water : Environment
     {
         // Constructor for water 
-
         public Water(string imagePath, PointF position) : base(imagePath, position)
         {
-            // test
+            
         }
     }
 }

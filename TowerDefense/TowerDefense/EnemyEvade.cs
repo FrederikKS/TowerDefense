@@ -26,16 +26,28 @@ namespace TowerDefense
             : base(name, hp, speed, armor, worth, effect, imagePath, position, endPosition)
         {
             this.isEvade = isEvade;
+            State();
         }
 
+        /// <summary>
+        /// Frederik
+        /// Changes enemy's state from evading to not evading, depending on
+        /// </summary>
         public void State()
         {
             if (evadeTime == null)
                 evadeTime = new Timer();
             evadeTime.Enabled = true;
-            evadeTime.Interval = 5000;
+            evadeTime.Interval = 3000;
             evadeTime.Elapsed += new ElapsedEventHandler(Evade);
         }
+
+        /// <summary>
+        /// Frederik
+        /// Reverts enemy's evade status after timer elapses
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         public void Evade(object source, ElapsedEventArgs e)
         {
             if (isEvade == true)
@@ -48,10 +60,12 @@ namespace TowerDefense
 
         public override void Update(float FPS)
         {
-            State();
+            
             base.Update(FPS);
             if (Enabled == false)
                 evadeTime.Enabled = false;
+            if (Enabled && evadeTime.Enabled == false)
+                evadeTime.Enabled = true;
         }
     }
 }

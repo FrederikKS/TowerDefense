@@ -13,6 +13,16 @@ namespace TowerDefense
 
         // Properties
 
+        /// <summary>
+        /// Constructor - Creates a new projectile for this tower in the process
+        /// Saves starting damage as well, to be able to restore if tower is no longer boosted
+        /// </summary>
+        /// <param name="projectileDamage"></param>
+        /// <param name="speed"></param>
+        /// <param name="cost"></param>
+        /// <param name="range"></param>
+        /// <param name="imagePath"></param>
+        /// <param name="position"></param>
         public TowerNormal(int projectileDamage, float speed, int cost, float range, string imagePath, PointF position)
             : base(speed, cost, range, imagePath, position)
         {

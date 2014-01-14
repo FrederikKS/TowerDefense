@@ -37,11 +37,13 @@ namespace TowerDefense
             this.range = range;
         }
 
+        /// <summary>
+        /// Mikkel
+        /// Boosts nearby towers
+        /// </summary>
         public void Boost()
         {
-            // Runs through the list of placed towers and if they are within the range of the boost tower, they are boosted,
-            // if tower is sold, then the boost is removed.
-
+            // Runs through the list of placed towers and if they are within the range of the boost tower, they are boosted
             for (int i = 0; i < Form1.gw.towers.Count; i++)
             {
                 if (Form1.gw.towers[i] is TowerNormal)

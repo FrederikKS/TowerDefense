@@ -88,7 +88,6 @@ namespace TowerDefense
         public virtual void UpdateAnimation(float fps)
         {
             //Calculates the current index, so that the amount of images is spread out on one 1 second 
-            // (1 / fps) * amount of images
             float factor = 1 / fps;
             currentFrameIndex += factor * animationFrames.Count();
             //If currentAnimationIndex is outside of amount of images, reset it to the first image
@@ -101,7 +100,7 @@ namespace TowerDefense
             //Convert currentAnimationIndex to a integer (removing everything after the dot) and used it to 
             //get the correct image
             
-           // sprite = animationFrames[(int)currentFrameIndex];
+            // sprite = animationFrames[(int)currentFrameIndex];
 
             collisionRect = new RectangleF(Position.X, Position.Y, sprite.Width, sprite.Height);
         }
