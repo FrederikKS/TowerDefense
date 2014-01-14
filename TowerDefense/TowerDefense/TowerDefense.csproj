@@ -147,7 +147,16 @@
     <Content Include="Graphic\EvadeResizedRight.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Graphic\Grotto.png">
+    <Content Include="Graphic\GrottoBot.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphic\GrottoLeft.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphic\GrottoRight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Graphic\GrottoTop.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Graphic\heavyDown.png">
@@ -258,7 +267,9 @@
     <Content Include="Towers\ArrowTowerBtn.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Towers\CannonDown.png" />
+    <Content Include="Towers\CannonDown.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Towers\L1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

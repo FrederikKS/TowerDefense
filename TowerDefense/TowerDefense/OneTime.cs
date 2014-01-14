@@ -21,8 +21,8 @@ namespace TowerDefense
         /// <param name="imagePath"></param>
         /// <param name="position"></param>
         /// <param name="isClickAble"></param>
-        public OneTime(float speed, int cost, float ranged,string imagePath, PointF position, bool isClickAble) 
-            : base(speed,cost, ranged, imagePath,position,isClickAble)
+        public OneTime(float speed, int cost, float ranged,string imagePath, PointF position) 
+            : base(speed,cost, ranged, imagePath,position)
         {
 
         }

@@ -12,7 +12,7 @@ namespace TowerDefense
         // test
         // Constructor for island
 
-        public Island(string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
+        public Island(string imagePath, PointF position) : base(imagePath, position)
         {
             
         }

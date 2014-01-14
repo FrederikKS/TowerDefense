@@ -30,10 +30,10 @@ namespace TowerDefense
         /// <param name="imagePath"></param>
         /// <param name="position"></param>
         /// <param name="isClickAble"></param>
-        public TowerStun(float stunTime,float speed, int cost, float ranged, string imagePath, PointF position, bool isClickAble)
-            : base(speed, cost, ranged, imagePath, position, isClickAble)
+        public TowerStun(float stunTime,float speed, int cost, float ranged, string imagePath, PointF position)
+            : base(speed, cost, ranged, imagePath, position)
         {
-            this.Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, this);
+            this.Bullet = new Projectile(10, 5, @"Towers/w2.png", position, this);
         }
     }
 }

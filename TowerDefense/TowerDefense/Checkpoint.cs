@@ -11,7 +11,7 @@ namespace TowerDefense
     {
         // Constructor for Checkpoint
         // test
-        public Checkpoint(string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
+        public Checkpoint(string imagePath, PointF position) : base(imagePath, position)
         {
             
         }

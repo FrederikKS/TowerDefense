@@ -9,7 +9,7 @@ namespace TowerDefense
 {    
     public abstract class Environment : GameObject
     {
-        public Environment(string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
+        public Environment(string imagePath, PointF position) : base(imagePath, position)
         {
             
         }

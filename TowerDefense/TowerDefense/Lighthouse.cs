@@ -12,7 +12,7 @@ namespace TowerDefense
         // test
         // Constructor for lighthouse
         
-        public Lighthouse(string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
+        public Lighthouse(string imagePath, PointF position) : base(imagePath, position)
         {
 
         }

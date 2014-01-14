@@ -52,7 +52,7 @@ namespace TowerDefense
         /// <param name="imagePath"></param>
         /// <param name="Position"></param>
         /// <param name="isClickable"></param>
-        public GameObject(string imagePath, PointF Position, bool isClickable)
+        public GameObject(string imagePath, PointF Position)
         {
             // Seperates the image path on "," enables multiple image paths
             string[] imagePaths = imagePath.Split(new char[] { ',' });

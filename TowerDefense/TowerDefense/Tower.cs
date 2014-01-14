@@ -55,7 +55,7 @@ namespace TowerDefense
         /// <param name="imagePath"></param>
         /// <param name="position"></param>
         /// <param name="isClickAble"></param>
-        public Tower(float speed, int cost, float ranged, string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
+        public Tower(float speed, int cost, float ranged, string imagePath, PointF position) : base(imagePath, position)
         {
 
             this.speed = speed;

@@ -78,10 +78,11 @@ namespace TowerDefense
         #endregion
         // Fields for building phase
 
-        public int gold = 10000;
+        public int gold = 200;
         bool afford = true;
         Timer tAfford;
         public float life;
+        private bool slowTowerOwned = false;
         // Constructors
 
         public GameWorld(Graphics dc, Rectangle displayRectangle, float worldSizeX, float worldSizeY, float dif)
@@ -281,11 +282,11 @@ namespace TowerDefense
                 for (int enemyNumber = 0; enemyNumber < 10; enemyNumber++)
                 {
                     if (i % 3 == 0)
-                        waveEnemy[i].Add(new EnemyNormal("TestEnemyNormal", 100 * chosenDif, 20, 0, 10, new Effect(@"Graphic/Grotto.png", new PointF(0, 0), false), @"Graphic/heavyUp.png,Graphic/heavyLeft.png,Graphic/heavyDown.png,Graphic/heavyRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                        waveEnemy[i].Add(new EnemyNormal("TestEnemyNormal", 10 * chosenDif + (i * 5), 20, 0, 10, new Effect(@"Graphic/GrottoTop.png", new PointF(0, 0)), @"Graphic/heavyUp.png,Graphic/heavyLeft.png,Graphic/heavyDown.png,Graphic/heavyRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint));
                     if (i % 3 == 1)
-                        waveEnemy[i].Add(new EnemyEvade("TestEnemyEvade", false, 100 * chosenDif, 20, 0, 10, new Effect(@"Graphic/Grotto.png", new PointF(0, 0), false), @"Graphic/EvadeResized.png,Graphic/EvadeResizedLeft.png,Graphic/EvadeResizedDown.png,Graphic/EvadeResizedRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                        waveEnemy[i].Add(new EnemyEvade("TestEnemyEvade", false, 10 * chosenDif + (i * 5), 20, 0, 10, new Effect(@"Graphic/GrottoTop.png", new PointF(0, 0)), @"Graphic/EvadeResized.png,Graphic/EvadeResizedLeft.png,Graphic/EvadeResizedDown.png,Graphic/EvadeResizedRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint));
                     if (i % 3 == 2)
-                        waveEnemy[i].Add(new EnemySlow("TestEnemySlow", 10, 10, 100 * chosenDif, 20, 0, 10, new Effect(@"Graphic/Grotto.png", new PointF(0, 0), false), @"Graphic/slowUp.png,Graphic/slowLeft.png,Graphic/slowDown.png,Graphic/slowRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint, false));
+                        waveEnemy[i].Add(new EnemySlow("TestEnemySlow", 10, 10, 10 * chosenDif + (i * 5), 20, 0, 10, new Effect(@"Graphic/GrottoTop.png", new PointF(0, 0)), @"Graphic/slowUp.png,Graphic/slowLeft.png,Graphic/slowDown.png,Graphic/slowRight.png", new PointF(grottoX * tileSizeX, grottoY * tileSizeY), firstPoint));
                 }
             }
 
@@ -386,6 +387,9 @@ namespace TowerDefense
                         {
                             if (Form1.drawBuildGUI == 2)
                             {
+                                if (tower is TowerSlow)
+                                    slowTowerOwned = false;
+
                                 Sell(tower);
                             }
                         }
@@ -962,16 +966,16 @@ namespace TowerDefense
                         int temp = rnd.Next(1, 100);
 
                         //Water
-                        if (temp >= 27 && temp <= 100)
+                        if (temp >= 15 && temp <= 100)
                             coordinateSystem[x][y] = 10;
                         //Island
-                        if (temp >= 10 && temp < 25)
+                        if (temp >= 8 && temp < 15)
                             coordinateSystem[x][y] = 11;
                         //Lighthouse
-                        if (temp >= 25 && temp < 27)
+                        if (temp >= 5 && temp < 8)
                             coordinateSystem[x][y] = 12;
                         //Rock
-                        if (temp >= 0 && temp < 10)
+                        if (temp >= 0 && temp < 5)
                             coordinateSystem[x][y] = 13;
                     }
 
@@ -1030,91 +1034,98 @@ namespace TowerDefense
                     //Placing grotto
                     if (coordinateSystem[x][y] == 1)
                     {
-                        environmentList.Add(new Grotto(@"Graphic/Grotto.png", new PointF(tempX, tempY), false));
+                        if (y == 0)
+                            environmentList.Add(new Grotto(@"Graphic/GrottoTop.png", new PointF(tempX, tempY)));
+                        if (y == (worldSizeY*tileSizeY) - tileSizeY)
+                            environmentList.Add(new Grotto(@"Graphic/GrottoBot.png", new PointF(tempX, tempY)));
+                        if (x == (worldSizeX*tileSizeX) - tileSizeX)
+                            environmentList.Add(new Grotto(@"Graphic/GrottoRight.png", new PointF(tempX, tempY)));
+                        if (x == 0)
+                            environmentList.Add(new Grotto(@"Graphic/GrottoLeft.png", new PointF(tempX, tempY)));
                     }
 
                     //Checkpoints
                     if (coordinateSystem[x][y] == 2)
                     {
-                        environmentList.Add(new Checkpoint(@"Graphic/Checkpoint1.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Checkpoint(@"Graphic/Checkpoint1.png", new PointF(tempX, tempY)));
                     }
                     if (coordinateSystem[x][y] == 3)
                     {
-                        environmentList.Add(new Checkpoint(@"Graphic/Checkpoint2.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Checkpoint(@"Graphic/Checkpoint2.png", new PointF(tempX, tempY)));
                     }
                     if (coordinateSystem[x][y] == 4)
                     {
-                        environmentList.Add(new Checkpoint(@"Graphic/Checkpoint3.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Checkpoint(@"Graphic/Checkpoint3.png", new PointF(tempX, tempY)));
                     }
 
                     //Placing treasure chest
                     if (coordinateSystem[x][y] == 5)
                     {
-                        environmentList.Add(new Treasure(@"Graphic/TreasureChest.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Treasure(@"Graphic/TreasureChest.png", new PointF(tempX, tempY)));
                     }
                     //Placing Water
                     if (coordinateSystem[x][y] == 10)
                     {
-                        environmentList.Add(new Water(@"Graphic/water.png", new PointF(tempX, tempY), true));
+                        environmentList.Add(new Water(@"Graphic/water.png", new PointF(tempX, tempY)));
                     }
                     //Placing Islands
                     if (coordinateSystem[x][y] == 11)
                     {
-                        environmentList.Add(new Island(@"Graphic/land.png", new PointF(tempX, tempY), true));
+                        environmentList.Add(new Island(@"Graphic/land.png", new PointF(tempX, tempY)));
                     }
                     //Placing lighthouses
                     if (coordinateSystem[x][y] == 12)
                     {
-                        environmentList.Add(new Lighthouse(@"Graphic/lighthouse.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Lighthouse(@"Graphic/lighthouse.png", new PointF(tempX, tempY)));
                     }
                     //Placing rocks
                     if (coordinateSystem[x][y] == 13)
                     {
-                        environmentList.Add(new Rock(@"Graphic/rocks.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/rocks.png", new PointF(tempX, tempY)));
                     }
 
                     //Placing Walls
                     //Left
                     if (coordinateSystem[x][y] == 101)
                     {
-                        environmentList.Add(new Rock(@"Graphic/WallLeft.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/WallLeft.png", new PointF(tempX, tempY)));
                     }
                     //Right
                     if (coordinateSystem[x][y] == 102)
                     {
-                        environmentList.Add(new Rock(@"Graphic/WallRight.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/WallRight.png", new PointF(tempX, tempY)));
                     }
                     //Top
                     if (coordinateSystem[x][y] == 103)
                     {
-                        environmentList.Add(new Rock(@"Graphic/WallTop.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/WallTop.png", new PointF(tempX, tempY)));
                     }
                     //Bot
                     if (coordinateSystem[x][y] == 104)
                     {
-                        environmentList.Add(new Rock(@"Graphic/WallBot.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/WallBot.png", new PointF(tempX, tempY)));
                     }
 
                     //Placing Corners
                     //Top Left
                     if (coordinateSystem[x][y] == 105)
                     {
-                        environmentList.Add(new Rock(@"Graphic/CornerTopLeft.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/CornerTopLeft.png", new PointF(tempX, tempY)));
                     }
                     //Top Right
                     if (coordinateSystem[x][y] == 106)
                     {
-                        environmentList.Add(new Rock(@"Graphic/CornerTopRight.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/CornerTopRight.png", new PointF(tempX, tempY)));
                     }
                     //Bot Left
                     if (coordinateSystem[x][y] == 107)
                     {
-                        environmentList.Add(new Rock(@"Graphic/CornerBotLeft.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/CornerBotLeft.png", new PointF(tempX, tempY)));
                     }
                     //Bot Right
                     if (coordinateSystem[x][y] == 108)
                     {
-                        environmentList.Add(new Rock(@"Graphic/CornerBotRight.png", new PointF(tempX, tempY), false));
+                        environmentList.Add(new Rock(@"Graphic/CornerBotRight.png", new PointF(tempX, tempY)));
                     }
                 }
             }
@@ -1242,6 +1253,8 @@ namespace TowerDefense
                 coordinateSystem[(int)position.X / tileSizeX][(int)position.Y / tileSizeY] = 110;
                 allowTower = true;
             }
+            if (towerNumb == 3 && slowTowerOwned)
+                allowTower = false;
 
             if (allowTower)
                 switch (towerNumb)
@@ -1251,7 +1264,7 @@ namespace TowerDefense
                     case 1:
                         if (gold >= 25)
                         {
-                            towers.Add(new TowerNormal(15, 4000, 25, tileSizeX * 3, @"Towers/shipTower.png", position, true));
+                            towers.Add(new TowerNormal(15, 4000, 25, tileSizeX * 3, @"Towers/shipTower.png", position));
                             gold -= towers[0].Cost;
                         }
                         else
@@ -1263,7 +1276,7 @@ namespace TowerDefense
                     case 2:
                         if (gold >= 40)
                         {
-                            towers.Add(new TowerBoost((float)0.3, 15, 1000, 40, tileSizeX * 3, @"Towers/mermaid.png", position, true));
+                            towers.Add(new TowerBoost((float)0.3, 15, 1000, 40, tileSizeX * 3, @"Towers/mermaid.png", position));
                             gold -= towers[0].Cost;
                         }
                         else
@@ -1275,8 +1288,9 @@ namespace TowerDefense
                     case 3:
                         if (gold >= 60)
                         {
-                            towers.Add(new TowerSlow((float)0.3, tileSizeX * 3, 1000, 60, tileSizeX * 3, @"Towers/Whirlpool.png", position, true));
+                            towers.Add(new TowerSlow((float)0.3, tileSizeX * 3, 1000, 60, tileSizeX * 3, @"Towers/Whirlpool.png", position));
                             gold -= towers[0].Cost;
+                            slowTowerOwned = true;
                         }
                         else
                         {
@@ -1289,7 +1303,7 @@ namespace TowerDefense
                     case 4:
                         if (gold >= 25)
                         {
-                            towers.Add(new TowerNormal(10, 2000, 25, tileSizeX * 3, @"Towers/LightCannons.png", position, true));
+                            towers.Add(new TowerNormal(10, 2000, 25, tileSizeX * 3, @"Towers/LightCannons.png", position));
                             gold -= towers[0].Cost;
                         }
                         else
@@ -1301,7 +1315,7 @@ namespace TowerDefense
                     case 5:
                         if (gold >= 40)
                         {
-                            towers.Add(new TowerNormal(30, 5000, 40, tileSizeX * 3, @"Towers/CannonDown.png", position, true));
+                            towers.Add(new TowerNormal(30, 5000, 40, tileSizeX * 3, @"Towers/CannonDown.png", position));
                             gold -= towers[0].Cost;
                         }
                         else

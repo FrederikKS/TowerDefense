@@ -9,7 +9,7 @@ namespace TowerDefense
 {
     class Treasure : Environment
     {
-        public Treasure(string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
+        public Treasure(string imagePath, PointF position) : base(imagePath, position)
         {
         }
     }

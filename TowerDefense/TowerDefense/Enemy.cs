@@ -85,8 +85,8 @@ namespace TowerDefense
         }
         #endregion
         //constructor
-        public Enemy(string name, float hp, float speed, int armor, int worth, Effect effect, string imagePath, PointF position, PointF endPosition, bool isClickable)
-            : base(imagePath, position, isClickable)
+        public Enemy(string name, float hp, float speed, int armor, int worth, Effect effect, string imagePath, PointF position, PointF endPosition)
+            : base(imagePath, position)
         {
             this.name = name;
             this.hp = hp;

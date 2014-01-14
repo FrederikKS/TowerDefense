@@ -29,8 +29,8 @@ namespace TowerDefense
         }
 
         //Constructor
-        public TowerBoost(float boostDamage, float boostSpeed, float speed, int cost, int range, string imagePath, PointF position, bool isClickable) 
-            : base(speed, cost, range, imagePath, position, isClickable)
+        public TowerBoost(float boostDamage, float boostSpeed, float speed, int cost, int range, string imagePath, PointF position) 
+            : base(speed, cost, range, imagePath, position)
         {
             this.boostDamage = boostDamage;
             this.boostSpeed = boostSpeed;

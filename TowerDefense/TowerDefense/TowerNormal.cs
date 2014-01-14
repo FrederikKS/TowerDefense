@@ -13,10 +13,10 @@ namespace TowerDefense
 
         // Properties
 
-        public TowerNormal(int projectileDamage, float speed, int cost, float range, string imagePath, PointF position, bool isClickAble)
-            : base(speed, cost, range, imagePath, position, isClickAble)
+        public TowerNormal(int projectileDamage, float speed, int cost, float range, string imagePath, PointF position)
+            : base(speed, cost, range, imagePath, position)
         {
-            this.Bullet = new Projectile(projectileDamage, 20, @"Graphic/CannonBall.png", position, false, this);
+            this.Bullet = new Projectile(projectileDamage, 20, @"Graphic/CannonBall.png", position, this);
             this.SavedDamage = this.Bullet.damage;
         }
 

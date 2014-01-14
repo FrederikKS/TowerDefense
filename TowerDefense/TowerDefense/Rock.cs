@@ -13,7 +13,7 @@ namespace TowerDefense
 
         // Constructor for rock
 
-        public Rock(string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
+        public Rock(string imagePath, PointF position) : base(imagePath, position)
         {
             
         }

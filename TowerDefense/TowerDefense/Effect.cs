@@ -10,7 +10,7 @@ namespace TowerDefense
     {
         // test
         //Constructor
-        public Effect(string imagePath, PointF position, bool isClickable): base(imagePath,position,isClickable)
+        public Effect(string imagePath, PointF position): base(imagePath,position)
         {
 
         }

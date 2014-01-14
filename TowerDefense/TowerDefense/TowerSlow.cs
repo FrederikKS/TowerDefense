@@ -22,8 +22,8 @@ namespace TowerDefense
             get { return range; }
         }
 
-        public TowerSlow(float slow, int range, float speed, int cost, float ranged, string imagePath, PointF position, bool isClickAble)
-            : base(speed, cost, range, imagePath, position, isClickAble)
+        public TowerSlow(float slow, int range, float speed, int cost, float ranged, string imagePath, PointF position)
+            : base(speed, cost, range, imagePath, position)
         {
             this.slow = slow;
             this.range = range;

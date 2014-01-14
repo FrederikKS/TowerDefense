@@ -12,7 +12,7 @@ namespace TowerDefense
         // test
         // Constructor for grotto
 
-        public Grotto(string imagePath, PointF position, bool isClickable) : base(imagePath, position, isClickable)
+        public Grotto(string imagePath, PointF position) : base(imagePath, position)
         {
             
         }

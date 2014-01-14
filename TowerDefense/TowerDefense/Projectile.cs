@@ -51,7 +51,7 @@ namespace TowerDefense
         /// <param name="imagePath"></param>
         /// <param name="position"></param>
         /// <param name="isClickable"></param>
-        public Projectile( int damage, float bulletSpeed, string imagePath, PointF position, bool isClickable, Tower fromTower) : base(imagePath, position, isClickable)
+        public Projectile(int damage, float bulletSpeed, string imagePath, PointF position, Tower fromTower) : base(imagePath, position)
         {
             this.damage = damage;
             this.bulletSpeed = bulletSpeed;

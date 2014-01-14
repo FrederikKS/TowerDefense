@@ -30,11 +30,11 @@ namespace TowerDefense
         }
 
         //Constructor
-        public TowerDoT(float dmgOverTime, float duration, float speed, int cost, int ranged,string imagePath, PointF position, bool isClickable) : base(speed, cost, ranged, imagePath, position, isClickable)
+        public TowerDoT(float dmgOverTime, float duration, float speed, int cost, int ranged,string imagePath, PointF position) : base(speed, cost, ranged, imagePath, position)
         {
             this.dmgOverTime = dmgOverTime;
             this.duration = duration;
-            this.Bullet = new Projectile(10, 5, @"Towers/w2.png", position, false, this);
+            this.Bullet = new Projectile(10, 5, @"Towers/w2.png", position, this);
         }
 
         public void DoT()
