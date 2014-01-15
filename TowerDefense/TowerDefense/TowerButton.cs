@@ -67,19 +67,18 @@ namespace TowerDefense
 
                 if (Form1.drawBuildGUI == 4)
                 {
-                    dc.DrawImage(Image.FromFile(@"Towers/LightCannons.png"), new Point(tmpX + 50, tmpY));
-                    dc.DrawImage(Image.FromFile(@"Towers/CannonDown.png"), new Point(tmpX - 120, tmpY));
-                    //dc.DrawImage(Image.FromFile(@"Towers/L3.png"), new Point(tmpX - 30, tmpY - 120));
+                    dc.DrawImage(Image.FromFile(@"Towers/LightCannonsBtn.png"), new Point(tmpX + 50, tmpY));
+                    dc.DrawImage(Image.FromFile(@"Towers/CanonBtn.png"), new Point(tmpX - 120, tmpY));
                 }
                 if (Form1.drawBuildGUI == 3)
                 {
-                    dc.DrawImage(Image.FromFile(@"Towers/shipTowerBtn.png"), new Point(tmpX + 50, tmpY));
-                    dc.DrawImage(Image.FromFile(@"Towers/mermaid.png"), new Point(tmpX - 120, tmpY));
-                    dc.DrawImage(Image.FromFile(@"Towers/Whirlpool.png"), new Point(tmpX - 30, tmpY - 120));
+                    dc.DrawImage(Image.FromFile(@"Towers/shipTowerLeftBtn.png"), new Point(tmpX + 50, tmpY));
+                    dc.DrawImage(Image.FromFile(@"Towers/mermaidBtn.png"), new Point(tmpX - 120, tmpY));
+                    dc.DrawImage(Image.FromFile(@"Towers/WhirlpoolBtn.png"), new Point(tmpX - 30, tmpY - 120));
                 }
                 if (Form1.drawBuildGUI == 2)
                 {
-                    dc.DrawImage(Image.FromFile(@"Graphic/Sell.png"), new Point(tmpX - 30, tmpY - 120));
+                    dc.DrawImage(Image.FromFile(@"Graphic/SellBtn.png"), new Point(tmpX - 30, tmpY - 120));
                 }
 
             }

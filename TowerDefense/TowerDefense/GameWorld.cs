@@ -159,7 +159,7 @@ namespace TowerDefense
             //Location for grotto
             #region Defining which border grotto should spawn on
             //Randoming one out of 4 numbers, each representing a side
-            int locationOfGrotto = rnd.Next(0, 3);
+            int locationOfGrotto = rnd.Next(0, 4);
             //left
             if (locationOfGrotto == 0)
             {
@@ -1080,9 +1080,9 @@ namespace TowerDefense
                     {
                         if (y == 0)
                             environmentList.Add(new Grotto(@"Graphic/GrottoTop.png", new PointF(tempX, tempY)));
-                        if (y == (worldSizeY * tileSizeY) - tileSizeY)
+                        if (y == worldSizeY - 1)
                             environmentList.Add(new Grotto(@"Graphic/GrottoBot.png", new PointF(tempX, tempY)));
-                        if (x == (worldSizeX * tileSizeX))
+                        if (x == worldSizeX - 1)
                             environmentList.Add(new Grotto(@"Graphic/GrottoRight.png", new PointF(tempX, tempY)));
                         if (x == 0)
                             environmentList.Add(new Grotto(@"Graphic/GrottoLeft.png", new PointF(tempX, tempY)));

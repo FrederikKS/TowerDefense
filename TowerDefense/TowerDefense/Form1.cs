@@ -131,7 +131,7 @@ namespace TowerDefense
                     {
 
                         string path = @"Highscore/Hard.txt";
-                        string text = "\n Name: " + txt_name.Text + "\n" + " Lives Remaining:" + gw.life + " out of 10 \n --------------------";
+                        string text = "\n Name: " + txt_name.Text + "\n" + " Lives Remaining:" + gw.life + " out of 10" + " \n --------------------";
                         File.AppendAllText(path, text);
                         allowHighscore = false;
                     }
@@ -159,15 +159,14 @@ namespace TowerDefense
             highscoreC = 2;
             string path = @"Highscore/Medium.txt";
             string readText = File.ReadAllText(path);
-            rtb_highscore.Text = readText.ToString();
+            rtb_highscore.Text += readText.ToString();
         }
 
         private void btn_highHard_Click(object sender, EventArgs e)
         {
-            highscoreC = 3;
             string path = @"Highscore/Hard.txt";
             string readText = File.ReadAllText(path);
-            rtb_highscore.Text = readText.ToString();
+            rtb_highscore.Text = readText;
         }
         #endregion
         // Btn Exit
@@ -229,6 +228,13 @@ namespace TowerDefense
 
                 guiPos = ActiveForm.PointToClient(Cursor.Position);
             }
+        }
+
+        public void WriteToFile(string FilePath, string Text)
+        {
+            StreamWriter sw = new StreamWriter(FilePath);
+            sw.Write(Text);
+            sw.Close();
         }
     }
 }
