@@ -39,7 +39,6 @@
             this.btn_exit = new System.Windows.Forms.Button();
             this.btn_high = new System.Windows.Forms.Button();
             this.pnl_dif = new System.Windows.Forms.Panel();
-            this.btn_submit = new System.Windows.Forms.Button();
             this.btn_Hard = new System.Windows.Forms.Button();
             this.txt_name = new System.Windows.Forms.TextBox();
             this.lbl_name = new System.Windows.Forms.Label();
@@ -141,7 +140,6 @@
             // 
             // pnl_dif
             // 
-            this.pnl_dif.Controls.Add(this.btn_submit);
             this.pnl_dif.Controls.Add(this.btn_Hard);
             this.pnl_dif.Controls.Add(this.txt_name);
             this.pnl_dif.Controls.Add(this.lbl_name);
@@ -152,16 +150,6 @@
             this.pnl_dif.Size = new System.Drawing.Size(936, 108);
             this.pnl_dif.TabIndex = 1;
             this.pnl_dif.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
-            // 
-            // btn_submit
-            // 
-            this.btn_submit.Location = new System.Drawing.Point(683, 24);
-            this.btn_submit.Name = "btn_submit";
-            this.btn_submit.Size = new System.Drawing.Size(75, 23);
-            this.btn_submit.TabIndex = 9;
-            this.btn_submit.Text = "Submit";
-            this.btn_submit.UseVisualStyleBackColor = true;
-            this.btn_submit.Click += new System.EventHandler(this.btn_submit_Click);
             // 
             // btn_Hard
             // 
@@ -186,7 +174,7 @@
             this.lbl_name.AutoSize = true;
             this.lbl_name.Location = new System.Drawing.Point(574, 6);
             this.lbl_name.Name = "lbl_name";
-            this.lbl_name.Size = new System.Drawing.Size(35, 13);
+            this.lbl_name.Size = new System.Drawing.Size(41, 15);
             this.lbl_name.TabIndex = 7;
             this.lbl_name.Text = "Name";
             // 
@@ -262,7 +250,6 @@
         private System.Windows.Forms.Button btn_highMedium;
         private System.Windows.Forms.Button btn_highEasy;
         private System.Windows.Forms.RichTextBox rtb_highscore;
-        private System.Windows.Forms.Button btn_submit;
         private System.Windows.Forms.Label lbl_name;
         private System.Windows.Forms.TextBox txt_name;
     }

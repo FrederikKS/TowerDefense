@@ -58,7 +58,7 @@ namespace TowerDefense
         private List<PointF> startPoints = new List<PointF>();
         private bool validLocation;
         ISoundEngine engine = new ISoundEngine();
-
+        bool gameOver = false;
         #region Fields for wave
         // Fields for wave
         List<List<Enemy>> waveEnemy = new List<List<Enemy>>();
@@ -115,7 +115,7 @@ namespace TowerDefense
 
             //Starting FPS timert
             lastFrameStarted = DateTime.Now;
-            
+
 
             #region Instantiating coordinate system and grotto/checkpoints/treasure location
             // Instantiating coordinate system
@@ -311,7 +311,7 @@ namespace TowerDefense
                     break;
             }
             engine.Play2D("Blackmoor_Tides_Loop.wav", true);
-           
+
         }
         /// <summary>
         /// Makes sure all the update functions is called every frames
@@ -411,7 +411,7 @@ namespace TowerDefense
             //Update all bullet objects
             for (int i = 0; i < bullets.Count; i++)
             {
-               bullets[i].Update(currentFPS);
+                bullets[i].Update(currentFPS);
             }
             //Update all tower objects
             foreach (Tower tower in towers)
@@ -452,26 +452,31 @@ namespace TowerDefense
             }
 
             //Update wavename
-            if(waveEnemy[waveNumber][0] is EnemyNormal)
-                waveName = "Normal";
-            if (waveEnemy[waveNumber][0] is EnemyEvade)
-                waveName = "Evade";
-            if (waveEnemy[waveNumber][0] is EnemySlow)
-                waveName = "Slow";
+            if (waveNumber < waveEnemy.Count())
+            {
+                if (waveEnemy[waveNumber][0] is EnemyNormal)
+                    waveName = "Normal";
+                if (waveEnemy[waveNumber][0] is EnemyEvade)
+                    waveName = "Evade";
+                if (waveEnemy[waveNumber][0] is EnemySlow)
+                    waveName = "Slow";
+            }
 
             //Update nextWave
-            if (waveNumber + 1 < waveEnemy.Count)
+            if (waveNumber < waveEnemy.Count)
             {
-                if (waveEnemy[waveNumber + 1][0] is EnemyNormal)
-                    waveNext = "Normal";
-                if (waveEnemy[waveNumber + 1][0] is EnemyEvade)
-                    waveNext = "Evade";
-                if (waveEnemy[waveNumber + 1][0] is EnemySlow)
-                    waveNext = "Slow";
+                if (waveNumber + 1 < waveEnemy.Count)
+                {
+                    if (waveEnemy[waveNumber + 1][0] is EnemyNormal)
+                        waveNext = "Normal";
+                    if (waveEnemy[waveNumber + 1][0] is EnemyEvade)
+                        waveNext = "Evade";
+                    if (waveEnemy[waveNumber + 1][0] is EnemySlow)
+                        waveNext = "Slow";
+                }
+                else
+                    waveNext = "Victory";
             }
-            else
-                waveNext = "Victory";
-
         }
 
 
@@ -584,7 +589,7 @@ namespace TowerDefense
             }
 
             //Draw Wave Number
-            dc.DrawString(string.Format("Wave: {0} / {1}", waveNumber+1, waveEnemy.Count), w, q, 1152, 5);
+            dc.DrawString(string.Format("Wave: {0} / {1}", waveNumber + 1, waveEnemy.Count), w, q, 1152, 5);
             dc.DrawString(string.Format("Wave Type: {0}", waveName), w, q, 1152, 25);
             dc.DrawString(string.Format("Next wave: {0}", waveNext), w, q, 1152, 45);
 
@@ -602,12 +607,19 @@ namespace TowerDefense
             // Lost
             if (life <= 0)
             {
+
+                if (!gameOver)
+                {
+                    Form1.allowHighscore = true;
+                    gameOver = true;
+                }
+
                 environment.Clear();
                 towers.Clear();
                 tmpTowers.Clear();
-                checkpointList.Clear();
-                endPoints.Clear();
-                startPoints.Clear();
+                //checkpointList.Clear();
+                //endPoints.Clear();
+                //startPoints.Clear();
                 SolidBrush sb = new SolidBrush(Color.Black);
                 dc.FillRectangle(sb, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
                 dc.DrawString(string.Format("You are dead"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2);
@@ -616,12 +628,18 @@ namespace TowerDefense
             // Won
             if (waveNumber == waveEnemy.Count)
             {
+                if (!gameOver)
+                {
+                    Form1.allowHighscore = true;
+                    gameOver = true;
+                }
+
                 environment.Clear();
                 towers.Clear();
                 tmpTowers.Clear();
-                checkpointList.Clear();
-                endPoints.Clear();
-                startPoints.Clear();
+                //checkpointList.Clear();
+                //endPoints.Clear();
+                //startPoints.Clear();
                 SolidBrush sb = new SolidBrush(Color.Black);
                 dc.FillRectangle(sb, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
                 dc.DrawString(string.Format("You Won!"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2);
@@ -915,7 +933,7 @@ namespace TowerDefense
                 }
                 if (coordinateSystem[mainNode.LocationX][mainNode.LocationY + 1] == 5 && endX == treasureX && endY == treasureY)
                     if (!CheckForDuplicates(ref openNodes, mainNode, 0, 1))
-                    openNodes.Add(new Node(mainNode.LocationX, mainNode.LocationY + 1, endX, endY, mainNode.G));
+                        openNodes.Add(new Node(mainNode.LocationX, mainNode.LocationY + 1, endX, endY, mainNode.G));
             }
 
             //Node above main
@@ -1062,9 +1080,9 @@ namespace TowerDefense
                     {
                         if (y == 0)
                             environmentList.Add(new Grotto(@"Graphic/GrottoTop.png", new PointF(tempX, tempY)));
-                        if (y == (worldSizeY*tileSizeY) - tileSizeY)
+                        if (y == (worldSizeY * tileSizeY) - tileSizeY)
                             environmentList.Add(new Grotto(@"Graphic/GrottoBot.png", new PointF(tempX, tempY)));
-                        if (x == (worldSizeX*tileSizeX))
+                        if (x == (worldSizeX * tileSizeX))
                             environmentList.Add(new Grotto(@"Graphic/GrottoRight.png", new PointF(tempX, tempY)));
                         if (x == 0)
                             environmentList.Add(new Grotto(@"Graphic/GrottoLeft.png", new PointF(tempX, tempY)));
@@ -1381,7 +1399,7 @@ namespace TowerDefense
                 {
                     gold += t.Cost / 2;
                     coordinateSystem[(int)t.Position.X / tileSizeX][(int)t.Position.Y / tileSizeY] = 10;
-                    
+
                     //Perform path generation again
 
                     //Clearing current path
@@ -1472,7 +1490,7 @@ namespace TowerDefense
             return newList;
         }
 
-        
+
         /// <summary>
         /// Frederik
         /// Duplicates a 2D jagged array to prevent cross references

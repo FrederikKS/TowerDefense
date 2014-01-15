@@ -1,7 +1,1 @@
 ﻿
-Name: Butt
-Lives Remaining: 20
- --------------------
-Name: Butt2
-Lives Remaining: 203
- --------------------
