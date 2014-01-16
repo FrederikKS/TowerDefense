@@ -17,8 +17,6 @@ namespace TowerDefense
         public static GUI gui;
         // Dificulity choosen
         public static int difc = 0;
-        // Highscore Choosen
-        int highscoreC = 0;
         // Classes
         public static GameWorld gw;
         //Mouse local position on the form
@@ -50,7 +48,6 @@ namespace TowerDefense
             // GUI
             MouseUp += new MouseEventHandler(Form1_MouseUp);
             MouseDown += new MouseEventHandler(Form1_MouseDown);
-            
         }
         #region Difficulty
         private void btn_dif_Click(object sender, EventArgs e)
@@ -124,7 +121,7 @@ namespace TowerDefense
                     if (difc == 2)
                     {
                         string path = @"Highscore/Medium.txt";
-                        string text = "\nName: " + txt_name.Text + "\n" + " Lives Remaining: "+ gw.life +"  out of 20 \n --------------------";
+                        string text = "\nName: " + txt_name.Text + "\n" + " Lives Remaining: " + gw.life + "  out of 20 \n --------------------";
                         File.AppendAllText(path, text);
                     }
                     if (difc == 3 && allowHighscore)
@@ -148,7 +145,6 @@ namespace TowerDefense
 
         private void btn_highEasy_Click(object sender, EventArgs e)
         {
-            highscoreC = 1;
             string path = @"Highscore/Easy.txt";
             string readText = File.ReadAllText(path);
             rtb_highscore.Text = readText.ToString();
@@ -156,7 +152,6 @@ namespace TowerDefense
 
         private void btn_highMedium_Click(object sender, EventArgs e)
         {
-            highscoreC = 2;
             string path = @"Highscore/Medium.txt";
             string readText = File.ReadAllText(path);
             rtb_highscore.Text += readText.ToString();
@@ -199,31 +194,42 @@ namespace TowerDefense
             {
                 guiIsClicked = true;
 
+                if (gw != null)
+                {
+                    foreach (Environment environment in gw.environment)
+                    {
+                        if (gw.mouseRect.IntersectsWith(environment.CollisionRect))
+                        {
+                            if (environment is Water)
+                            {
+                                drawBuildGUI = 3;
+                            }
+                            if (environment is Island)
+                            {
+                                drawBuildGUI = 4;
+                            }
+                        }
+                    }
+                    foreach (Tower tower in gw.towers)
+                    {
+                        if (gw.mouseRect.IntersectsWith(tower.CollisionRect))
+                        {
+                            if (tower is Tower)
+                            {
+                                drawBuildGUI = 2;
+                            }
+                        }
+                    }
+                }
 
-                foreach (Environment environment in gw.environment)
+                if (gw != null)
                 {
-                    if (gw.mouseRect.IntersectsWith(environment.CollisionRect))
+                    if (gw.life == 0)
                     {
-                        if (environment is Water)
-                        {
-                            drawBuildGUI = 3;
-                        }
-                        if (environment is Island)
-                        {
-                            drawBuildGUI = 4;
-                        }
+                        gw = null;
                     }
                 }
-                foreach (Tower tower in gw.towers)
-                {
-                    if (gw.mouseRect.IntersectsWith(tower.CollisionRect))
-                    {
-                        if (tower is Tower)
-                        {
-                            drawBuildGUI = 2;
-                        }
-                    }
-                }
+                
                 //Set position
 
                 guiPos = ActiveForm.PointToClient(Cursor.Position);

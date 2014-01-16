@@ -68,7 +68,7 @@ namespace TowerDefense
                 if (Form1.drawBuildGUI == 4)
                 {
                     dc.DrawImage(Image.FromFile(@"Towers/LightCannonsBtn.png"), new Point(tmpX + 50, tmpY));
-                    dc.DrawImage(Image.FromFile(@"Towers/CanonBtn.png"), new Point(tmpX - 120, tmpY));
+                    dc.DrawImage(Image.FromFile(@"Towers/CanonDownBtn.png"), new Point(tmpX - 120, tmpY));
                 }
                 if (Form1.drawBuildGUI == 3)
                 {
@@ -78,7 +78,7 @@ namespace TowerDefense
                 }
                 if (Form1.drawBuildGUI == 2)
                 {
-                    dc.DrawImage(Image.FromFile(@"Graphic/SellBtn.png"), new Point(tmpX - 30, tmpY - 120));
+                    dc.DrawImage(Image.FromFile(@"Towers/SellBtn.png"), new Point(tmpX - 30, tmpY - 120));
                 }
 
             }

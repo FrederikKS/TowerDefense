@@ -623,7 +623,26 @@ namespace TowerDefense
                 SolidBrush sb = new SolidBrush(Color.Black);
                 dc.FillRectangle(sb, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
                 dc.DrawString(string.Format("You are dead"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2);
-                dc.DrawString(string.Format("Press ESC to exit the game!"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2 + 30);
+                if (chosenDif == 1)
+                {
+                    dc.DrawString(string.Format("Difficulty: Easy"), w, q, Form1.ActiveForm.Width / 2, Form1.ActiveForm.Height / 2 + 30);
+                    dc.DrawString(string.Format("You had: " + life + " lives left out of: 50"), w, q, Form1.ActiveForm.Width / 2, Form1.ActiveForm.Height / 2 + 60);
+
+                }
+
+                if (chosenDif == 2)
+                {
+                    dc.DrawString(string.Format("Difficulty: Medium"), w, q, Form1.ActiveForm.Width / 2, Form1.ActiveForm.Height / 2 + 30);
+                    dc.DrawString(string.Format("You had: " + life + " lives left out of: 30"), w, q, Form1.ActiveForm.Width / 2, Form1.ActiveForm.Height / 2 + 60);
+                }
+
+                if (chosenDif == 3)
+                {
+                    dc.DrawString(string.Format("Difficulty: Hard"), w, q, Form1.ActiveForm.Width / 2, Form1.ActiveForm.Height / 2 + 30);
+                    dc.DrawString(string.Format("You had: " + life + " lives left out of: 10"), w, q, Form1.ActiveForm.Width / 2, Form1.ActiveForm.Height / 2 + 60);
+                }
+
+                dc.DrawString(string.Format("Press Left Mouse Button to Restart the game!"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2 + 90);
             }
             // Won
             if (waveNumber == waveEnemy.Count)
@@ -643,7 +662,26 @@ namespace TowerDefense
                 SolidBrush sb = new SolidBrush(Color.Black);
                 dc.FillRectangle(sb, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
                 dc.DrawString(string.Format("You Won!"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2);
-                dc.DrawString(string.Format("Press ESC to exit the game!"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2 + 30);
+                if (chosenDif == 1)
+                {
+                    dc.DrawString(string.Format("Difficulty: Easy"), w, q, Form1.ActiveForm.Width / 2, Form1.ActiveForm.Height / 2 + 30);
+                    dc.DrawString(string.Format("You had: " + life + " lives left out of: 50"), w, q, Form1.ActiveForm.Width / 2, Form1.ActiveForm.Height / 2 + 60);
+
+                }
+
+                if (chosenDif == 2)
+                {
+                    dc.DrawString(string.Format("Difficulty: Medium"), w, q, Form1.ActiveForm.Width / 2, Form1.ActiveForm.Height / 2 + 30);
+                    dc.DrawString(string.Format("You had: " + life + " lives left out of: 30"), w, q, Form1.ActiveForm.Width / 2, Form1.ActiveForm.Height / 2 + 60);
+                }
+
+                if (chosenDif == 3)
+                {
+                    dc.DrawString(string.Format("Difficulty: Hard"), w, q, Form1.ActiveForm.Width / 2, Form1.ActiveForm.Height / 2 + 30);
+                    dc.DrawString(string.Format("You had: " + life + " lives left out of: 10"), w, q, Form1.ActiveForm.Width / 2, Form1.ActiveForm.Height / 2 + 60);
+                }
+
+                dc.DrawString(string.Format("Press Left Mouse Button to Restart the game!"), w, q, Form1.ActiveForm.Size.Width / 2, Form1.ActiveForm.Size.Height / 2 + 90);
 
             }
             buffer.Render();
